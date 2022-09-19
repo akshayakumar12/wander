@@ -1,2 +1,4 @@
-# wander
+# **${\color{blue} \textsf {wander} }$**
 ### Sai Edupulapati, Akshaya Kumar, Shreya Sanapala, Visa Thongdee, Vidya Vuppala
+
+
