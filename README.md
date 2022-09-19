@@ -1,2 +1,2 @@
 # wander
-CS 307 Project
+### Sai Edupulapati, Akshaya Kumar, Shreya Sanapala, Visa Thongdee, Vidya Vuppala
