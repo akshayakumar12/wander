@@ -7,3 +7,5 @@ The **Design Document** does the following:
 - outlines our design decisions and describes the purpose of each component in our system
 - discusses design issues and the justification behind our solution for each issue
 - includes class level designs of our system, sequence diagrams, and mockups of the UI
+
+The **Sprint Planning Documents** discuss the overview of each sprint, the user stories to be implemented as well as well-defined, self-contained tasks and acceptance criteria for each user story, and the remaining backlog. 
