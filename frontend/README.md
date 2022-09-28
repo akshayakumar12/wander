@@ -1,3 +1,3 @@
 - Clone git repository
-- Download node.js [link](https://nodejs.org/en/download/)
-- get MUI [link](https://mui.com/)
+- Download [node.js](https://nodejs.org/en/download/)
+- get [MUI](https://mui.com/)
