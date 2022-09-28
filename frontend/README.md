@@ -2,3 +2,6 @@
 - Download [node.js](https://nodejs.org/en/download/)
 - get [MUI](https://mui.com/)
 - react [tutorial](https://reactjs.org/tutorial/tutorial.html)
+- to run do:
+  - npm i (downloads node modules needed. only needed the first time you open)
+  - npm start (starts the program)
