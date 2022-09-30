@@ -14,13 +14,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-/*
-const db = getFirestore(app)
+export const firestore = getFirestore(app);
 
-async function getUsers(db) {
-    const userCol = collection(db, 'users')
-    const userSnapshot = await getDocs(db)
-    const userList = userSnapshot.docs.map(doc => doc.data())
-    return cityList;
-}
-*/
