@@ -1,5 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, setDoc, doc } from 'firebase/firestore/lite';
+//import { doc, setDoc } from "firebase/firestore"; 
+// Follow this pattern to import other Firebase services
+// import { } from 'firebase/<service>';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -14,13 +17,26 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-/*
-const db = getFirestore(app)
+const db = getFirestore(app);
 
+// Get a list of cities from your database
 async function getUsers(db) {
-    const userCol = collection(db, 'users')
-    const userSnapshot = await getDocs(db)
-    const userList = userSnapshot.docs.map(doc => doc.data())
-    return cityList;
+  console.log("Started")
+  const userCol = collection(db, 'users');
+  console.log("Waiting")
+  const userSnapshot = await getDocs(userCol);
+  const userList = userSnapshot.docs.map(doc => doc.data());
+  console.log("Ending")
+  return userList;
 }
-*/
+
+let x = getUsers(db);
+console.log(x)
+
+x.then(function(result) {
+    console.log(result)
+});
+
+await setDoc(doc(db, "users", "JEB"), {
+    name: "Jeb"
+});
