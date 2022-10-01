@@ -1,11 +1,9 @@
 import "./App.css";
-import Home from "./pages/homepage/home";
+import Login from "./frontend/pages/login/login";
 
 function App() {
   return <div className="App">
-    Wander
-    <Home/>
-
+    <Login/>
   </div>;
 }
 
