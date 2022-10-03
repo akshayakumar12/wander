@@ -2,9 +2,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import React, { useState } from "react";
 
-function register() {
-
+function Register() {
+    const [fullName, setFullName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     return (
         <Box>
@@ -20,22 +23,30 @@ function register() {
                         <h3>Register</h3>
                         <TextField
                             label="Full Name"
+                            onChange = {(event) => setFullName(event.target.value)}    // save full name from user input
                         />
                         <br></br>
                         <br></br>
                         <TextField
                             label="Email Address"
+                            onChange = {(event) => setEmail(event.target.value)}    // save email from user input
                         />
                         <br></br>
                         <br></br>
                         <TextField
                             label="Password"
                             type="password"
+                            onChange = {(event) => setPassword(event.target.value)}    // save password from user input
                         />
 
                         <br></br>
                         <br></br>
-                        <Button variant="contained" disableElevation uppercase={false}>Get Started</Button>
+                        <Button 
+                            variant="contained" 
+                            disableElevation uppercase={false}
+                            onClick={() => { alert("Name: " + fullName + "\nEmail: " + email + "\nPassword: " + password);}} >
+                                Get Started
+                        </Button>
 
                         <br></br>
                         <br></br>
@@ -52,4 +63,4 @@ function register() {
     )
 }
 
-export default register;
+export default Register;
