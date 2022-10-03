@@ -1,9 +1,6 @@
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 
@@ -11,10 +8,13 @@ function profile () {
 
     return (
         <Box>
-            <h1>My Profile</h1>
             <Stack spacing={2}>
+
+                {/* My Profile Title */}
+                <Stack alignItems={"flex-start"}style={{marginLeft: "50px", marginRight: "50px", }}><h1>My Profile</h1></Stack>
+
                 {/* Profile Box */}
-                <Stack direction="row" alignItems="center" justifyContent="space-evenly" style={{backgroundColor: "#f3f5f9"}}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between" style={{backgroundColor: "#f3f5f9", padding: "30px", marginLeft: "50px", marginRight: "50px", }}>
 
                     
                     {/* Profile Picture*/}
@@ -26,14 +26,11 @@ function profile () {
                     </Box>
 
                     {/* User Information */}
-                    <Box></Box>
-                    <Box>
-                        <h1>Full Name</h1>
-                        <br></br>
+                    <Stack direction="column" alignItems={"flex-start"} spacing={1}>
+                        <h2>Full Name</h2>
                         <p>@username</p>
-                        <br></br>
                         <p>email address</p>
-                    </Box>
+                    </Stack>
 
                     {/* Edit Profile and Settings Box */}
                     <Paper style={{backgroundColor: "#f3f5f9"}}>
@@ -43,7 +40,9 @@ function profile () {
                     </Paper>
 
                 </Stack>
+
             </Stack>
+            <Button style={{position: 'absolute', bottom: 40}}>Logout</Button>
         </Box>
     )
 }
