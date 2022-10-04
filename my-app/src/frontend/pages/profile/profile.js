@@ -3,11 +3,13 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import Header from '../header/header'
 
 function profile () {
 
     return (
         <Box>
+            <Header/>
             <Stack spacing={2}>
 
                 {/* My Profile Title */}
