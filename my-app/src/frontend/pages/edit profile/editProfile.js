@@ -1,7 +1,7 @@
 import Header from '../header/header'
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -32,7 +32,7 @@ export default function editProfile() {
                 <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={2} width="70%">
                     <TextField
                         label="Full Name"
-                        defaultValue="First "
+                        defaultValue="First Last"
                     />
                     <TextField
                         label="Username"
@@ -55,7 +55,10 @@ export default function editProfile() {
                         type="password"
                     />
 
-                    <Button variant="contained" disableElevation uppercase={false} margin-right="50px">Submit</Button>
+                    {/* Submit Button */}
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                        <Button variant="contained" disableElevation uppercase={false}>Submit</Button>
+                    </Stack>
                 </Stack>
             </Stack>
         </Box>
