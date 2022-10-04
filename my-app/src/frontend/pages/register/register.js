@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import React, { useState } from "react";
+import register from '../../../backend/pages/register/register';
+
 
 function Register() {
     const [fullName, setFullName] = useState("")
@@ -44,7 +46,8 @@ function Register() {
                         <Button 
                             variant="contained" 
                             disableElevation uppercase={false}
-                            onClick={() => { alert("Name: " + fullName + "\nEmail: " + email + "\nPassword: " + password);}} >
+                            // create new user
+                            onClick={() => { register(email, password, fullName); }} >
                                 Get Started
                         </Button>
 
