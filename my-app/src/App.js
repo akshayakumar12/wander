@@ -4,7 +4,7 @@ import Register from "./frontend/pages/register/register"
 
 function App() {
   return <div className="App">
-    <Register/>
+    <Login/>
   </div>;
 }
 

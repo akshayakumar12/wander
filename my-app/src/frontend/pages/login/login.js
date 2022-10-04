@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import LoginWithEmailAndPassword from "../../../backend/pages/login/login"
+import login from "../../../backend/pages/login/login"
 
 function Login() {
   const [email, setEmail] = useState("")
@@ -35,7 +35,8 @@ function Login() {
             <h6 justifyContent="flex-end">Forgot Password</h6>
 
             <Button variant="contained" 
-                    onClick={() => { <LoginWithEmailAndPassword email={email} password = {password}/>; }}> 
+                    // attempt log in
+                    onClick={() => { login(email, password); }}> 
                 Log In 
             </Button>
             <h4>Don't Have an Account?</h4>
