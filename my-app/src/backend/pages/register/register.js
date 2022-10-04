@@ -9,7 +9,13 @@ async function register(email, password, fullName) {
         await addDoc(collection(firestore, "users"), 
                      {uid: user.uid, email: email, password: password, name: fullName});
     } catch (error) {
-        alert(error.message);
+        if (error.code === "auth/email-already-in-use") {
+            alert("This email is already registered.");
+        } else if (error.code === "auth/invalid-email") {
+            alert("Your email is invalid.");
+        } else if (error.code === "auth/weak-password") {
+            alert(error.code + "Your password is too weak. Add at least 6 characters.");
+        }
     }
 };
 
