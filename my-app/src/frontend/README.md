@@ -9,6 +9,8 @@
   
  ```
  //in app.js
+ //import all components
+ import { Route, Routes } from "react-router-dom";
  function App() {
   return (
     <Routes>
@@ -20,7 +22,7 @@
  ```
  
  ```
- //in specific tag
+ //in a tag
  
  import { useNavigate } from "react-router-dom";
  
