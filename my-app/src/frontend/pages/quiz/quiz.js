@@ -3,8 +3,6 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-
-
 function quiz() {
 
     // Questions of the quiz
@@ -30,7 +28,7 @@ function quiz() {
         <div className='answer-section'>
 	        {questions[0].answerOptions.map((answerOption, index) => (
 		        <>
-                <button>{answerOption.answerText}</button>
+                <Button variant="outlined" sx={{ width: 200, padding: 1, margin: 2 }}>{answerOption.answerText}</Button>
                 <br></br>
                 </>
 	        ))}
