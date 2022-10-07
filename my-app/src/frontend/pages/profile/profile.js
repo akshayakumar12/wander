@@ -28,7 +28,7 @@ function profile () {
                     </Box>
 
                     {/* User Information */}
-                    <Stack direction="column" alignItems={"flex-start"} spacing={1}>
+                    <Stack direction="column" spacing={1}>
                         <h2>Full Name</h2>
                         <p>@username</p>
                         <p>email address</p>
@@ -43,7 +43,14 @@ function profile () {
 
                 </Stack>
 
+                {/* Spotify Buttons */}
+                <Stack spacing={2} justifyContent="center" direction="row">
+                    <Button variant="contained">Connect to Spotify</Button>
+                    <Button variant="contained" color="error">Disconnect to Spotify</Button>
+                </Stack>
+
             </Stack>
+
             <Button style={{position: 'absolute', bottom: 40}}>Logout</Button>
         </Box>
     )
