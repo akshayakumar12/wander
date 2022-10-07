@@ -57,7 +57,8 @@ export default function editProfile() {
 
                     {/* Submit Button */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" disableElevation uppercase={false}>Submit</Button>
+                        <Button variant="contained">Submit</Button>
+                        <Button variant="contained" color="error">Delete Account</Button>
                     </Stack>
                 </Stack>
             </Stack>
