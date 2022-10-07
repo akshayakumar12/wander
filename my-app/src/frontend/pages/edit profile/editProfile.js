@@ -31,8 +31,12 @@ export default function editProfile() {
                 {/* Text Fields */}
                 <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={2} width="70%">
                     <TextField
-                        label="Full Name"
-                        defaultValue="First Last"
+                        label="First Name"
+                        defaultValue="First"
+                    />
+                    <TextField
+                        label="Last Name"
+                        defaultValue="Last"
                     />
                     <TextField
                         label="Username"
@@ -55,11 +59,12 @@ export default function editProfile() {
                         type="password"
                     />
 
-                    {/* Submit Button */}
+                    {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
                         <Button variant="contained">Submit</Button>
                         <Button variant="contained" color="error">Delete Account</Button>
                     </Stack>
+
                 </Stack>
             </Stack>
         </Box>
