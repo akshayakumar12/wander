@@ -37,6 +37,11 @@ function register() {
                             label="Last Name"
                         />
 
+                        {/* Username field */}
+                        <TextField
+                            label="Username"
+                        />
+
                         {/* Email field */}
                         <TextField
                             label="Email Address"
