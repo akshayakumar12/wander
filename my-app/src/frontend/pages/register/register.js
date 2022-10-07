@@ -31,7 +31,7 @@ function register() {
                         <TextField
                             label="First Name"
                         />
-
+                        
                         {/* Last name field */}
                         <TextField
                             label="Last Name"
@@ -45,12 +45,14 @@ function register() {
                         {/* Email field */}
                         <TextField
                             label="Email Address"
+                            onChange = {(event) => setEmail(event.target.value)}    // save email from user input
                         />
 
                         {/* Password field */}
                         <TextField
                             label="Password"
                             type="password"
+                            onChange = {(event) => setPassword(event.target.value)}    // save password from user input
                         />
 
                         {/* Questionaire 1: What is your favorite sport? */}
@@ -113,4 +115,4 @@ function register() {
     )
 }
 
-export default register;
+export default Register;
