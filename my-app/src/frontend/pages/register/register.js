@@ -7,8 +7,15 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import React, { useState } from "react";
+import register from '../../../backend/pages/register/register';
 
-function register() {
+function Register() {
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     return (
         <Box>
@@ -30,16 +37,19 @@ function register() {
                         {/* First name field */}
                         <TextField
                             label="First Name"
+                            onChange = {(event) => setFirstName(event.target.value)}    // save first name from user input
                         />
                         
                         {/* Last name field */}
                         <TextField
                             label="Last Name"
+                            onChange = {(event) => setLastName(event.target.value)}    // save last name from user input
                         />
 
                         {/* Username field */}
                         <TextField
                             label="Username"
+                            onChange = {(event) => setUsername(event.target.value)}    // save username from user input
                         />
 
                         {/* Email field */}
@@ -100,7 +110,12 @@ function register() {
                         </FormControl>
 
                         {/* Get Started button */}
-                        <Button variant="contained" disableElevation uppercase={false}>Get Started</Button>
+                        <Button 
+                            variant="contained" 
+                            disableElevation uppercase={false}
+                            onClick={() => { register(email, password, firstName, lastName, username); }} >
+                                Get Started
+                        </Button>
 
                         {/* Log in option */}
                         <body>Already have an account?</body>
