@@ -4,11 +4,24 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import login from "../../../backend/pages/login/login"
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../../firebase"
+import {Routes, Route, useNavigate} from 'react-router-dom';
+
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+  const [user, setUser] = useState("")
 
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  })
+
+  if (user) {
+    navigate("/profile")
+  }
 
   return (
     <>

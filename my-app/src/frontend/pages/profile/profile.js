@@ -5,16 +5,13 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Header from '../header/header'
 import {useEffect, useState} from 'react';
-import {Routes, Route, useNavigate} from 'react-router-dom';
-import SpotifyWebApi from 'spotify-web-api-js'
-import * as spotify from '../../../backend/pages/profile/connectSpotify'
-
-
+import { auth } from "../../../firebase"
+import { onAuthStateChanged } from "firebase/auth";
 
 function Profile () {
 
     const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9"
-    const REDIRECT_URI = "http://localhost:3000"
+    const REDIRECT_URI = "http://localhost:3000/profile"
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
     const RESPONSE_TYPE = "token"
     const SCOPES = [
@@ -26,6 +23,12 @@ function Profile () {
     ]
 
     const [token, setToken] = useState("")
+    const user = useState("")
+    const setUser = useState("")
+
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    })
 
     useEffect(() => {
         const hash = window.location.hash
@@ -39,7 +42,6 @@ function Profile () {
         }
 
         setToken(token)
-
     }, [])
 
     const logout = () => {
@@ -71,7 +73,7 @@ function Profile () {
                     <Stack direction="column" spacing={1}>
                         <h2>Full Name</h2>
                         <p>@username</p>
-                        <p>email address</p>
+                        <p>email address: {user?.email}</p>
                     </Stack>
 
                     {/* Edit Profile and Settings Box */}
