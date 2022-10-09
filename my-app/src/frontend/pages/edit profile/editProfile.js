@@ -4,8 +4,23 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import * as React from 'react'
+import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-export default function editProfile() {
+export default function EditProfile() {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
 
         <Box>
@@ -62,7 +77,36 @@ export default function editProfile() {
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
                         <Button variant="contained">Submit</Button>
-                        <Button variant="contained" color="error">Delete Account</Button>
+                        <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>Confirm Account Action</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to delete you wander account? This action is permanent and cannot be reverse.
+                                    If yes, please reenter your username and password.
+                                </DialogContentText>
+                                <TextField 
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Username"
+                                fullWidth
+                                variant="standard"/>
+                                <TextField
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Password"
+                                fullWidth
+                                type="password"
+                                variant="standard"/>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={handleClose}>Delete Account</Button>
+                            </DialogActions>
+                        </Dialog>
+
                     </Stack>
 
                 </Stack>

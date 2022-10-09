@@ -7,7 +7,7 @@ import Profile from "./frontend/pages/profile/profile"
 
 function App() {
   return <div className="App">
-    <Profile/>
+    <EditProfile/>
   </div>;
 }
 
