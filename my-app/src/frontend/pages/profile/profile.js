@@ -5,15 +5,10 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Header from '../header/header'
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import SpotifyWebApi from 'spotify-web-api-js'
+import * as spotify from '../../../backend/pages/profile/connectSpotify'
 
-function authenticateUser() {
-    const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9"
-    const REDIRECT_URI = "http://localhost:3000"
-    const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-    const RESPONSE_TYPE = "token"
 
-    window.location.href= `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`
-}
 
 function profile () {
 
@@ -55,8 +50,8 @@ function profile () {
 
                 {/* Spotify Buttons */}
                 <Stack spacing={2} justifyContent="center" direction="row">
-                    <Button variant="contained" onClick={() => { authenticateUser() }}>Connect to Spotify</Button>
-                    <Button variant="contained" color="error">Disconnect to Spotify</Button>
+                    <Button variant="contained" onClick={() => { spotify.AuthenticateUser() }}>Connect to Spotify</Button>
+                    <Button variant="contained" onClick={() => { spotify.logout() }} color="error">Disconnect to Spotify</Button>
                 </Stack>
 
             </Stack>
