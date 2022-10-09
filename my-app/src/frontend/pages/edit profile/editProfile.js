@@ -4,10 +4,31 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import React, { useEffect, useState } from "react";
+import { auth, storage, upload } from '../../../firebase';
 
-export default function editProfile() {
+export default function EditProfile() {
+    const [photoURL, setPhotoURL] = useState("/broken-image.jpg");
+    const [photo, setPhoto] = useState(null);
+    const [loading, setLoading] = useState(false);
+    
+    function handleChange(e) {
+        if (e.target.files[0]) {
+            setPhoto(e.target.files[0]);
+        }
+    }
+
+    function handleClick() {
+        upload(photo, auth.currentUser, setLoading);
+    }
+
+    useEffect(() => {
+        if (currentUser?.photoURL) {
+            setPhotoURL(auth.currentUser.photoURL);
+        }
+    }, [auth.currentUser]);
+
     return (
-
         <Box>
             {/* Header */}
             <Header />
@@ -22,10 +43,19 @@ export default function editProfile() {
                 {/* Profile Picture*/}
                 <Stack spacing={2} alignItems="center" width="25%">
                     <Avatar 
-                        src="/broken-image.jpg" 
+                        src={photoURL}
                         sx={{ width: 150, height: 150}}
                     />
-                    <Button variant="contained" disableElevation uppercase={false}>Upload new photo</Button>
+                    <input 
+                        type="file"
+                        onChange = {handleChange}/>
+                    <Button 
+                        variant="contained" 
+                        disableElevation uppercase={false}
+                        disabled = {loading || !photo}
+                        onClick = {handleClick}>
+                            Upload new photo
+                    </Button>
                 </Stack>
 
                 {/* Text Fields */}
