@@ -47,18 +47,6 @@ function Profile () {
         window.localStorage.removeItem("token")
     }
 
-    /*
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    */
-   
     return (
         <Box>
             <Header/>
