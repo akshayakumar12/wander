@@ -23,7 +23,7 @@ export default function EditProfile() {
     }
 
     useEffect(() => {
-        if (currentUser?.photoURL) {
+        if (auth.currentUser?.photoURL) {
             setPhotoURL(auth.currentUser.photoURL);
         }
     }, [auth.currentUser]);

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore/lite';
 import { auth, firestore } from '../../../firebase';
 
+
 async function register(email, password, firstName, lastName, username) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -19,7 +20,7 @@ async function register(email, password, firstName, lastName, username) {
         } else if (error.code === "auth/invalid-email") {
             alert("Your email is invalid.");
         } else if (error.code === "auth/weak-password") {
-            alert(error.code + "Your password is too weak. Add at least 6 characters.");
+            alert("Your password is too weak. Add at least 6 characters.");
         }
     }
 };

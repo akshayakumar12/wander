@@ -9,7 +9,6 @@ function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-
   return (
     <>
       <Box>
@@ -32,7 +31,9 @@ function Login() {
               type="password"
               onChange = {(event) => setPassword(event.target.value)}   // save password from user input
             />
-            <h6 justifyContent="flex-end">Forgot Password</h6>
+            <br></br>
+            <Button justifyContent="flex-end">Forgot Password?</Button>
+            <br></br>
 
             <Button variant="contained" 
                     // attempt log in
@@ -40,7 +41,7 @@ function Login() {
                 Log In 
             </Button>
             <h4>Don't Have an Account?</h4>
-            <h5>Sign Up</h5>
+            <Button>Sign Up</Button>
           </Box>
         </Stack>
       </Box>
