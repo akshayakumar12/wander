@@ -10,6 +10,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import {useNavigate } from 'react-router-dom';
 import {getTokenFromUrl} from "../../../backend/pages/profile/connectSpotify"
 import SpotifyWebApi from 'spotify-web-api-js'
+import {GetUserInfo} from "../../../backend/pages/profile/getData"
 
 function Profile () {
 
@@ -24,22 +25,7 @@ function Profile () {
         "user-top-read",
         "user-modify-playback-state"
     ]
-    /*
-    const [token, setToken] = useState("")
-    useEffect(() => {
-        const hash = window.location.hash
-        let token = window.localStorage.getItem("token")
-
-        if (!token && hash) {
-            token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
-
-            window.location.hash = ""
-            window.localStorage.setItem("token", token)
-        }
-
-        setToken(token)
-    }, [])
-    */
+    
 
     const spotify = new SpotifyWebApi();
     const [spotifyToken, setSpotifyToken] = useState("");
@@ -66,25 +52,21 @@ function Profile () {
         await signOut(auth)
         navigate('/')
     }
-    
-    /*
-    const [user, setUser] = useState("");
-
-    onAuthStateChanged(auth, () => {
-        if (auth.currentUser) {
-            setUser(auth.currentUser)
-        }
-    })
-    */
 
     const [user, setUser] = useState("")
     useEffect(() => {
         onAuthStateChanged(auth, () => {
             if (auth.currentUser) {
                 setUser(auth.currentUser)
+            } else {
+                navigate('/')
             }
         })
     }, [])
+
+    console.log("Logging Data")
+    const data = GetUserInfo()
+    console.log(data)
 
     return (
         <Box>
