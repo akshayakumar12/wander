@@ -70,11 +70,15 @@ function Profile () {
         const response = db.collection('users');
         const data = await response.get();
         data.docs.forEach(item=>{
-            setUserInfo([...userInfo, item.data()])
+            if (item.data().email == auth.currentUser.email) {
+                setUserInfo(item.data())
+            }
         })
     }
     useEffect(()=> {
-        getData();
+        onAuthStateChanged(auth, () => {
+            getData();
+        })
     }, [])
 
     return (
@@ -99,8 +103,8 @@ function Profile () {
 
                     {/* User Information */}
                     <Stack direction="column" spacing={1}>
-                        <h2>Full Name</h2>
-                        <p>@username</p>
+                        <h2>Full Name: {userInfo?.firstName} {userInfo?.lastName}</h2>
+                        <p>@username: {userInfo?.username}</p>
                         <p>email address: {user.email}</p>
                     </Stack>
 
