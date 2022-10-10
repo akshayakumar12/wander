@@ -5,12 +5,12 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Header from '../header/header'
 import {useEffect, useState} from 'react';
-import { auth } from "../../../firebase"
+import { auth, db } from "../../../firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {useNavigate } from 'react-router-dom';
 import {getTokenFromUrl} from "../../../backend/pages/profile/connectSpotify"
 import SpotifyWebApi from 'spotify-web-api-js'
-import {GetUserInfo} from "../../../backend/pages/profile/getData"
+import { collection, getDocs } from "firebase/firestore";
 
 function Profile () {
 
@@ -64,9 +64,18 @@ function Profile () {
         })
     }, [])
 
-    console.log("Logging Data")
-    const data = GetUserInfo()
-    console.log(data)
+    
+    const [userInfo, setUserInfo] = useState("");    
+    const getData = async () => {
+        const response = db.collection('users');
+        const data = await response.get();
+        data.docs.forEach(item=>{
+            setUserInfo([...userInfo, item.data()])
+        })
+    }
+    useEffect(()=> {
+        getData();
+    }, [])
 
     return (
         <Box>
