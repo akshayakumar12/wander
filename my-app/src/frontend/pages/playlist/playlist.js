@@ -1,3 +1,5 @@
+import Button from "@mui/material/Button";
+
 function Playlist() {
   return (
     <div>
@@ -14,6 +16,11 @@ function Playlist() {
           loading="lazy"
         ></iframe>
       </body>
+      <Button>Edit playlist</Button>
+      <h3>Other information for this trip</h3>
+      <p>Date</p>
+      <p>Starting point</p>
+      <p>Ending point</p>
     </div>
   );
 }
