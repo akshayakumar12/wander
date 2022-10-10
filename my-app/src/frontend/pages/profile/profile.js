@@ -6,7 +6,10 @@ import Avatar from '@mui/material/Avatar';
 import Header from '../header/header'
 import {useEffect, useState} from 'react';
 import { auth } from "../../../firebase"
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import {useNavigate } from 'react-router-dom';
+import {getTokenFromUrl} from "../../../backend/pages/profile/connectSpotify"
+import SpotifyWebApi from 'spotify-web-api-js'
 
 function Profile () {
 
@@ -21,15 +24,8 @@ function Profile () {
         "user-top-read",
         "user-modify-playback-state"
     ]
-
+    /*
     const [token, setToken] = useState("")
-    const user = useState("")
-    const setUser = useState("")
-
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    })
-
     useEffect(() => {
         const hash = window.location.hash
         let token = window.localStorage.getItem("token")
@@ -43,11 +39,52 @@ function Profile () {
 
         setToken(token)
     }, [])
+    */
+
+    const spotify = new SpotifyWebApi();
+    const [spotifyToken, setSpotifyToken] = useState("");
+
+    useEffect(() => {
+        const _spotifyToken = getTokenFromUrl().access_token;
+        window.location.hash = "";
+
+        if (_spotifyToken) {
+            setSpotifyToken(_spotifyToken);
+            spotify.setAccessToken(_spotifyToken);
+            window.localStorage.setItem("spotifyToken", _spotifyToken)
+        }
+    })
 
     const logout = () => {
-        setToken("")
-        window.localStorage.removeItem("token")
+        setSpotifyToken("")
+        window.localStorage.removeItem("spotifyToken")
+        Profile()
     }
+
+    const navigate = useNavigate()
+    const logout_fb = async () => {
+        await signOut(auth)
+        navigate('/')
+    }
+    
+    /*
+    const [user, setUser] = useState("");
+
+    onAuthStateChanged(auth, () => {
+        if (auth.currentUser) {
+            setUser(auth.currentUser)
+        }
+    })
+    */
+
+    const [user, setUser] = useState("")
+    useEffect(() => {
+        onAuthStateChanged(auth, () => {
+            if (auth.currentUser) {
+                setUser(auth.currentUser)
+            }
+        })
+    }, [])
 
     return (
         <Box>
@@ -73,7 +110,7 @@ function Profile () {
                     <Stack direction="column" spacing={1}>
                         <h2>Full Name</h2>
                         <p>@username</p>
-                        <p>email address: {user?.email}</p>
+                        <p>email address: {user.email}</p>
                     </Stack>
 
                     {/* Edit Profile and Settings Box */}
@@ -87,7 +124,7 @@ function Profile () {
 
                 {/* Spotify Buttons */}
                 <Stack spacing={2} justifyContent="center" direction="row">
-                    {!token ?
+                    {!spotifyToken ?
                         <Button variant="contained" href= {`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join("%20")}&response_type=${RESPONSE_TYPE}&show_dialog=true`}>Connect to Spotify</Button>
                         : <Button variant="contained" onClick={logout} color="error">Disconnect from Spotify</Button>
                     }
@@ -95,7 +132,7 @@ function Profile () {
 
             </Stack>
 
-            <Button style={{position: 'absolute', bottom: 40}}>Logout</Button>
+            <Button onClick={logout_fb} style={{position: 'absolute', bottom: 40}}>Logout</Button>
         </Box>
     )
 }
