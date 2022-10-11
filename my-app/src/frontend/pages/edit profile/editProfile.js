@@ -9,10 +9,9 @@ import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState, useEffect } from 'react'; 
-import {auth, db} from "../../../firebase"
+import {auth, db, record} from "../../../firebase"
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { async } from '@firebase/util';
 
 export default function EditProfile() {
 
@@ -49,11 +48,24 @@ export default function EditProfile() {
         })
     }
 
+    const useComponentWillMount = (cb) => {
+        const willMount = React.useRef(true)
+    
+        if (willMount.current) cb()
+    
+        willMount.current = false
+    }
+
+    useComponentWillMount(getData)
+
+    
     useEffect(()=> {
         onAuthStateChanged(auth, () => {
             getData();
         })
     }, [])
+    
+
 
     return (
 
