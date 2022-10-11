@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import React, { useState } from 'react';
+import QuizSend from "../../../backend/pages/quiz/quizSend";
 
 function Quiz() {
 
@@ -55,23 +56,17 @@ function Quiz() {
 
 	];
 
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [showEnd, setShowEnd] = useState(false);
-    const [answers, setAnswers] = useState([]);
+    const [currentQuestion, setCurrentQuestion] = useState(0); // keeps track of question number
+    const [showEnd, setShowEnd] = useState(false); // Determines whether ending page is shown or not
+    const [answers, setAnswers] = useState([]); // keeps track of user's answers
+    const [flag, setFlag] = React.useState(true); // color change?
 
-    const ansArr = ["hi"]
-
-
-    const [flag, setFlag] = React.useState(true); // Change color of selected question
     const handleAnsClick = (answerOption) => { 
         setFlag(!flag);
         if (currentQuestion == questions.length - 1) {
             
-            /*console.log(answerOption)
-            ansArr = ansArr.concat(answerOption)
-            console.log(ansArr)*/
             answers.push(answerOption)
-            console.log(answers)
+            /*console.log(answers)*/
             
             setShowEnd(true);
         }
@@ -80,11 +75,8 @@ function Quiz() {
             setCurrentQuestion(nextQuestion);
 
             answers.push(answerOption)
-            console.log(answers)
+            /*console.log(answers)*/
             
-            /*console.log(answerOption)
-            ansArr = ansArr.concat(answerOption)
-            console.log(ansArr)*/
         }
         
     };
@@ -104,16 +96,24 @@ function Quiz() {
         }
     };
 
+    const handleSubmit = () => { // Send answers array as a string to database
+        let ansString = "";
+        for (let i = 0; i < answers.length; i++) {
+            ansString += answers[i] + ",";
+        }
+        QuizSend("12345", ansString)
+        console.log(ansString)
+    };
+
     return (
         <div className='app'>
         {showEnd ? (
             <div className='end-section'>
                 <h1>quiz</h1>
                 You have reached the end of the quiz
-
                 <br></br>
                 <Button variant="contained" sx={{ width: 200, padding: 2, margin: 2 }} onClick={() => handlePrevButtonClick()}> {"Start Over"}</Button>
-                <Button variant="contained" sx={{ width: 200, padding: 2, margin: 2 }}> {"Submit Quiz"}</Button>
+                <Button variant="contained" sx={{ width: 200, padding: 2, margin: 2 }} onClick={handleSubmit}> {"Submit Quiz"}</Button>
             </div>
         ) : (
                 <>
