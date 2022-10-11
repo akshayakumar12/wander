@@ -8,6 +8,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { useState, useEffect } from 'react'; 
+import {auth, db} from "../../../firebase"
+import { onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { async } from '@firebase/util';
 
 export default function EditProfile() {
 
@@ -20,6 +25,35 @@ export default function EditProfile() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const navigate = useNavigate()
+    const [user, setUser] = useState("")
+    useEffect(() => {
+        onAuthStateChanged(auth, () => {
+            if (auth.currentUser) {
+                setUser(auth.currentUser)
+            } else {
+                navigate('/')
+            }
+        })
+    }, [])
+
+    const [userInfo, setUserInfo] = useState("");    
+    const getData = async () => {
+        const response = db.collection('users');
+        const data = await response.get();
+        data.docs.forEach(item=>{
+            if (item.data().email == auth.currentUser.email) {
+                setUserInfo(item.data())
+            }
+        })
+    }
+
+    useEffect(()=> {
+        onAuthStateChanged(auth, () => {
+            getData();
+        })
+    }, [])
 
     return (
 
@@ -48,18 +82,22 @@ export default function EditProfile() {
                     <TextField
                         label="First Name"
                         defaultValue="First"
+                        value={userInfo.firstName}
                     />
                     <TextField
                         label="Last Name"
                         defaultValue="Last"
+                        value={userInfo.lastName}
                     />
                     <TextField
                         label="Username"
                         defaultValue="username"
+                        value={userInfo.username}
                     />
                     <TextField
                         label="Email Address"
                         defaultValue="name@email.com"
+                        value={userInfo.email}
                     />
                     <TextField
                         label="Old Password"
