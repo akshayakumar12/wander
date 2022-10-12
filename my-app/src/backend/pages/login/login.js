@@ -1,10 +1,9 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase'
 
-async function login(email, password) {
+async function Login_home(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        alert("Logged In!");
     } catch (error) {
         if (error.code === "auth/invalid-email") {
             alert("Your email is invalid.");
@@ -18,4 +17,4 @@ async function login(email, password) {
     }
 };
 
-export default login;
+export default Login_home;

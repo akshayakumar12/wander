@@ -4,8 +4,69 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import * as React from 'react'
+import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { useState, useEffect } from 'react'; 
+import {auth, db, record} from "../../../firebase"
+import { onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
-export default function editProfile() {
+export default function EditProfile() {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const navigate = useNavigate()
+    const [user, setUser] = useState("")
+    useEffect(() => {
+        onAuthStateChanged(auth, () => {
+            if (auth.currentUser) {
+                setUser(auth.currentUser)
+            } else {
+                navigate('/')
+            }
+        })
+    }, [])
+
+    const [userInfo, setUserInfo] = useState("");    
+    const getData = async () => {
+        const response = db.collection('users');
+        const data = await response.get();
+        data.docs.forEach(item=>{
+            if (item.data().email == auth.currentUser.email) {
+                setUserInfo(item.data())
+            }
+        })
+    }
+
+    const useComponentWillMount = (cb) => {
+        const willMount = React.useRef(true)
+    
+        if (willMount.current) cb()
+    
+        willMount.current = false
+    }
+
+    useComponentWillMount(getData)
+
+    
+    useEffect(()=> {
+        onAuthStateChanged(auth, () => {
+            getData();
+        })
+    }, [])
+    
+
+
     return (
 
         <Box>
@@ -33,18 +94,22 @@ export default function editProfile() {
                     <TextField
                         label="First Name"
                         defaultValue="First"
+                        value={userInfo.firstName}
                     />
                     <TextField
                         label="Last Name"
                         defaultValue="Last"
+                        value={userInfo.lastName}
                     />
                     <TextField
                         label="Username"
                         defaultValue="username"
+                        value={userInfo.username}
                     />
                     <TextField
                         label="Email Address"
                         defaultValue="name@email.com"
+                        value={userInfo.email}
                     />
                     <TextField
                         label="Old Password"
@@ -62,7 +127,36 @@ export default function editProfile() {
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
                         <Button variant="contained">Submit</Button>
-                        <Button variant="contained" color="error">Delete Account</Button>
+                        <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>Confirm Account Action</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to delete you wander account? This action is permanent and cannot be reverse.
+                                    If yes, please reenter your username and password.
+                                </DialogContentText>
+                                <TextField 
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Username"
+                                fullWidth
+                                variant="standard"/>
+                                <TextField
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Password"
+                                fullWidth
+                                type="password"
+                                variant="standard"/>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={handleClose}>Delete Account</Button>
+                            </DialogActions>
+                        </Dialog>
+
                     </Stack>
 
                 </Stack>
