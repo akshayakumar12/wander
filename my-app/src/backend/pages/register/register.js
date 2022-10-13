@@ -3,7 +3,7 @@ import { addDoc, collection } from 'firebase/firestore/lite';
 import { auth, firestore } from '../../../firebase';
 
 
-async function register(email, password, firstName, lastName, username) {
+async function register(email, password, firstName, lastName, username, security1, security2) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -13,7 +13,9 @@ async function register(email, password, firstName, lastName, username) {
                       password: password, 
                       firstName: firstName,
                       lastName: lastName, 
-                      username: username, });
+                      username: username, 
+                      securityQuestion1: security1,
+                      securityQuestion2: security2 });
     } catch (error) {
         if (error.code === "auth/email-already-in-use") {
             alert("This email is already registered.");
