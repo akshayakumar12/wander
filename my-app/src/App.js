@@ -1,8 +1,8 @@
 import "./App.css";
 import Login from "./frontend/pages/login/login";
 import Register from "./frontend/pages/register/register";
-import EditProfile from "./frontend/pages/edit profile/editProfile"import EditProfile from "./frontend/pages/edit profile/editProfile"
-import Home from "./frontend/pages/homepage/homepage"
+import EditProfile from "./frontend/pages/edit profile/editProfile";
+import Home from "./frontend/pages/homepage/homepage";
 import Profile from "./frontend/pages/profile/profile"
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

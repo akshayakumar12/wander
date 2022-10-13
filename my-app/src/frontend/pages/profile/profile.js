@@ -47,6 +47,12 @@ function Profile () {
         Profile()
     }
 
+    const edit_profile_click = () => {
+        if (auth.currentUser) {
+          navigate('/editProfile')
+        }
+      }
+
     const navigate = useNavigate()
     const logout_fb = async () => {
         await signOut(auth)
@@ -110,7 +116,7 @@ function Profile () {
 
                     {/* Edit Profile and Settings Box */}
                     <Paper style={{backgroundColor: "#f3f5f9"}}>
-                        <Button>Edit Profile</Button>
+                        <Button onClick={edit_profile_click}>Edit Profile</Button>
                         <br></br>
                         <Button>Settings</Button>
                     </Paper>

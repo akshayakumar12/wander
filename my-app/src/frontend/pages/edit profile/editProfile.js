@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import { getDatabase, ref, set } from "firebase/database";
 
 export default function EditProfile() {
-
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -87,17 +86,12 @@ export default function EditProfile() {
                 {/* Profile Picture*/}
                 <Stack spacing={2} alignItems="center" width="25%">
                     <Avatar 
-                        src={photoURL}
+                        src="/broken-image.jpg"
                         sx={{ width: 150, height: 150}}
                     />
-                    <input 
-                        type="file"
-                        onChange = {handleChange}/>
                     <Button 
                         variant="contained" 
-                        disableElevation uppercase={false}
-                        disabled = {loading || !photo}
-                        onClick = {handleClick}>
+                        disableElevation uppercase={false}>
                             Upload new photo
                     </Button>
                 </Stack>
