@@ -50,10 +50,11 @@ export default function EditProfile() {
     }
 
     const modifyData = async (first, last) => {
-        db.collection('users').doc('VToo2wyd8bBEWmSm41sg').set({
+        var userRef = db.collection('users').doc(auth.currentUser.email);
+        userRef.set({
             firstName: first,
             lastName: last
-        })
+        }, {merge: true})
     }
 
     

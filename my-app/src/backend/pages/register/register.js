@@ -1,12 +1,12 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore/lite';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore/lite';
 import { auth, firestore } from '../../../firebase';
 
 async function register(email, password, firstName, lastName, username) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        await addDoc(collection(firestore, "users"), 
+        await setDoc(doc(firestore, "users", email), 
                      {uid: user.uid, 
                       email: email, 
                       password: password, 
