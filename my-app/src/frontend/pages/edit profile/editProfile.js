@@ -49,11 +49,13 @@ export default function EditProfile() {
         })
     }
 
-    const modifyData = async (first, last) => {
+    const modifyData = async (first, last, uname) => {
+//        db.collections('users').doc(auth.currentUser.email);
         var userRef = db.collection('users').doc(auth.currentUser.email);
         userRef.set({
             firstName: first,
-            lastName: last
+            lastName: last,
+            username: uname
         }, {merge: true})
     }
 
@@ -107,12 +109,13 @@ export default function EditProfile() {
                         label="Last Name"
                         defaultValue="Last"
                         value={l ? userInfo.lastName: last}
-                        onChange={(event) => {setLast(event.target.value)}}
+                        onChange={(event) => {setL(""); setLast(event.target.value)}}
                     />
                     <TextField
                         label="Username"
                         defaultValue="username"
-                        value={userInfo.username}
+                        value={u ? userInfo.username : uname}
+                        onChange={(event) => {setU(""); setUname(event.target.value)}}
                     />
                     <TextField
                         label="Email Address"
@@ -134,7 +137,7 @@ export default function EditProfile() {
 
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" onClick={modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName)}>Submit</Button>
+                        <Button variant="contained" onClick={modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username)}>Submit</Button>
                         <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
                         <Dialog open={open} onClose={handleClose}>
                             <DialogTitle>Confirm Account Action</DialogTitle>
