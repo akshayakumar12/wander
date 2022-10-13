@@ -6,11 +6,11 @@ import { db } from "../../../firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import {useNavigate } from 'react-router-dom';
 
-async function QuizSend(uid, answers) {
+async function QuizSend(email, answers) {
 
     await addDoc(collection(firestore, "quizAnswers"), 
     {
-        quiz_id: uid,
+        quiz_id: email,
         quiz_ans: answers,
     });
 }

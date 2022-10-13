@@ -5,6 +5,7 @@ import EditProfile from "./frontend/pages/edit profile/editProfile"
 import Home from "./frontend/pages/homepage/homepage"
 import Profile from "./frontend/pages/profile/profile"
 import Quiz from "./frontend/pages/quiz/quiz"
+import Results from "./frontend/pages/quiz/results"
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/quiz" element={<Quiz />} />
+        <Route path="/results" element={<Results />} />
       </Routes>
     </Router>
   </div>

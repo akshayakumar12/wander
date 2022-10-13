@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import React, { useState } from 'react';
 import QuizSend from "../../../backend/pages/quiz/quizSend";
 import { auth, db } from "../../../firebase"
+import {useNavigate } from 'react-router-dom';
 
 function Quiz() {
 
@@ -65,6 +66,7 @@ function Quiz() {
     const [showEnd, setShowEnd] = useState(false); // Determines whether ending page is shown or not
     const [answers, setAnswers] = useState([]); // keeps track of user's answers
     const [flag, setFlag] = React.useState(true); // color change?
+    const navigate = useNavigate();
 
     const handleAnsClick = (answerOption) => { 
         setFlag(!flag);
@@ -101,13 +103,15 @@ function Quiz() {
         }
     };
 
+
     const handleSubmit = () => { // Send answers array as a string to database
         let ansString = "";
         for (let i = 0; i < answers.length; i++) {
             ansString += answers[i] + ",";
         }
+
         QuizSend(auth.currentUser.email, ansString)
-        console.log(ansString)
+        navigate("/results")
     };
 
     return (
