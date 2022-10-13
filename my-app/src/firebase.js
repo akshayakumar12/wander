@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
-import { getAuth, updateProfile } from "firebase/auth";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
+import firebase from 'firebase/compat/app'
+import "firebase/compat/firestore"
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -20,14 +21,5 @@ export const auth = getAuth(app);
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
 
-
-// Storage
-export async function upload(file, currentUser, setLoading) {
-    const fileRef = ref(storage, currentUser.uid + '.png');
-    setLoading(true);
-    const snapshot = await uploadBytes(fileRef, file);
-    const photoURL = await getDownloadURL(fileRef);
-    updateProfile(currentUser, {photoURL});
-    setLoading(false);
-    alert("Uploaded file!");
-}
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();

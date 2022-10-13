@@ -3,11 +3,33 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import login from "../../../backend/pages/login/login"
+import Login_home from "../../../backend/pages/login/login"
+import {auth} from "../../../firebase"
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const navigate = useNavigate()
+
+  if (auth.currentUser) {
+    navigate('/profile')
+  }
+
+  onAuthStateChanged(auth, () => {
+    if (auth.currentUser) {
+      navigate('/profile');
+    }
+  })
+
+  const login_button_click = () => {
+    Login_home(email, password)
+    if (auth.currentUser) {
+      navigate('/profile')
+    }
+  }
 
   return (
     <>
@@ -37,7 +59,7 @@ function Login() {
 
             <Button variant="contained" 
                     // attempt log in
-                    onClick={() => { login(email, password); }}> 
+                    onClick={login_button_click}> 
                 Log In 
             </Button>
             <h4>Don't Have an Account?</h4>
