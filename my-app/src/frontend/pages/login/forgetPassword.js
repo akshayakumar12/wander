@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-export default function editProfile() {
+export default function ForgotPassword() {
     return (
         <Box>
             {/* Header */}
