@@ -109,8 +109,8 @@ function Profile () {
 
                     {/* User Information */}
                     <Stack direction="column" spacing={1}>
-                        <h2>Full Name: {userInfo?.firstName} {userInfo?.lastName}</h2>
-                        <p>@username: {userInfo?.username}</p>
+                        <h2>{userInfo?.firstName} {userInfo?.lastName}</h2>
+                        <p>username: @{userInfo?.username}</p>
                         <p>email address: {user.email}</p>
                     </Stack>
 
