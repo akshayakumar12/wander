@@ -3,9 +3,9 @@ import { doc, setDoc } from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
 
 async function register(email, password, firstName, lastName, username, security1, security2) {
-    try {
-        checkUniqueUsername(username);
+    checkUniqueUsername(username);
 
+    try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
