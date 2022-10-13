@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import React, { useState } from 'react';
 import QuizSend from "../../../backend/pages/quiz/quizSend";
+import { auth, db } from "../../../firebase"
 
 function Quiz() {
 
@@ -14,6 +15,10 @@ function Quiz() {
 				{ answerText: 'Rap'},
 				{ answerText: 'R&B'},
 				{ answerText: 'Country'},
+                { answerText: 'EDM'},
+                { answerText: 'Hip Hop'},
+                { answerText: 'Jazz'},
+                { answerText: 'Classical'},
 			],
 		},
         {
@@ -101,7 +106,7 @@ function Quiz() {
         for (let i = 0; i < answers.length; i++) {
             ansString += answers[i] + ",";
         }
-        QuizSend("12345", ansString)
+        QuizSend(auth.currentUser.email, ansString)
         console.log(ansString)
     };
 
