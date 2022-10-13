@@ -24,7 +24,7 @@ function Register() {
 
     const login_click = () => {
         navigate('/login')
-      }
+    }
 
     return (
         <Box>
