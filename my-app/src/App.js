@@ -15,8 +15,8 @@ import Playlist from "./frontend/pages/playlist/playlist";
 function App() {
   return (
     <div className="App">
-      <Header></Header>
       <Router>
+        <Header></Header>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
