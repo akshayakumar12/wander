@@ -64,9 +64,6 @@ export default function EditProfile() {
     });
   }, []);
 
-  const [first, setFirst] = React.useState("");
-  const [f, setF] = React.useState("abcd");
-
     // PROFILE PICTURE FUNCTIONALITY
     const [image, setImage] = useState(null);
     const [url, setURL] = useState(null);
