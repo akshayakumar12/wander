@@ -10,7 +10,7 @@ import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState, useEffect } from 'react'; 
 import {auth, db, record} from "../../../firebase"
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, updateEmail } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { getDatabase, ref, set } from "firebase/database";
 
@@ -49,14 +49,20 @@ export default function EditProfile() {
         })
     }
 
-    const modifyData = async (first, last, uname) => {
-//        db.collections('users').doc(auth.currentUser.email);
-        var userRef = db.collection('users').doc(auth.currentUser.email);
+    const modifyData = async (first, last, uname, email, password) => {
+        var userRef = db.collection('users').doc(email);
         userRef.set({
             firstName: first,
             lastName: last,
-            username: uname
+            username: uname,
+            email: email
         }, {merge: true})
+
+        if (email != auth.currentUser.email) {
+            db.collection('users').doc(auth.currentUser.email).delete();
+            updateEmail(auth.currentUser, email);
+        }
+
     }
 
     
@@ -74,6 +80,10 @@ export default function EditProfile() {
 
     const [uname, setUname] = React.useState("");
     const [u, setU] = React.useState("abcd");
+
+    const [email, setEmail] = React.useState("");
+    const [e, setE] = React.useState("abcd");
+
 
     return (
 
@@ -120,7 +130,8 @@ export default function EditProfile() {
                     <TextField
                         label="Email Address"
                         defaultValue="name@email.com"
-                        value={userInfo.email}
+                        value={e ? userInfo.email : email}
+                        onChange={(event) => {setE(""); setEmail(event.target.value)}}
                     />
                     <TextField
                         label="Old Password"
@@ -137,7 +148,7 @@ export default function EditProfile() {
 
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" onClick={modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username)}>Submit</Button>
+                        <Button variant="contained" onClick={() => {modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email)}}>Submit</Button>
                         <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
                         <Dialog open={open} onClose={handleClose}>
                             <DialogTitle>Confirm Account Action</DialogTitle>
