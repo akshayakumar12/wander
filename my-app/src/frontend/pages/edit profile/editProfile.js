@@ -72,6 +72,14 @@ export default function EditProfile() {
 
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
+            const file = e.target.files[0];
+            var pattern = /image-*/;
+
+            if (!file.type.match(pattern)) {
+                alert("Please choose an image file.");
+                return;
+            }
+
             setImage(e.target.files[0]);
         }
     }
@@ -118,10 +126,10 @@ export default function EditProfile() {
                 {/* Profile Picture*/}
                 <Stack spacing={2} alignItems="center" width="25%">
                     <Avatar 
-                        src={url}
+                        src={url || userInfo?.profilePicture}
                         sx={{ width: 150, height: 150}}
                     />
-                    <input type = "file" onChange={handleImageChange}/>
+                    <input type = "file" onChange={handleImageChange} accept = "image/*" />
                     <Button 
                         variant="contained" 
                         disableElevation uppercase={false}
