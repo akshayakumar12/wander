@@ -13,24 +13,29 @@ import Header from "./frontend/pages/header/header";
 import Playlist from "./frontend/pages/playlist/playlist";
 
 function App() {
-  
-  return <div className="App">
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editProfile" element={<EditProfile />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/securityQuestionnaire" element={<SecurityQuestionnaire />} />
-        <Route path="/playlist" element={<Playlist />} />
-      </Routes>
-    </Router>
-  </div>
+  return (
+    <div className="App">
+      <Header></Header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/results" element={<Results />} />
+          <Route
+            path="/securityQuestionnaire"
+            element={<SecurityQuestionnaire />}
+          />
+          <Route path="/playlist" element={<Playlist />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

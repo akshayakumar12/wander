@@ -1,21 +1,21 @@
-import Header from '../header/header'
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import * as React from 'react'
-import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { useState, useEffect } from 'react'; 
-import { auth, db, record, storage } from "../../../firebase"
-import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import Header from "../header/header";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import * as React from "react";
+import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useState, useEffect } from "react";
+import { auth, db, record, storage } from "../../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function EditProfile() {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,15 +48,18 @@ export default function EditProfile() {
     });
   };
 
-    const modifyData = async (first, last, uname) => {
-//        db.collections('users').doc(auth.currentUser.email);
-        var userRef = db.collection('users').doc(auth.currentUser.email);
-        userRef.set({
-            firstName: first,
-            lastName: last,
-            username: uname
-        }, {merge: true})
-    }
+  const modifyData = async (first, last, uname) => {
+    //        db.collections('users').doc(auth.currentUser.email);
+    var userRef = db.collection("users").doc(auth.currentUser.email);
+    userRef.set(
+      {
+        firstName: first,
+        lastName: last,
+        username: uname,
+      },
+      { merge: true }
+    );
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, () => {
@@ -64,55 +67,60 @@ export default function EditProfile() {
     });
   }, []);
 
-    // PROFILE PICTURE FUNCTIONALITY
-    const [image, setImage] = useState(null);
-    const [url, setURL] = useState(null);
+  // PROFILE PICTURE FUNCTIONALITY
+  const [image, setImage] = useState(null);
+  const [url, setURL] = useState(null);
 
-    const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            const file = e.target.files[0];
-            var pattern = /image-*/;
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      const file = e.target.files[0];
+      var pattern = /image-*/;
 
-            if (!file.type.match(pattern)) {
-                alert("Please choose an image file.");
-                return;
-            }
+      if (!file.type.match(pattern)) {
+        alert("Please choose an image file.");
+        return;
+      }
 
-            setImage(e.target.files[0]);
-        }
+      setImage(e.target.files[0]);
     }
+  };
 
-    const handleUpload = () => {
-        const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
-        uploadBytes(imageRef, image).then(() => {
-            getDownloadURL(imageRef).then((url) => {
-                setURL(url);
-                db.collection("users").doc(auth.currentUser.email).set({
-                    profilePicture: url
-                }, {merge: true})
-            }).catch(error => {
-                console.log(error.message, "error getting the image url");
-            })
-            setImage(null);
-        }).catch(error => {
-            console.log(error.message);
-        });
-    }
+  const handleUpload = () => {
+    const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+            setURL(url);
+            db.collection("users").doc(auth.currentUser.email).set(
+              {
+                profilePicture: url,
+              },
+              { merge: true }
+            );
+          })
+          .catch((error) => {
+            console.log(error.message, "error getting the image url");
+          });
+        setImage(null);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
+  const [first, setFirst] = React.useState("");
+  const [f, setF] = React.useState("abcd");
 
-    const [first, setFirst] = React.useState("");
-    const [f, setF] = React.useState("abcd");
-    
-    const [last, setLast] = React.useState("");
-    const [l, setL] = React.useState("abcd");
+  const [last, setLast] = React.useState("");
+  const [l, setL] = React.useState("abcd");
 
   const [uname, setUname] = React.useState("");
   const [u, setU] = React.useState("abcd");
 
-    return (
-        <Box>
-            {/* Header */}
-            <Header />
+  return (
+    <Box>
+      {/* Header */}
 
       {/* My Profile Title */}
       <Stack
@@ -122,101 +130,127 @@ export default function EditProfile() {
         <h1>Edit Profile</h1>
       </Stack>
 
-            {/* Components Stack */}
-            <Stack direction="row" alignItems="center" justifyContent="space-between" style={{padding: "0px", marginLeft: "50px", marginRight: "50px", }}>
+      {/* Components Stack */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        style={{ padding: "0px", marginLeft: "50px", marginRight: "50px" }}
+      >
+        {/* Profile Picture*/}
+        <Stack spacing={2} alignItems="center" width="25%">
+          <Avatar
+            src={url || userInfo?.profilePicture}
+            sx={{ width: 150, height: 150 }}
+          />
+          <input type="file" onChange={handleImageChange} accept="image/*" />
+          <Button
+            variant="contained"
+            disableElevation
+            uppercase={false}
+            onClick={handleUpload}
+          >
+            Upload new photo
+          </Button>
+        </Stack>
 
-                
-                {/* Profile Picture*/}
-                <Stack spacing={2} alignItems="center" width="25%">
-                    <Avatar 
-                        src={url || userInfo?.profilePicture}
-                        sx={{ width: 150, height: 150}}
-                    />
-                    <input type = "file" onChange={handleImageChange} accept = "image/*" />
-                    <Button 
-                        variant="contained" 
-                        disableElevation uppercase={false}
-                        onClick={handleUpload}>
-                            Upload new photo
-                    </Button>
-                </Stack>
+        {/* Text Fields */}
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={2}
+          width="70%"
+        >
+          <TextField
+            label="First Name"
+            defaultValue="First"
+            value={f ? userInfo.firstName : first}
+            onChange={(event) => {
+              setF("");
+              setFirst(event.target.value);
+            }}
+          />
+          <TextField
+            label="Last Name"
+            defaultValue="Last"
+            value={l ? userInfo.lastName : last}
+            onChange={(event) => {
+              setL("");
+              setLast(event.target.value);
+            }}
+          />
+          <TextField
+            label="Username"
+            defaultValue="username"
+            value={u ? userInfo.username : uname}
+            onChange={(event) => {
+              setU("");
+              setUname(event.target.value);
+            }}
+          />
+          <TextField
+            label="Email Address"
+            defaultValue="name@email.com"
+            value={userInfo.email}
+          />
+          <TextField label="Old Password" type="password" />
+          <TextField label="New Password" type="password" />
+          <TextField label="Confirm Password" type="password" />
 
-                {/* Text Fields */}
-                <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={2} width="70%">
-                    <TextField
-                        label="First Name"
-                        defaultValue="First"
-                        value={f ? userInfo.firstName : first}
-                        onChange={(event) => { setF(""); setFirst(event.target.value);}}
-                    />
-                    <TextField
-                        label="Last Name"
-                        defaultValue="Last"
-                        value={l ? userInfo.lastName: last}
-                        onChange={(event) => {setL(""); setLast(event.target.value)}}
-                    />
-                    <TextField
-                        label="Username"
-                        defaultValue="username"
-                        value={u ? userInfo.username : uname}
-                        onChange={(event) => {setU(""); setUname(event.target.value)}}
-                    />
-                    <TextField
-                        label="Email Address"
-                        defaultValue="name@email.com"
-                        value={userInfo.email}
-                    />
-                    <TextField
-                        label="Old Password"
-                        type="password"
-                    />
-                    <TextField
-                        label="New Password"
-                        type="password"
-                    />
-                    <TextField
-                        label="Confirm Password"
-                        type="password"
-                    />
-
-                    {/* Submit + Delete Buttons */}
-                    <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" onClick={modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username)}>Submit</Button>
-                        <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
-                        <Dialog open={open} onClose={handleClose}>
-                            <DialogTitle>Confirm Account Action</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    Are you sure you want to delete your wander account? This action is permanent and cannot be reverse.
-                                    If yes, please reenter your username and password.
-                                </DialogContentText>
-                                <TextField 
-                                autoFocus
-                                margin="dense"
-                                id="name"
-                                label="Enter Username"
-                                fullWidth
-                                variant="standard"/>
-                                <TextField
-                                autoFocus
-                                margin="dense"
-                                id="name"
-                                label="Enter Password"
-                                fullWidth
-                                type="password"
-                                variant="standard"/>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClose}>Cancel</Button>
-                                <Button onClick={handleClose}>Delete Account</Button>
-                            </DialogActions>
-                        </Dialog>
-
-                    </Stack>
-
-                </Stack>
-            </Stack>
-        </Box>
-
-    )
+          {/* Submit + Delete Buttons */}
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Button
+              variant="contained"
+              onClick={modifyData(
+                first ? first : userInfo.firstName,
+                last ? last : userInfo.lastName,
+                uname ? uname : userInfo.username
+              )}
+            >
+              Submit
+            </Button>
+            <Button variant="contained" color="error" onClick={handleClickOpen}>
+              Delete Account
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Confirm Account Action</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to delete your wander account? This
+                  action is permanent and cannot be reverse. If yes, please
+                  reenter your username and password.
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Enter Username"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Enter Password"
+                  fullWidth
+                  type="password"
+                  variant="standard"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose}>Delete Account</Button>
+              </DialogActions>
+            </Dialog>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Box>
+  );
 }

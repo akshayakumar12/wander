@@ -9,7 +9,6 @@ function SecurityQuestionnaire() {
 
   return (
     <>
-      <Header />
       <Stack alignItems="center" marginTop="10%">
         {/* My Profile Title */}
         <Stack
