@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, set } from "firebase/database";
 
 export default function EditProfile() {
-  const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,12 +48,15 @@ export default function EditProfile() {
     });
   };
 
-  const modifyData = async (first, last) => {
-    db.collection("users").doc("VToo2wyd8bBEWmSm41sg").set({
-      firstName: first,
-      lastName: last,
-    });
-  };
+    const modifyData = async (first, last, uname) => {
+//        db.collections('users').doc(auth.currentUser.email);
+        var userRef = db.collection('users').doc(auth.currentUser.email);
+        userRef.set({
+            firstName: first,
+            lastName: last,
+            username: uname
+        }, {merge: true})
+    }
 
   useEffect(() => {
     onAuthStateChanged(auth, () => {
@@ -70,10 +73,10 @@ export default function EditProfile() {
   const [uname, setUname] = React.useState("");
   const [u, setU] = React.useState("abcd");
 
-  return (
-    <Box>
-      {/* Header */}
-      <Header />
+    return (
+        <Box>
+            {/* Header */}
+            <Header />
 
       {/* My Profile Title */}
       <Stack
@@ -83,112 +86,100 @@ export default function EditProfile() {
         <h1>Edit Profile</h1>
       </Stack>
 
-      {/* Components Stack */}
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        style={{ padding: "0px", marginLeft: "50px", marginRight: "50px" }}
-      >
-        {/* Profile Picture*/}
-        <Stack spacing={2} alignItems="center" width="25%">
-          <Avatar src="/broken-image.jpg" sx={{ width: 150, height: 150 }} />
-          <Button variant="contained" disableElevation uppercase={false}>
-            Upload new photo
-          </Button>
-        </Stack>
+            {/* Components Stack */}
+            <Stack direction="row" alignItems="center" justifyContent="space-between" style={{padding: "0px", marginLeft: "50px", marginRight: "50px", }}>
 
-        {/* Text Fields */}
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={2}
-          width="70%"
-        >
-          <TextField
-            label="First Name"
-            defaultValue="First"
-            value={f ? userInfo.firstName : first}
-            onChange={(event) => {
-              setF("");
-              setFirst(event.target.value);
-            }}
-          />
-          <TextField
-            label="Last Name"
-            defaultValue="Last"
-            value={l ? userInfo.lastName : last}
-            onChange={(event) => {
-              setLast(event.target.value);
-            }}
-          />
-          <TextField
-            label="Username"
-            defaultValue="username"
-            value={userInfo.username}
-          />
-          <TextField
-            label="Email Address"
-            defaultValue="name@email.com"
-            value={userInfo.email}
-          />
-          <TextField label="Old Password" type="password" />
-          <TextField label="New Password" type="password" />
-          <TextField label="Confirm Password" type="password" />
+                
+                {/* Profile Picture*/}
+                <Stack spacing={2} alignItems="center" width="25%">
+                    <Avatar 
+                        src="/broken-image.jpg"
+                        sx={{ width: 150, height: 150}}
+                    />
+                    <input type = "file" />
+                    <Button 
+                        variant="contained" 
+                        disableElevation uppercase={false}>
+                            Upload new photo
+                    </Button>
+                </Stack>
 
-          {/* Submit + Delete Buttons */}
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Button
-              variant="contained"
-              onClick={modifyData(
-                first ? first : userInfo.firstName,
-                last ? last : userInfo.lastName
-              )}
-            >
-              Submit
-            </Button>
-            <Button variant="contained" color="error" onClick={handleClickOpen}>
-              Delete Account
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Confirm Account Action</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Are you sure you want to delete you wander account? This
-                  action is permanent and cannot be reverse. If yes, please
-                  reenter your username and password.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Enter Username"
-                  fullWidth
-                  variant="standard"
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Enter Password"
-                  fullWidth
-                  type="password"
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Delete Account</Button>
-              </DialogActions>
-            </Dialog>
-          </Stack>
-        </Stack>
-      </Stack>
-    </Box>
-  );
+                {/* Text Fields */}
+                <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={2} width="70%">
+                    <TextField
+                        label="First Name"
+                        defaultValue="First"
+                        value={f ? userInfo.firstName : first}
+                        onChange={(event) => { setF(""); setFirst(event.target.value);}}
+                    />
+                    <TextField
+                        label="Last Name"
+                        defaultValue="Last"
+                        value={l ? userInfo.lastName: last}
+                        onChange={(event) => {setL(""); setLast(event.target.value)}}
+                    />
+                    <TextField
+                        label="Username"
+                        defaultValue="username"
+                        value={u ? userInfo.username : uname}
+                        onChange={(event) => {setU(""); setUname(event.target.value)}}
+                    />
+                    <TextField
+                        label="Email Address"
+                        defaultValue="name@email.com"
+                        value={userInfo.email}
+                    />
+                    <TextField
+                        label="Old Password"
+                        type="password"
+                    />
+                    <TextField
+                        label="New Password"
+                        type="password"
+                    />
+                    <TextField
+                        label="Confirm Password"
+                        type="password"
+                    />
+
+                    {/* Submit + Delete Buttons */}
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                        <Button variant="contained" onClick={modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username)}>Submit</Button>
+                        <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>Confirm Account Action</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to delete your wander account? This action is permanent and cannot be reverse.
+                                    If yes, please reenter your username and password.
+                                </DialogContentText>
+                                <TextField 
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Username"
+                                fullWidth
+                                variant="standard"/>
+                                <TextField
+                                autoFocus
+                                margin="dense"
+                                id="name"
+                                label="Enter Password"
+                                fullWidth
+                                type="password"
+                                variant="standard"/>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={handleClose}>Delete Account</Button>
+                            </DialogActions>
+                        </Dialog>
+
+                    </Stack>
+
+                </Stack>
+            </Stack>
+        </Box>
+
+    )
 }

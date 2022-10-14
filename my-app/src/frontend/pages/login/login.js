@@ -31,6 +31,14 @@ function Login() {
     }
   };
 
+  const forgot_password_click = () => {
+    navigate('/forgotPassword')
+  }
+
+  const register_click = () => {
+    navigate('/register')
+  }
+
   return (
     <>
       <Box>
@@ -54,23 +62,16 @@ function Login() {
               onChange={(event) => setPassword(event.target.value)} // save password from user input
             />
             <br></br>
-            <Button
-              justifyContent="flex-end"
-              onClick={() => navigate("/change")}
-            >
-              Forgot Password
-            </Button>
+            <Button justifyContent="flex-end" onClick={forgot_password_click}>Forgot Password?</Button>
             <br></br>
-            <Button
-              variant="contained"
-              // attempt log in
-              marginTop="1%"
-              onClick={login_button_click}
-            >
-              Log In
+
+            <Button variant="contained" 
+                    // attempt log in
+                    onClick={login_button_click}> 
+                Log In 
             </Button>
             <h4>Don't Have an Account?</h4>
-            <h5>Sign Up</h5>
+            <Button onClick={register_click}>Sign Up</Button>
           </Box>
         </Stack>
       </Box>

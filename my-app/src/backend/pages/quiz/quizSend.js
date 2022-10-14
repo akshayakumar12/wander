@@ -1,5 +1,5 @@
-import { doc, setDoc, addDoc, collection } from "firebase/firestore/lite";
-import { auth, firestore } from "../../../firebase";
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore/lite';
+import { auth, firestore } from '../../../firebase';
 
 async function QuizSend(email, answers) {
   const docRef = doc(firestore, "quizAnswers", email);
@@ -8,10 +8,9 @@ async function QuizSend(email, answers) {
     quiz_ans: answers,
   };
 
-  await setDoc(docRef, data);
+    await setDoc(docRef, data);
 
-  /*
-    await addDoc(collection(firestore, "quizAnswers"), 
+    /*await addDoc(collection(firestore, "quizAnswers"), 
     {
         quiz_id: qid,
         quiz_ans: answers,
