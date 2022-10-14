@@ -1,18 +1,9 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore/lite';
+import { doc, setDoc } from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
 
 async function register(email, password, firstName, lastName, username, security1, security2) {
     try {
-        const matchingUsers = db.collection('users').where("username", "==", username).get().then((query) => {
-            if (query.docs.length != 0) {
-                console.log("found matches");
-                alert("Username already in use!");
-                return;
-            } else {
-                console.log("no matches");
-            }
-        });
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
