@@ -10,7 +10,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import {useNavigate } from 'react-router-dom';
 import {getTokenFromUrl} from "../../../backend/pages/profile/connectSpotify"
 import SpotifyWebApi from 'spotify-web-api-js'
-import { collection, getDocs } from "firebase/firestore";
+import axios from 'axios';
 
 function Profile () {
 
@@ -39,13 +39,45 @@ function Profile () {
             spotify.setAccessToken(_spotifyToken);
             window.localStorage.setItem("spotifyToken", _spotifyToken)
         }
-    })
+    }, [])
 
     const logout = () => {
         setSpotifyToken("")
         window.localStorage.removeItem("spotifyToken")
         Profile()
     }
+
+
+    const [m, setM] = useState("");
+    const [n, setN] = useState("");
+
+    const fn = async () => {
+        if (spotifyToken) {
+            let topArtist = "";
+            let topTrack = "";
+            //console.log((await spotify.getMyTopArtists()).items);
+            await spotify.getMyTopArtists().then((result) => {
+                result.items.forEach((item) => {
+                    topArtist += item.name + " | ";
+                    setM(topArtist);
+                    return;
+                });
+            })
+
+            await spotify.getMyTopTracks().then((result) => {
+                result.items.forEach((item) => {
+                    topTrack += item.name + " | ";
+                    setN(topTrack);
+                    return;
+                })
+            })
+            //console.log(topArtist);
+        }
+    }
+
+    useEffect(() => {
+        fn();
+    })
 
     const navigate = useNavigate()
     const logout_fb = async () => {
@@ -124,7 +156,7 @@ function Profile () {
                         : <Button variant="contained" onClick={logout} color="error">Disconnect from Spotify</Button>
                     }
                 </Stack>
-
+                <h3>Top Artists: {spotifyToken? m : ""}</h3>
             </Stack>
 
             <Button onClick={logout_fb} style={{position: 'absolute', bottom: 40}}>Logout</Button>
