@@ -52,7 +52,7 @@ export default function EditProfile() {
     const modifyData = async (first, last, uname, email, oldpassword, password) => {
         var userRef = db.collection('users').doc(email);
 
-        if (password != userInfo.password) {
+        if ((password != userInfo.password) && (password)) {
             signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
             String(password);
             if (password.length < 6) {
@@ -80,6 +80,7 @@ export default function EditProfile() {
     const deleteUserFromBase = async (email, pass) => {
         signInWithEmailAndPassword(auth, email, pass);
         db.collection('users').doc(auth.currentUser.email).delete();
+        signOut(auth);
         deleteUser(auth.currentUser);
         setOpen(false);
         navigate('/')

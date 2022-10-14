@@ -113,6 +113,10 @@ function Profile () {
         })
     }, [])
 
+    const handleEditProfile = () => {
+        navigate('/editProfile');
+    }
+
     return (
         <Box>
             <Header/>
@@ -142,7 +146,7 @@ function Profile () {
 
                     {/* Edit Profile and Settings Box */}
                     <Paper style={{backgroundColor: "#f3f5f9"}}>
-                        <Button>Edit Profile</Button>
+                        <Button onClick={handleEditProfile}>Edit Profile</Button>
                         <br></br>
                         <Button>Settings</Button>
                     </Paper>
