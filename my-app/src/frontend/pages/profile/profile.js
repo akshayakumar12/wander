@@ -7,88 +7,55 @@ import Header from "../header/header";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import {useNavigate } from 'react-router-dom';
-import {getTokenFromUrl} from "../../../backend/pages/profile/connectSpotify"
-import SpotifyWebApi from 'spotify-web-api-js'
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { getTokenFromUrl } from "../../../backend/pages/profile/connectSpotify";
+import SpotifyWebApi from "spotify-web-api-js";
+import { collection, getDocs } from "firebase/firestore";
 
-function Profile () {
+function Profile() {
+  const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
+  const REDIRECT_URI = "http://localhost:3000/profile";
+  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+  const RESPONSE_TYPE = "token";
+  const SCOPES = [
+    "user-read-currently-playing",
+    "user-read-recently-played",
+    "user-read-playback-state",
+    "user-top-read",
+    "user-modify-playback-state",
+  ];
 
-    const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9"
-    const REDIRECT_URI = "http://localhost:3000/profile"
-    const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
-    const RESPONSE_TYPE = "token"
-    const SCOPES = [
-        "user-read-currently-playing",
-        "user-read-recently-played",
-        "user-read-playback-state",
-        "user-top-read",
-        "user-modify-playback-state"
-    ]
-    
+  const spotify = new SpotifyWebApi();
+  const [spotifyToken, setSpotifyToken] = useState("");
 
-    const spotify = new SpotifyWebApi();
-    const [spotifyToken, setSpotifyToken] = useState("");
+  useEffect(() => {
+    const _spotifyToken = getTokenFromUrl().access_token;
+    window.location.hash = "";
 
-    useEffect(() => {
-        const _spotifyToken = getTokenFromUrl().access_token;
-        window.location.hash = "";
-
-        if (_spotifyToken) {
-            setSpotifyToken(_spotifyToken);
-            spotify.setAccessToken(_spotifyToken);
-            window.localStorage.setItem("spotifyToken", _spotifyToken)
-        }
-    }, [])
-
-    const logout = () => {
-        setSpotifyToken("")
-        window.localStorage.removeItem("spotifyToken")
-        Profile()
+    if (_spotifyToken) {
+      setSpotifyToken(_spotifyToken);
+      spotify.setAccessToken(_spotifyToken);
+      window.localStorage.setItem("spotifyToken", _spotifyToken);
     }
   });
 
-    const [m, setM] = useState("");
-    const [n, setN] = useState("");
-
-    const fn = async () => {
-        if (spotifyToken) {
-            let topArtist = "";
-            let topTrack = "";
-            //console.log((await spotify.getMyTopArtists()).items);
-            await spotify.getMyTopArtists().then((result) => {
-                result.items.forEach((item) => {
-                    topArtist += item.name + " | ";
-                    setM(topArtist);
-                    return;
-                });
-            })
-
-            await spotify.getMyTopTracks().then((result) => {
-                result.items.forEach((item) => {
-                    topTrack += item.name + " | ";
-                    setN(topTrack);
-                    return;
-                })
-            })
-            //console.log(topArtist);
-        }
-    }
-
-    useEffect(() => {
-        fn();
-    })
-
-    const navigate = useNavigate()
-    const logout_fb = async () => {
-        await signOut(auth)
-        navigate('/')
-    }
+  const logout = () => {
+    setSpotifyToken("");
+    window.localStorage.removeItem("spotifyToken");
+    Profile();
+  };
 
   const edit_profile_click = () => {
     if (auth.currentUser) {
       navigate("/editProfile");
     }
+  };
+
+  const navigate = useNavigate();
+  const logout_fb = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
 
   const [user, setUser] = useState("");
   useEffect(() => {
@@ -182,7 +149,6 @@ function Profile () {
             </Button>
           )}
         </Stack>
-        <h3>Top Artists: {spotifyToken? m : ""}</h3>
       </Stack>
 
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
