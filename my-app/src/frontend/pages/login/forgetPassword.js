@@ -3,8 +3,19 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-export default function ForgotPassword() {
+function ForgotPassword() {
+    const navigate = useNavigate();
+
+    const security_questions_click = () => {
+        navigate('/securityQuestionnaire')
+    }
+
+    const register_click = () => {
+        navigate('/register')
+    }
+
     return (
         <Box>
             {/* Header */}
@@ -18,10 +29,15 @@ export default function ForgotPassword() {
                         label="Email Address"
                     />
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" disableElevation uppercase={false}>Submit</Button>
+                        <Button 
+                            variant="contained" 
+                            disableElevation uppercase={false}
+                            onClick={security_questions_click}>
+                                Reset
+                        </Button>
                         <Stack direction="row" alignItems="center" spacing={1}>
                             <p>Not a member?</p>
-                            <p>Sign up now</p>
+                            <Button onClick={register_click}>Sign up now</Button>
 
                         </Stack>
                     </Stack>
@@ -37,3 +53,5 @@ export default function ForgotPassword() {
 
     )
 }
+
+export default ForgotPassword;

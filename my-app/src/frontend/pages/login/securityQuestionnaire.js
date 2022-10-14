@@ -2,9 +2,11 @@ import Header from "../header/header";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-export default function securityQuestionnaire() {
+function SecurityQuestionnaire() {
   const navigate = useNavigate();
+
   return (
     <>
       <Header />
@@ -25,11 +27,11 @@ export default function securityQuestionnaire() {
           <h1 style={{ textAlign: "left" }}>Security Questions</h1>
 
           {/* Question 1 */}
-          <p style={{ textAlign: "left" }}>[Question 1]</p>
+          <p style={{ textAlign: "left" }}>What is your favorite sport?</p>
           <TextField />
 
           {/* Question 2 */}
-          <p style={{ textAlign: "left" }}>[Question 2]</p>
+          <p style={{ textAlign: "left" }}>What is your favorite color?</p>
           <TextField />
 
           {/* Submit Button */}
@@ -52,3 +54,5 @@ export default function securityQuestionnaire() {
     </>
   );
 }
+
+export default SecurityQuestionnaire;
