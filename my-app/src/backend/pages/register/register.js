@@ -3,11 +3,11 @@ import { doc, setDoc } from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
 
 async function register(email, password, firstName, lastName, username, security1, security2) {
-    checkUniqueUsername(username);
-
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+
+        // checkUniqueUsername(username);
 
         const docRef = doc(firestore, "users", email);
         const data = {
@@ -35,19 +35,7 @@ async function register(email, password, firstName, lastName, username, security
 };
 
 function checkUniqueUsername(username) {
-    db.collection("users").where("username", "==", username).get().then((qSnap) => {
-        if (qSnap.empty) {
-            // unique username
-            // for debugging: console.log("no username found")
-        } else {
-            // username is taken
-            // for debugging: console.log("username")
-            /* qSnap.docs.forEach((d) => {
-                console.log(d.data())
-            }) */
-            alert("Your username is already taken. Choose a different one.");
-        }
-    })
+    return true;
 }
 
 export default register;

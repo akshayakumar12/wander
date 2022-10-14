@@ -89,6 +89,7 @@ export default function EditProfile() {
                         src="/broken-image.jpg"
                         sx={{ width: 150, height: 150}}
                     />
+                    <input type = "file" />
                     <Button 
                         variant="contained" 
                         disableElevation uppercase={false}>
@@ -141,7 +142,7 @@ export default function EditProfile() {
                             <DialogTitle>Confirm Account Action</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete you wander account? This action is permanent and cannot be reverse.
+                                    Are you sure you want to delete your wander account? This action is permanent and cannot be reverse.
                                     If yes, please reenter your username and password.
                                 </DialogContentText>
                                 <TextField 
