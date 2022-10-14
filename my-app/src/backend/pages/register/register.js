@@ -18,7 +18,8 @@ async function register(email, password, firstName, lastName, username, security
             lastName: lastName, 
             username: username, 
             securityQuestion1: security1,
-            securityQuestion2: security2
+            securityQuestion2: security2,
+            profilePicture: null
         }
 
         await setDoc(docRef, data);

@@ -57,60 +57,55 @@ function Profile() {
     navigate("/");
   };
 
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    onAuthStateChanged(auth, () => {
-      if (auth.currentUser) {
-        setUser(auth.currentUser);
-      } else {
-        navigate("/");
-      }
-    });
-  }, []);
 
-  const [userInfo, setUserInfo] = useState("");
-  const getData = async () => {
-    const response = db.collection("users");
-    const data = await response.get();
-    data.docs.forEach((item) => {
-      if (item.data().email == auth.currentUser.email) {
-        setUserInfo(item.data());
-      }
-    });
-  };
-  useEffect(() => {
-    onAuthStateChanged(auth, () => {
-      getData();
-    });
-  }, []);
+    const [user, setUser] = useState("")
+    useEffect(() => {
+        onAuthStateChanged(auth, () => {
+            if (auth.currentUser) {
+                setUser(auth.currentUser)
+            } else {
+                navigate('/')
+            }
+        })
+    }, [])
 
-  return (
-    <Box>
-      <Stack spacing={2}>
-        {/* My Profile Title */}
-        <Stack
-          alignItems={"flex-start"}
-          style={{ marginLeft: "50px", marginRight: "50px" }}
-        >
-          <h1>My Profile</h1>
-        </Stack>
+    
+    const [userInfo, setUserInfo] = useState("");    
+    const getData = async () => {
+        const response = db.collection('users');
+        const data = await response.get();
+        data.docs.forEach(item=>{
+            if (item.data().email == auth.currentUser.email) {
+                setUserInfo(item.data())
+            }
+        })
+    }
+    useEffect(()=> {
+        onAuthStateChanged(auth, () => {
+            getData();
+        })
+    }, [])
 
-        {/* Profile Box */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          style={{
-            backgroundColor: "#f3f5f9",
-            padding: "30px",
-            marginLeft: "50px",
-            marginRight: "50px",
-          }}
-        >
-          {/* Profile Picture*/}
-          <Box>
-            <Avatar src="/broken-image.jpg" sx={{ width: 150, height: 150 }} />
-          </Box>
+    return (
+        <Box>
+            <Header/>
+            <Stack spacing={2}>
+
+                {/* My Profile Title */}
+                <Stack alignItems={"flex-start"}style={{marginLeft: "50px", marginRight: "50px", }}><h1>My Profile</h1></Stack>
+
+                {/* Profile Box */}
+                <Stack direction="row" alignItems="center" justifyContent="space-between" style={{backgroundColor: "#f3f5f9", padding: "30px", marginLeft: "50px", marginRight: "50px", }}>
+
+                    
+                    {/* Profile Picture*/}
+                    <Box>
+                        <Avatar 
+                            src={userInfo?.profilePicture}
+                            sx={{ width: 150, height: 150}}
+                        />
+                    </Box>
+
 
           {/* User Information */}
           <Stack direction="column" spacing={1}>
