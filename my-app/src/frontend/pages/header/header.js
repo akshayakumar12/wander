@@ -89,7 +89,14 @@ function Header() {
             >
               Profile
             </MenuItem>
-            <MenuItem>Settings</MenuItem>
+            <MenuItem
+              onClick={() => {
+                navigate("/settings");
+                handleClose();
+              }}
+            >
+                Settings
+            </MenuItem>
           </Menu>
 
           {/* Logo */}
