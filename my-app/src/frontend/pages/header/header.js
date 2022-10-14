@@ -91,12 +91,14 @@ function Header() {
 
 
                     {/* Logo */}
-                    <img src={Logo} alt="Brand Logo" height={75} />
+                    <img src={Logo} alt="Brand Logo" height={75} onClick={() => {navigate("/home")}}/>
+
 
                     {/* Profile Picture */}
                     <Avatar 
                         src={userInfo?.profilePicture}
                         sx={{ marginLeft: "auto" }}
+                        onClick={() => {navigate("/profile")}}
                     />
 
                 </Toolbar>
