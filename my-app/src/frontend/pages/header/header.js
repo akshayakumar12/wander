@@ -2,25 +2,16 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-//import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-//import AccountCircle from '@mui/icons-material/AccountCircle';
-//import Switch from '@mui/material/Switch';
-//import FormControlLabel from '@mui/material/FormControlLabel';
-//import FormGroup from '@mui/material/FormGroup';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-//import Menu from '@mui/material/Menu';
 import Logo from '../wander logo.png'
 import Avatar from '@mui/material/Avatar';
 import {useEffect, useState} from 'react';
 import { auth, db } from "../../../firebase"
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from 'react-router';
-
-
-const pages = ['Home', 'Past Trips', 'Profile', 'Settings'];
 
 function Header() {
     const navigate = useNavigate();
@@ -48,11 +39,9 @@ function Header() {
         setAnchorEl(event.currentTarget);
     };
 
-
     function handleClose() {
         setAnchorEl(null);
     }
-
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -73,6 +62,7 @@ function Header() {
                     >
                         <MenuIcon sx={{color: '#023a7e'}} />
                     </IconButton>
+
                     {/* Dropdown Menu */}
                     <Menu
                         id="basic-menu"
@@ -93,7 +83,6 @@ function Header() {
                     {/* Logo */}
                     <img src={Logo} alt="Brand Logo" height={75} onClick={() => {navigate("/home")}}/>
 
-
                     {/* Profile Picture */}
                     <Avatar 
                         src={userInfo?.profilePicture}
@@ -104,7 +93,6 @@ function Header() {
                 </Toolbar>
             </AppBar>
         </Box>
-
 
     )
 
