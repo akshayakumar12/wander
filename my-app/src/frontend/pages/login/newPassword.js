@@ -1,14 +1,25 @@
 import Header from "../header/header";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
-function SecurityQuestionnaire() {
+function NewPassword() {
   const navigate = useNavigate();
 
+  const login_click= () => {
+    navigate("/");
+  };
+
+  const register_click = () => {
+    navigate("/register");
+  };
+
   return (
-    <>
+    <Box>
+      {/* Header */}
+
       <Stack alignItems="center" marginTop="10%">
         {/* My Profile Title */}
         <Stack
@@ -22,18 +33,12 @@ function SecurityQuestionnaire() {
             padding: "5%",
           }}
         >
-          {/* Title */}
-          <h1 style={{ textAlign: "left" }}>Security Questions</h1>
-
-          {/* Question 1 */}
-          <p style={{ textAlign: "left" }}>What is your favorite sport?</p>
-          <TextField />
-
-          {/* Question 2 */}
-          <p style={{ textAlign: "left" }}>What is your favorite color?</p>
-          <TextField />
-
-          {/* Submit Button */}
+          <h1 style={{ textAlign: "left" }}>Reset Password</h1>
+          <p style={{ textAlign: "left" }}>
+            {" "}
+            Enter your new password. 
+          </p>
+          <TextField label="New Password" />
           <Stack
             direction="row"
             alignItems="center"
@@ -43,15 +48,15 @@ function SecurityQuestionnaire() {
               variant="contained"
               disableElevation
               uppercase={false}
-              onClick={() => navigate("/newPassword")} //add authentication
+              onClick={login_click}
             >
-              Submit
+              Reset
             </Button>
           </Stack>
         </Stack>
       </Stack>
-    </>
+    </Box>
   );
 }
 
-export default SecurityQuestionnaire;
+export default NewPassword;

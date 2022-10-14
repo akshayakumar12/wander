@@ -11,6 +11,7 @@ import ForgotPassword from "./frontend/pages/login/forgetPassword";
 import SecurityQuestionnaire from "./frontend/pages/login/securityQuestionnaire";
 import Header from "./frontend/pages/header/header";
 import Playlist from "./frontend/pages/playlist/playlist";
+import NewPassword from "./frontend/pages/login/newPassword";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             path="/securityQuestionnaire"
             element={<SecurityQuestionnaire />}
           />
+          <Route path="/newPassword" element={<NewPassword/>} />
           <Route path="/playlist" element={<Playlist />} />
         </Routes>
       </Router>
