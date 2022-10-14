@@ -81,6 +81,9 @@ export default function EditProfile() {
         uploadBytes(imageRef, image).then(() => {
             getDownloadURL(imageRef).then((url) => {
                 setURL(url);
+                db.collection("users").doc(auth.currentUser.email).set({
+                    profilePicture: url
+                }, {merge: true})
             }).catch(error => {
                 console.log(error.message, "error getting the image url");
             })

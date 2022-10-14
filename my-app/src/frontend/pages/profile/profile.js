@@ -102,7 +102,7 @@ function Profile () {
                     {/* Profile Picture*/}
                     <Box>
                         <Avatar 
-                            src="/broken-image.jpg" 
+                            src={userInfo?.profilePicture}
                             sx={{ width: 150, height: 150}}
                         />
                     </Box>
