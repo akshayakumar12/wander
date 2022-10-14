@@ -45,6 +45,10 @@ function Profile() {
     Profile();
   };
 
+  const settings_click= () => {
+    navigate("/settings");
+  };
+
   const edit_profile_click = () => {
     if (auth.currentUser) {
       navigate("/editProfile");
@@ -120,15 +124,15 @@ function Profile() {
             <h2>
               {userInfo?.firstName} {userInfo?.lastName}
             </h2>
-            <p>username: @{userInfo?.username}</p>
-            <p>email address: {user.email}</p>
+            <p>@{userInfo?.username}</p>
+            <p>{user.email}</p>
           </Stack>
 
           {/* Edit Profile and Settings Box */}
           <Paper style={{ backgroundColor: "#f3f5f9" }}>
             <Button onClick={edit_profile_click}>Edit Profile</Button>
             <br></br>
-            <Button>Settings</Button>
+            <Button onClick={settings_click}>Settings</Button>
           </Paper>
         </Stack>
 

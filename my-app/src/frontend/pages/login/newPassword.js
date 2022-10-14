@@ -38,7 +38,7 @@ function NewPassword() {
             {" "}
             Enter your new password. 
           </p>
-          <TextField label="New Password" />
+          <TextField label="New Password" type="password"/>
           <Stack
             direction="row"
             alignItems="center"
