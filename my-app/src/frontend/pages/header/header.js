@@ -17,11 +17,13 @@ import Avatar from '@mui/material/Avatar';
 import {useEffect, useState} from 'react';
 import { auth, db } from "../../../firebase"
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router';
+
 
 const pages = ['Home', 'Past Trips', 'Profile', 'Settings'];
 
 function Header() {
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState("");    
 
     const getData = async () => {
@@ -45,11 +47,12 @@ function Header() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+
     function handleClose() {
         setAnchorEl(null);
     }
 
-    //const navigate = useNavigate(); 
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -80,21 +83,10 @@ function Header() {
                         'aria-labelledby': 'basic-button',
                         }}
                     >
-                        {/*
-                        <MenuItem 
-                            onClick={() => {
-                                navigate("/home");
-                                handleClose();
-                            }}>
-                            Home
-                        </MenuItem>
-                        <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
-                        */}
-
-                        <MenuItem onClick={handleClose}>Home</MenuItem>
-                        <MenuItem onClick={handleClose}>Past Trips</MenuItem>
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>Settings</MenuItem>
+                        <MenuItem onClick={() => {navigate("/home"); handleClose();}}>Home</MenuItem>
+                        <MenuItem onClick={() => {navigate("/pasttrips"); handleClose();}}>Past Trips</MenuItem>
+                        <MenuItem onClick={() => {navigate("/profile"); handleClose();}}>Profile</MenuItem>
+                        <MenuItem onClick={() => {navigate("/settings"); handleClose();}}>Settings</MenuItem>
                     </Menu>
 
 
