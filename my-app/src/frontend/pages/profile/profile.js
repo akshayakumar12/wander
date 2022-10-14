@@ -124,8 +124,8 @@ function Profile() {
             <h2>
               {userInfo?.firstName} {userInfo?.lastName}
             </h2>
-            <p>username: @{userInfo?.username}</p>
-            <p>email address: {user.email}</p>
+            <p>@{userInfo?.username}</p>
+            <p>{user.email}</p>
           </Stack>
 
           {/* Edit Profile and Settings Box */}
