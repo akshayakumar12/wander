@@ -1,8 +1,6 @@
 import Button from "@mui/material/Button";
 import React, { useState } from 'react';
 import QuizSend from "../../../backend/pages/quiz/quizSend";
-import { auth, db } from "../../../firebase"
-import {useNavigate } from 'react-router-dom';
 
 function Quiz() {
 
@@ -16,10 +14,6 @@ function Quiz() {
 				{ answerText: 'Rap'},
 				{ answerText: 'R&B'},
 				{ answerText: 'Country'},
-                { answerText: 'EDM'},
-                { answerText: 'Hip Hop'},
-                { answerText: 'Jazz'},
-                { answerText: 'Classical'},
 			],
 		},
         {
@@ -29,53 +23,43 @@ function Quiz() {
 				{ answerText: 'Romantic'},
 				{ answerText: 'Sad'},
 				{ answerText: 'Angry'},
-                { answerText: 'Depressing'},
-                { answerText: 'Energetic'},
 			],
         },
         {
-            questionText: "Who's your favorite artist?",
+            questionText: "What is your favorite color",
 			answerOptions: [
-				{ answerText: 'Taylor Swift'},
-				{ answerText: 'Kanye West'},
-				{ answerText: 'Lil Nas X'},
-				{ answerText: 'Drake'},
-                { answerText: 'Ariana Grande'},
-                { answerText: 'Doja Cat'},
-                { answerText: 'Nicki Minaj'},
-                { answerText: 'BTS'},
-                { answerText: 'Blackpink'},
+				{ answerText: 'Red'},
+				{ answerText: 'Orange'},
+				{ answerText: 'Yellow'},
+				{ answerText: 'Green'},
+                { answerText: 'Blue'},
+                { answerText: 'Purple'},
+                { answerText: 'Cyan'},
+                { answerText: 'Fuchsia'},
 			],
         },
         {
-            questionText: "Who are you traveling with?",
+            questionText: "Who is your favorite U.S. President in the last 50 years?",
             answerOptions: [
-                { answerText: 'Family'},
-                { answerText: 'Friends'},
-                { answerText: 'Classmates'},
-                { answerText: 'Colleagues'},
-                { answerText: 'Lover'},
-                { answerText: 'Enemy'},
-            ],
-        },
-        {
-            questionText: "What is the purpose of your trip?",
-            answerOptions: [
-                { answerText: 'Vacation'},
-                { answerText: 'Road trip'},
-                { answerText: 'Team bonding'},
-                { answerText: 'Going home'},
-                { answerText: 'Corporate retreat'},
-                { answerText: 'Field trip'},
+                { answerText: 'Joe Biden'},
+                { answerText: 'Donald Trump'},
+                { answerText: 'Barack Obama'},
+                { answerText: 'George Bush'},
+                { answerText: 'Bill Clinton'},
+                { answerText: 'George Bush Sr.'},
+                { answerText: 'Ronald Reagan'},
+                { answerText: 'Jimmy Carter'},
+                { answerText: 'Gerald Ford'},
+                { answerText: 'Richard Nixon'},      
             ],
         }
+
 	];
 
     const [currentQuestion, setCurrentQuestion] = useState(0); // keeps track of question number
     const [showEnd, setShowEnd] = useState(false); // Determines whether ending page is shown or not
     const [answers, setAnswers] = useState([]); // keeps track of user's answers
     const [flag, setFlag] = React.useState(true); // color change?
-    const navigate = useNavigate();
 
     const handleAnsClick = (answerOption) => { 
         setFlag(!flag);
@@ -112,15 +96,13 @@ function Quiz() {
         }
     };
 
-
     const handleSubmit = () => { // Send answers array as a string to database
         let ansString = "";
         for (let i = 0; i < answers.length; i++) {
             ansString += answers[i] + ",";
         }
-
-        QuizSend(auth.currentUser.email, ansString)
-        navigate("/results")
+        QuizSend("12345", ansString)
+        console.log(ansString)
     };
 
     return (

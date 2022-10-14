@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
+import { auth } from '../../../firebase'
 
 async function Login_home(email, password) {
     try {

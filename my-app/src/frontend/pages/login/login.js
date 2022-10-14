@@ -3,41 +3,33 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import Login_home from "../../../backend/pages/login/login";
-import { auth } from "../../../firebase";
+import Login_home from "../../../backend/pages/login/login"
+import {auth} from "../../../firebase"
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   if (auth.currentUser) {
-    navigate("/home");
+    navigate('/profile')
   }
 
   onAuthStateChanged(auth, () => {
     if (auth.currentUser) {
-      navigate("/home");
+      navigate('/profile');
     }
-  });
+  })
 
   const login_button_click = () => {
-    Login_home(email, password);
+    Login_home(email, password)
     if (auth.currentUser) {
-      navigate("/home");
+      navigate('/profile')
     }
-  };
-
-  const forgot_password_click = () => {
-    navigate("/forgotPassword");
-  };
-
-  const register_click = () => {
-    navigate("/register");
-  };
+  }
 
   return (
     <>
@@ -48,34 +40,28 @@ function Login() {
           </Box>
           <Box>
             <h1>Sign In</h1>
-            <TextField
-              label="Email or Username"
+            <TextField 
+              label="Email or Username" 
               variant="outlined"
-              onChange={(event) => setEmail(event.target.value)} // save email from user input
+              onChange = {(event) => setEmail(event.target.value)}    // save email from user input
             />
             <br></br>
             <br></br>
-            <TextField
-              label="Password"
+            <TextField 
+              label="Password" 
               variant="outlined"
               type="password"
-              onChange={(event) => setPassword(event.target.value)} // save password from user input
+              onChange = {(event) => setPassword(event.target.value)}   // save password from user input
             />
-            <br></br>
-            <Button justifyContent="flex-end" onClick={forgot_password_click}>
-              Forgot Password?
-            </Button>
-            <br></br>
+            <h6 justifyContent="flex-end">Forgot Password</h6>
 
-            <Button
-              variant="contained"
-              // attempt log in
-              onClick={login_button_click}
-            >
-              Log In
+            <Button variant="contained" 
+                    // attempt log in
+                    onClick={login_button_click}> 
+                Log In 
             </Button>
             <h4>Don't Have an Account?</h4>
-            <Button onClick={register_click}>Sign Up</Button>
+            <h5>Sign Up</h5>
           </Box>
         </Stack>
       </Box>

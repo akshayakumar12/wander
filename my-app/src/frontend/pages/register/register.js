@@ -9,7 +9,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import React, { useState } from "react";
 import register from '../../../backend/pages/register/register';
-import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [firstName, setFirstName] = useState("")
@@ -17,14 +16,6 @@ function Register() {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [security1, setSecurity1] = useState("")
-    const [security2, setSecurity2] = useState("")
-
-    const navigate = useNavigate()
-
-    const login_click = () => {
-        navigate('/login')
-    }
 
     return (
         <Box>
@@ -81,7 +72,6 @@ function Register() {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="sport"
-                                onClick = {(event) => setSecurity1(event.target.innerText)}
                             >
                                 <MenuItem value={10}>Tennis</MenuItem>
                                 <MenuItem value={20}>Soccer</MenuItem>
@@ -104,7 +94,6 @@ function Register() {
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="color"
-                                onClick = {(event) => setSecurity2(event.target.innerText)}
                             >
                                 <MenuItem value={10}>Red</MenuItem>
                                 <MenuItem value={20}>Green</MenuItem>
@@ -124,13 +113,13 @@ function Register() {
                         <Button 
                             variant="contained" 
                             disableElevation uppercase={false}
-                            onClick={() => { register(email, password, firstName, lastName, username, security1, security2); }} >
+                            onClick={() => { register(email, password, firstName, lastName, username); }} >
                                 Get Started
                         </Button>
 
                         {/* Log in option */}
                         <body>Already have an account?</body>
-                        <Button onClick={login_click}>Log In</Button>
+                        <Button>Log In</Button>
 
 
                     </Stack>
