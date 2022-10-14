@@ -15,29 +15,29 @@ function Login() {
   const navigate = useNavigate();
 
   if (auth.currentUser) {
-    navigate("/profile");
+    navigate("/home");
   }
 
   onAuthStateChanged(auth, () => {
     if (auth.currentUser) {
-      navigate("/profile");
+      navigate("/home");
     }
   });
 
   const login_button_click = () => {
     Login_home(email, password);
     if (auth.currentUser) {
-      navigate("/profile");
+      navigate("/home");
     }
   };
 
   const forgot_password_click = () => {
-    navigate('/forgotPassword')
-  }
+    navigate("/forgotPassword");
+  };
 
   const register_click = () => {
-    navigate('/register')
-  }
+    navigate("/register");
+  };
 
   return (
     <>
@@ -62,13 +62,17 @@ function Login() {
               onChange={(event) => setPassword(event.target.value)} // save password from user input
             />
             <br></br>
-            <Button justifyContent="flex-end" onClick={forgot_password_click}>Forgot Password?</Button>
+            <Button justifyContent="flex-end" onClick={forgot_password_click}>
+              Forgot Password?
+            </Button>
             <br></br>
 
-            <Button variant="contained" 
-                    // attempt log in
-                    onClick={login_button_click}> 
-                Log In 
+            <Button
+              variant="contained"
+              // attempt log in
+              onClick={login_button_click}
+            >
+              Log In
             </Button>
             <h4>Don't Have an Account?</h4>
             <Button onClick={register_click}>Sign Up</Button>
