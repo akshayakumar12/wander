@@ -54,6 +54,11 @@ export default function EditProfile() {
 
         if (password != userInfo.password) {
             signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
+            String(password);
+            if (password.length < 6) {
+                alert("Weak Password! Please try again!");
+                return;
+            }
             updatePassword(auth.currentUser, password);
         }
 
