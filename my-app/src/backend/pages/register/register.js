@@ -7,7 +7,7 @@ async function register(email, password, firstName, lastName, username) {
         const matchingUsers = db.collection('users').where("username", "==", username).get().then((query) => {
             if (query.docs.length != 0) {
                 console.log("found matches");
-                alert("Username already in use!")
+                alert("Username already in use!");
                 return;
             } else {
                 console.log("no matches");
