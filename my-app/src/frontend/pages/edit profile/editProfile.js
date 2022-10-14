@@ -9,10 +9,10 @@ import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState, useEffect } from 'react'; 
-import {auth, db, record} from "../../../firebase"
+import { auth, db, record, storage } from "../../../firebase"
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { getDatabase, ref, set } from "firebase/database";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function EditProfile() {
     const [open, setOpen] = React.useState(false);
@@ -65,6 +65,32 @@ export default function EditProfile() {
         })
     }, [])
 
+
+    // PROFILE PICTURE FUNCTIONALITY
+    const [image, setImage] = useState(null);
+    const [url, setURL] = useState(null);
+
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    }
+
+    const handleUpload = () => {
+        const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
+        uploadBytes(imageRef, image).then(() => {
+            getDownloadURL(imageRef).then((url) => {
+                setURL(url);
+            }).catch(error => {
+                console.log(error.message, "error getting the image url");
+            })
+            setImage(null);
+        }).catch(error => {
+            console.log(error.message);
+        });
+    }
+
+
     const [first, setFirst] = React.useState("");
     const [f, setF] = React.useState("abcd");
     
@@ -89,13 +115,14 @@ export default function EditProfile() {
                 {/* Profile Picture*/}
                 <Stack spacing={2} alignItems="center" width="25%">
                     <Avatar 
-                        src="/broken-image.jpg"
+                        src={url}
                         sx={{ width: 150, height: 150}}
                     />
-                    <input type = "file" />
+                    <input type = "file" onChange={handleImageChange}/>
                     <Button 
                         variant="contained" 
-                        disableElevation uppercase={false}>
+                        disableElevation uppercase={false}
+                        onClick={handleUpload}>
                             Upload new photo
                     </Button>
                 </Stack>
