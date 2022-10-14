@@ -6,6 +6,7 @@ import Home from "./frontend/pages/homepage/homepage";
 import ChangePass from "./frontend/pages/login/changePass";
 import Profile from "./frontend/pages/profile/profile";
 import Quiz from "./frontend/pages/quiz/quiz";
+import Result from "./frontend/pages/quiz/results";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/change" element={<ChangePass />} />
+          <Route path="/results" element={<Result />} />
         </Routes>
       </Router>
     </div>
