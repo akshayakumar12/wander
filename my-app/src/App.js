@@ -4,6 +4,7 @@ import Register from "./frontend/pages/register/register";
 import EditProfile from "./frontend/pages/edit profile/editProfile";
 import Home from "./frontend/pages/homepage/homepage";
 import Profile from "./frontend/pages/profile/profile"
+import Quiz from "./frontend/pages/quiz/quiz"
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ForgotPassword from "./frontend/pages/login/forgetPassword";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/quiz" element={<Quiz />} />
       </Routes>
     </Router>
   </div>
