@@ -10,9 +10,9 @@ import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState, useEffect } from 'react'; 
 import {auth, db, record} from "../../../firebase"
-import { onAuthStateChanged, updateEmail } from 'firebase/auth';
+import { deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { getDatabase, ref, set } from "firebase/database";
+
 
 export default function EditProfile() {
 
@@ -49,13 +49,20 @@ export default function EditProfile() {
         })
     }
 
-    const modifyData = async (first, last, uname, email, password) => {
+    const modifyData = async (first, last, uname, email, oldpassword, password) => {
         var userRef = db.collection('users').doc(email);
+
+        if (password != userInfo.password) {
+            signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
+            updatePassword(auth.currentUser, password);
+        }
+
         userRef.set({
             firstName: first,
             lastName: last,
             username: uname,
-            email: email
+            email: email,
+            password: password
         }, {merge: true})
 
         if (email != auth.currentUser.email) {
@@ -65,6 +72,13 @@ export default function EditProfile() {
 
     }
 
+    const deleteUserFromBase = async (email, pass) => {
+        signInWithEmailAndPassword(auth, email, pass);
+        db.collection('users').doc(auth.currentUser.email).delete();
+        deleteUser(auth.currentUser);
+        setOpen(false);
+        navigate('/')
+    }
     
     useEffect(()=> {
         onAuthStateChanged(auth, () => {
@@ -84,6 +98,11 @@ export default function EditProfile() {
     const [email, setEmail] = React.useState("");
     const [e, setE] = React.useState("abcd");
 
+    const [oldpass, setOldpass] = React.useState("");
+    const [newpass, setNewpass] = React.useState("");
+
+    const [deleteuser, setDeleteuser] = React.useState("");
+    const [deletepass, setDeletepass] = React.useState("");
 
     return (
 
@@ -136,10 +155,12 @@ export default function EditProfile() {
                     <TextField
                         label="Old Password"
                         type="password"
+                        onChange={(event) => {setOldpass(event.target.value)}}
                     />
                     <TextField
                         label="New Password"
                         type="password"
+                        onChange={(event) => {setNewpass(event.target.value)}}
                     />
                     <TextField
                         label="Confirm Password"
@@ -148,26 +169,28 @@ export default function EditProfile() {
 
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" onClick={() => {modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email)}}>Submit</Button>
+                        <Button variant="contained" onClick={() => {modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "")}}>Submit</Button>
                         <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
                         <Dialog open={open} onClose={handleClose}>
                             <DialogTitle>Confirm Account Action</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                     Are you sure you want to delete you wander account? This action is permanent and cannot be reverse.
-                                    If yes, please reenter your username and password.
+                                    If yes, please reenter your email and password.
                                 </DialogContentText>
                                 <TextField 
                                 autoFocus
                                 margin="dense"
                                 id="name"
-                                label="Enter Username"
+                                onChange={(event) => {setDeleteuser(event.target.value)}}
+                                label="Enter Email"
                                 fullWidth
                                 variant="standard"/>
                                 <TextField
                                 autoFocus
                                 margin="dense"
                                 id="name"
+                                onChange={(event) => {setDeletepass(event.target.value)}}
                                 label="Enter Password"
                                 fullWidth
                                 type="password"
@@ -175,7 +198,7 @@ export default function EditProfile() {
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
-                                <Button onClick={handleClose}>Delete Account</Button>
+                                <Button onClick={(event) => {deleteUserFromBase(deleteuser, deletepass)}}>Delete Account</Button>
                             </DialogActions>
                         </Dialog>
 
