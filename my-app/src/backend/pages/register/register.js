@@ -33,8 +33,4 @@ async function register(email, password, firstName, lastName, username) {
     }
 };
 
-const checkUsername = (username) => {
-
-}
-
 export default register;
