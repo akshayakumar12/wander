@@ -45,17 +45,18 @@ function Profile() {
     Profile();
   };
 
-    const edit_profile_click = () => {
-        if (auth.currentUser) {
-          navigate('/editProfile')
-        }
-      }
-
-    const navigate = useNavigate()
-    const logout_fb = async () => {
-        await signOut(auth)
-        navigate('/')
+  const edit_profile_click = () => {
+    if (auth.currentUser) {
+      navigate("/editProfile");
     }
+  };
+
+  const navigate = useNavigate();
+  const logout_fb = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
+
 
     const [user, setUser] = useState("")
     useEffect(() => {
@@ -105,21 +106,23 @@ function Profile() {
                         />
                     </Box>
 
-                    {/* User Information */}
-                    <Stack direction="column" spacing={1}>
-                        <h2>{userInfo?.firstName} {userInfo?.lastName}</h2>
-                        <p>username: @{userInfo?.username}</p>
-                        <p>email address: {user.email}</p>
-                    </Stack>
 
-                    {/* Edit Profile and Settings Box */}
-                    <Paper style={{backgroundColor: "#f3f5f9"}}>
-                        <Button onClick={edit_profile_click}>Edit Profile</Button>
-                        <br></br>
-                        <Button>Settings</Button>
-                    </Paper>
+          {/* User Information */}
+          <Stack direction="column" spacing={1}>
+            <h2>
+              {userInfo?.firstName} {userInfo?.lastName}
+            </h2>
+            <p>username: @{userInfo?.username}</p>
+            <p>email address: {user.email}</p>
+          </Stack>
 
-                </Stack>
+          {/* Edit Profile and Settings Box */}
+          <Paper style={{ backgroundColor: "#f3f5f9" }}>
+            <Button onClick={edit_profile_click}>Edit Profile</Button>
+            <br></br>
+            <Button>Settings</Button>
+          </Paper>
+        </Stack>
 
         {/* Spotify Buttons */}
         <Stack spacing={2} justifyContent="center" direction="row">
