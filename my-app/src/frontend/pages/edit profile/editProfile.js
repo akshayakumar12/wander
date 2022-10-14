@@ -17,36 +17,36 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function EditProfile() {
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const navigate = useNavigate()
-    const [user, setUser] = useState("")
-    useEffect(() => {
-        onAuthStateChanged(auth, () => {
-            if (auth.currentUser) {
-                setUser(auth.currentUser)
-            } else {
-                navigate('/')
-            }
-        })
-    }, [])
+  const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    onAuthStateChanged(auth, () => {
+      if (auth.currentUser) {
+        setUser(auth.currentUser);
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
 
-    const [userInfo, setUserInfo] = useState("");    
-    const getData = async () => {
-        const response = db.collection('users');
-        const data = await response.get();
-        data.docs.forEach(item=>{
-            if (item.data().email == auth.currentUser.email) {
-                setUserInfo(item.data())
-            }
-        })
-    }
+  const [userInfo, setUserInfo] = useState("");
+  const getData = async () => {
+    const response = db.collection("users");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      if (item.data().email == auth.currentUser.email) {
+        setUserInfo(item.data());
+      }
+    });
+  };
 
     const modifyData = async (first, last, uname) => {
 //        db.collections('users').doc(auth.currentUser.email);
@@ -58,13 +58,14 @@ export default function EditProfile() {
         }, {merge: true})
     }
 
-    
-    useEffect(()=> {
-        onAuthStateChanged(auth, () => {
-            getData();
-        })
-    }, [])
+  useEffect(() => {
+    onAuthStateChanged(auth, () => {
+      getData();
+    });
+  }, []);
 
+  const [first, setFirst] = React.useState("");
+  const [f, setF] = React.useState("abcd");
 
     // PROFILE PICTURE FUNCTIONALITY
     const [image, setImage] = useState(null);
@@ -108,16 +109,21 @@ export default function EditProfile() {
     const [last, setLast] = React.useState("");
     const [l, setL] = React.useState("abcd");
 
-    const [uname, setUname] = React.useState("");
-    const [u, setU] = React.useState("abcd");
+  const [uname, setUname] = React.useState("");
+  const [u, setU] = React.useState("abcd");
 
     return (
         <Box>
             {/* Header */}
             <Header />
 
-            {/* My Profile Title */}
-            <Stack alignItems={"flex-start"} style={{marginLeft: "50px", marginRight: "50px", }}><h1>Edit Profile</h1></Stack>
+      {/* My Profile Title */}
+      <Stack
+        alignItems={"flex-start"}
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+      >
+        <h1>Edit Profile</h1>
+      </Stack>
 
             {/* Components Stack */}
             <Stack direction="row" alignItems="center" justifyContent="space-between" style={{padding: "0px", marginLeft: "50px", marginRight: "50px", }}>
