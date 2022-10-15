@@ -60,6 +60,11 @@ export default function EditProfile() {
                 return;
             }
             updatePassword(auth.currentUser, password);
+            userRef.set({
+                password: password
+            }, {merge: true})
+        } else {
+            password = oldpassword;
         }
 
         userRef.set({
@@ -67,22 +72,21 @@ export default function EditProfile() {
             lastName: last,
             username: uname,
             email: email,
-            password: password
         }, {merge: true})
 
         if (email != auth.currentUser.email) {
             db.collection('users').doc(auth.currentUser.email).delete();
             updateEmail(auth.currentUser, email);
         }
-
+        
     }
 
     const deleteUserFromBase = async (email, pass) => {
-        signInWithEmailAndPassword(auth, email, pass);
-        db.collection('users').doc(auth.currentUser.email).delete();
-        signOut(auth);
-        deleteUser(auth.currentUser);
-        setOpen(false);
+        await signInWithEmailAndPassword(auth, email, pass);
+        await db.collection('users').doc(email).delete();
+        //await signOut(auth);
+        await deleteUser(auth.currentUser);
+        await setOpen(false);
         navigate('/')
     }
     
