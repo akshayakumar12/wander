@@ -13,31 +13,35 @@ import Header from "./frontend/pages/header/header";
 import Playlist from "./frontend/pages/playlist/playlist";
 import NewPassword from "./frontend/pages/login/newPassword";
 import Settings from "./frontend/pages/settings/settings";
-
+import { useLocation } from "react-router-dom";
 function App() {
+  const location = useLocation();
+  console.log("pathname", location);
+  const hideHeader =
+    location.pathname === "/" || location.pathname === "/register" ? null : (
+      <Header></Header>
+    );
   return (
     <div className="App">
-      <Router>
-        <Header></Header>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/results" element={<Results />} />
-          <Route
-            path="/securityQuestionnaire"
-            element={<SecurityQuestionnaire />}
-          />
-          <Route path="/newPassword" element={<NewPassword/>} />
-          <Route path="/settings" element={<Settings/>} />
-          <Route path="/playlist" element={<Playlist />} />
-        </Routes>
-      </Router>
+      {hideHeader}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/results" element={<Results />} />
+        <Route
+          path="/securityQuestionnaire"
+          element={<SecurityQuestionnaire />}
+        />
+        <Route path="/newPassword" element={<NewPassword />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/playlist" element={<Playlist />} />
+      </Routes>
     </div>
   );
 }
