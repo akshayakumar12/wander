@@ -33,10 +33,10 @@ function Register() {
 
   return (
     <Container maxWidth="xl" disableGutters="true" >
-      <Stack direction="row" justifyContent="flex-start" alignItems={"left"}>
+      <Stack direction="row" justifyContent="flex-start" alignItems={"left"} style={{background: "#F5ECE3"}}>
         {/* Left Stack */}
         <Stack
-          style={{ background: "#F5ECE3" }}
+          //style={{ background: "#F5ECE3" }}
           sx={{ height: "100vh", width: "100%" }}
           alignItems="flex-start"
           justifyContent="stretch"
@@ -70,144 +70,149 @@ function Register() {
         </Stack> 
 
         {/* Right Components Stack */}
-        <Box m={4} sx={{width:"100%"}}>
+        <Box  p={4} sx={{ backgroundColor: "#ffffff", minHeight: '100%', display:'flex', width:"100%"}} >
           <Grid container
             direction="column"
-            alignItems="center"
+            //alignItems="center"
             spacing={2}
           >
-            {/* Logo */}
-            <img src={Logo} alt="Brand Logo" height={125} />
 
-            {/* My Profile Title */}
-            <h1 style={{ textAlign:"left", fontWeight: "normal"}}>
-              Register
-            </h1>
+            <Stack width="100%" alignItems="center">
+              {/* Logo */}
+              <img src={Logo} alt="Brand Logo" height={125} />
+            </Stack>
 
-            {/* Components Stack */}
-            <Stack
-              direction="column"
-              justifyContent="center"
-              alignItems="stretch"
-              spacing={2}
-              width="70%"
-            >
-              {/* First name field */}
-              <TextField
-                label="First Name"
-                onChange={(event) => setFirstName(event.target.value)} // save first name from user input
-              />
+            <Stack marginX="15%" width="100%">
+              {/* My Profile Title */}
+              <h1 style={{ textAlign:"left", fontWeight: "normal"}}>
+                Register
+              </h1>
 
-              {/* Last name field */}
-              <TextField
-                label="Last Name"
-                onChange={(event) => setLastName(event.target.value)} // save last name from user input
-              />
-
-              {/* Username field */}
-              <TextField
-                label="Username"
-                onChange={(event) => setUsername(event.target.value)} // save username from user input
-              />
-
-              {/* Email field */}
-              <TextField
-                label="Email Address"
-                onChange={(event) => setEmail(event.target.value)} // save email from user input
-              />
-
-              {/* Password field */}
-              <TextField
-                label="Password"
-                type="password"
-                onChange={(event) => setPassword(event.target.value)} // save password from user input
-              />
-
-              {/* Questionaire 1: What is your favorite sport? */}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  What is your favorite sport
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="sport"
-                  onClick={(event) => setSecurity1(event.target.innerText)}
-                >
-                  <MenuItem value={10}>Tennis</MenuItem>
-                  <MenuItem value={20}>Soccer</MenuItem>
-                  <MenuItem value={30}>Football</MenuItem>
-                  <MenuItem value={40}>Swimming</MenuItem>
-                  <MenuItem value={50}>Dancing</MenuItem>
-                  <MenuItem value={60}>Cheerleading</MenuItem>
-                  <MenuItem value={60}>Baseball</MenuItem>
-                  <MenuItem value={70}>Badminton</MenuItem>
-                  <MenuItem value={80}>Basketball</MenuItem>
-                  <MenuItem value={90}>Rugby</MenuItem>
-                  <MenuItem value={100}>Figure Skating</MenuItem>
-                </Select>
-              </FormControl>
-
-              {/* Questionaire 2: What is your favorite color? */}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  What is your favorite color?
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="color"
-                  onClick={(event) => setSecurity2(event.target.innerText)}
-                >
-                  <MenuItem value={10}>Red</MenuItem>
-                  <MenuItem value={20}>Green</MenuItem>
-                  <MenuItem value={30}>Blue</MenuItem>
-                  <MenuItem value={40}>Yellow</MenuItem>
-                  <MenuItem value={50}>Purple</MenuItem>
-                  <MenuItem value={60}>Black</MenuItem>
-                  <MenuItem value={60}>White</MenuItem>
-                  <MenuItem value={70}>Orange</MenuItem>
-                  <MenuItem value={80}>Teal</MenuItem>
-                  <MenuItem value={90}>Cyan</MenuItem>
-                  <MenuItem value={100}>Fuchsia</MenuItem>
-                </Select>
-              </FormControl>
-
-              {/* Get Started button */}
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "#007B7B",
-                  textTransform: "none",
-                }}
-                onClick={() => {
-                  register(
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                    username,
-                    security1,
-                    security2
-                  );
-                }}
+              {/* Components Stack */}
+              <Stack
+                direction="column"
+                justifyContent="center"
+                alignItems="stretch"
+                spacing={2}
+                width="70%"
               >
-                Get Started 
-              </Button>
+                {/* First name field */}
+                <TextField
+                  label="First Name"
+                  onChange={(event) => setFirstName(event.target.value)} // save first name from user input
+                />
+
+                {/* Last name field */}
+                <TextField
+                  label="Last Name"
+                  onChange={(event) => setLastName(event.target.value)} // save last name from user input
+                />
+
+                {/* Username field */}
+                <TextField
+                  label="Username"
+                  onChange={(event) => setUsername(event.target.value)} // save username from user input
+                />
+
+                {/* Email field */}
+                <TextField
+                  label="Email Address"
+                  onChange={(event) => setEmail(event.target.value)} // save email from user input
+                />
+
+                {/* Password field */}
+                <TextField
+                  label="Password"
+                  type="password"
+                  onChange={(event) => setPassword(event.target.value)} // save password from user input
+                />
+
+                {/* Questionaire 1: What is your favorite sport? */}
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    What is your favorite sport
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="sport"
+                    onClick={(event) => setSecurity1(event.target.innerText)}
+                  >
+                    <MenuItem value={10}>Tennis</MenuItem>
+                    <MenuItem value={20}>Soccer</MenuItem>
+                    <MenuItem value={30}>Football</MenuItem>
+                    <MenuItem value={40}>Swimming</MenuItem>
+                    <MenuItem value={50}>Dancing</MenuItem>
+                    <MenuItem value={60}>Cheerleading</MenuItem>
+                    <MenuItem value={60}>Baseball</MenuItem>
+                    <MenuItem value={70}>Badminton</MenuItem>
+                    <MenuItem value={80}>Basketball</MenuItem>
+                    <MenuItem value={90}>Rugby</MenuItem>
+                    <MenuItem value={100}>Figure Skating</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Questionaire 2: What is your favorite color? */}
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    What is your favorite color?
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="color"
+                    onClick={(event) => setSecurity2(event.target.innerText)}
+                  >
+                    <MenuItem value={10}>Red</MenuItem>
+                    <MenuItem value={20}>Green</MenuItem>
+                    <MenuItem value={30}>Blue</MenuItem>
+                    <MenuItem value={40}>Yellow</MenuItem>
+                    <MenuItem value={50}>Purple</MenuItem>
+                    <MenuItem value={60}>Black</MenuItem>
+                    <MenuItem value={60}>White</MenuItem>
+                    <MenuItem value={70}>Orange</MenuItem>
+                    <MenuItem value={80}>Teal</MenuItem>
+                    <MenuItem value={90}>Cyan</MenuItem>
+                    <MenuItem value={100}>Fuchsia</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Get Started button */}
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#007B7B",
+                    textTransform: "none",
+                  }}
+                  onClick={() => {
+                    register(
+                      email,
+                      password,
+                      firstName,
+                      lastName,
+                      username,
+                      security1,
+                      security2
+                    );
+                  }}
+                >
+                  Get Started 
+                </Button>
 
 
-              {/* Log in option */}
-              <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
-                Already have an account?
-              </h5>
-              <Link
-                color={"#02387C"}
-                variant="body3"
-                fontWeight={"bold"}
-                onClick={login_click}
-              >
-                Log In 
-              </Link>
+                {/* Log in option */}
+                <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
+                  Already have an account?
+                </h5>
+                <Link
+                  color={"#02387C"}
+                  variant="body3"
+                  fontWeight={"bold"}
+                  onClick={login_click}
+                >
+                  Log In 
+                </Link>
+              </Stack>
             </Stack>
           </Grid>
         </Box>
