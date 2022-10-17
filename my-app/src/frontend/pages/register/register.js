@@ -14,6 +14,7 @@ import Music from "../music.png";
 import { Container } from "@mui/system";
 import Logo from "../wander logo.png";
 import Grid from '@mui/material/Grid';
+import { Link } from "@mui/material";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -31,15 +32,16 @@ function Register() {
   };
 
   return (
-    <Container maxWidth="xl" disableGutters="true">
+    <Container maxWidth="xl" disableGutters="true" >
       <Stack direction="row" justifyContent="flex-start" alignItems={"left"}>
         {/* Left Stack */}
         <Stack
           style={{ background: "#F5ECE3" }}
           sx={{ height: "100vh", width: "100%" }}
           alignItems="flex-start"
+          justifyContent="stretch"
+          spacing={4}
         >
-
           <img
             src={ConLogo}
             alt="Brand Logo"
@@ -65,29 +67,22 @@ function Register() {
           <h3 align="left" style={{ fontWeight: "normal", marginLeft: "10%" }}>
             Create the ultimate playlist for your travels
           </h3>
-
-        </Stack>
+        </Stack> 
 
         {/* Right Components Stack */}
-        <Container maxWidth="xl">
-          <Grid
+        <Box m={4} sx={{width:"100%"}}>
+          <Grid container
             direction="column"
-            justifyContent="center"
             alignItems="center"
             spacing={2}
-            width="100%"
           >
             {/* Logo */}
             <img src={Logo} alt="Brand Logo" height={125} />
 
             {/* My Profile Title */}
-            <Stack alignItem="flex-start">
-              <h1
-                style={{ textAlign:"left", fontWeight: "normal"}}
-              >
-                Register
-              </h1>
-            </Stack>
+            <h1 style={{ textAlign:"left", fontWeight: "normal"}}>
+              Register
+            </h1>
 
             {/* Components Stack */}
             <Stack
@@ -181,8 +176,10 @@ function Register() {
               {/* Get Started button */}
               <Button
                 variant="contained"
-                disableElevation
-                uppercase={false}
+                style={{
+                  backgroundColor: "#007B7B",
+                  textTransform: "none",
+                }}
                 onClick={() => {
                   register(
                     email,
@@ -195,15 +192,25 @@ function Register() {
                   );
                 }}
               >
-                Get Started
+                Get Started 
               </Button>
 
+
               {/* Log in option */}
-              <body>Already have an account?</body>
-              <Button onClick={login_click}>Log In</Button>
+              <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
+                Already have an account?
+              </h5>
+              <Link
+                color={"#02387C"}
+                variant="body3"
+                fontWeight={"bold"}
+                onClick={login_click}
+              >
+                Log In 
+              </Link>
             </Stack>
           </Grid>
-        </Container>
+        </Box>
       </Stack>
     </Container>
   );
