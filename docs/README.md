@@ -9,3 +9,5 @@ The **Design Document** does the following:
 - includes class level designs of our system, sequence diagrams, and mockups of the UI
 
 The **Sprint Planning Documents** discuss the overview of each sprint, the user stories to be implemented as well as well-defined, self-contained tasks and acceptance criteria for each user story, and the remaining backlog. 
+
+The **Sprint Retrospectives** reflect on the previous sprint and discuss what went well, what did not go well, and how we can improve.
