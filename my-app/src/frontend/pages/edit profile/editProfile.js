@@ -9,10 +9,10 @@ import DialogActions from '@mui/material/DialogActions';
 import * as React from 'react'
 import { DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState, useEffect } from 'react'; 
-import {auth, db, record} from "../../../firebase"
+import {auth, db, record, storage} from "../../../firebase"
 import { deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function EditProfile() {
 
@@ -96,6 +96,49 @@ export default function EditProfile() {
         })
     }, [])
 
+    const [image, setImage] = useState(null);
+    const [url, setURL] = useState(null);
+
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            const file = e.target.files[0];
+            var pattern = /image-*/;
+
+            if (!file.type.match(pattern)) {
+                alert("Please choose an image file.");
+                return;
+            }
+
+            setImage(e.target.files[0]);
+        }
+    };
+
+    const handleUpload = () => {
+        const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
+        uploadBytes(imageRef, image)
+          .then(() => {
+            getDownloadURL(imageRef)
+              .then((url) => {
+                setURL(url);
+                db.collection("users").doc(auth.currentUser.email).set(
+                  {
+                    profilePicture: url,
+                  },
+                  { merge: true }
+                );
+              })
+              .catch((error) => {
+                console.log(error.message, "error getting the image url");
+              });
+            setImage(null);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      };
+      
+
+
     const [first, setFirst] = React.useState("");
     const [f, setF] = React.useState("abcd");
     
@@ -129,12 +172,20 @@ export default function EditProfile() {
                 
                 {/* Profile Picture*/}
                 <Stack spacing={2} alignItems="center" width="25%">
-                    <Avatar 
-                        src="/broken-image.jpg" 
-                        sx={{ width: 150, height: 150}}
-                    />
-                    <Button variant="contained" disableElevation uppercase={false}>Upload new photo</Button>
-                </Stack>
+          <Avatar
+            src={url || userInfo?.profilePicture}
+            sx={{ width: 150, height: 150 }}
+          />
+          <input type="file" onChange={handleImageChange} accept="image/*" />
+          <Button
+            variant="contained"
+            disableElevation
+            uppercase={false}
+            onClick={handleUpload}
+          >
+            Upload new photo
+          </Button>
+        </Stack>
 
                 {/* Text Fields */}
                 <Stack direction="column" justifyContent="center" alignItems="stretch" spacing={2} width="70%">
