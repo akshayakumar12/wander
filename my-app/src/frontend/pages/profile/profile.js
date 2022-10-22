@@ -45,7 +45,7 @@ function Profile() {
     Profile();
   };
 
-  const settings_click= () => {
+  const settings_click = () => {
     navigate("/settings");
   };
 
@@ -53,6 +53,10 @@ function Profile() {
     if (auth.currentUser) {
       navigate("/editProfile");
     }
+  };
+
+  const pastQuizPref_click = () => {
+    navigate("/pastQuizPreferences");
   };
 
   const navigate = useNavigate();
@@ -152,6 +156,9 @@ function Profile() {
               Disconnect from Spotify
             </Button>
           )}
+          <Button variant="contained" onClick={pastQuizPref_click}>
+            Past Quiz Preferences
+          </Button>
         </Stack>
       </Stack>
 
