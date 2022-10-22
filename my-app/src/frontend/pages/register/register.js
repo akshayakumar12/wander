@@ -31,6 +31,10 @@ function Register() {
     navigate("/login");
   };
 
+  function getStarted_click() {
+    navigate("/profileSetup");
+  }
+
   return (
     <Container maxWidth="xl" disableGutters="true">
       <Stack
@@ -189,6 +193,7 @@ function Register() {
                       security1,
                       security2
                     );
+                    getStarted_click();
                   }}
                 >
                   Get Started
