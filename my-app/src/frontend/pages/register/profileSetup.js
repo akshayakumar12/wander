@@ -14,9 +14,9 @@ import Music from "../music.png";
 import { Container } from "@mui/system";
 import Logo from "../wander logo.png";
 import Grid from "@mui/material/Grid";
-import { Link } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 
-function Register() {
+export default function ProfileSetup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -29,6 +29,10 @@ function Register() {
 
   const login_click = () => {
     navigate("/login");
+  };
+
+  const back_click = () => {
+    navigate("/register");
   };
 
   return (
@@ -98,7 +102,7 @@ function Register() {
             <Stack marginX="15%" width="100%">
               {/* My Profile Title */}
               <h1 style={{ textAlign: "left", fontWeight: "normal" }}>
-                Register
+                Profile Setup
               </h1>
 
               {/* Components Stack */}
@@ -109,6 +113,21 @@ function Register() {
                 spacing={2}
                 width="70%"
               >
+                {/* Profile Picture*/}
+                <Stack spacing={2} alignItems="center">
+                  <Avatar sx={{ width: 150, height: 150 }} />
+                  <Stack spacing={2} direction="row">
+                    <input type="file" accept="image/*" />
+                    <Button
+                      variant="contained"
+                      disableElevation
+                      uppercase={false}
+                      style={{ fontSize: "12px" }}
+                    >
+                      Delete Profile Picture
+                    </Button>
+                  </Stack>
+                </Stack>
                 {/* First name field */}
                 <TextField
                   label="First Name"
@@ -148,19 +167,16 @@ function Register() {
                 >
                   Get Started
                 </Button>
-
-                {/* Log in option */}
-                <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
-                  Already have an account?
-                </h5>
-                <Link
-                  color={"#02387C"}
-                  variant="body3"
-                  fontWeight={"bold"}
-                  onClick={login_click}
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#007B7B",
+                    textTransform: "none",
+                  }}
+                  onClick={back_click}
                 >
-                  Log In
-                </Link>
+                  Back
+                </Button>
               </Stack>
             </Stack>
           </Grid>
@@ -169,5 +185,3 @@ function Register() {
     </Container>
   );
 }
-
-export default Register;
