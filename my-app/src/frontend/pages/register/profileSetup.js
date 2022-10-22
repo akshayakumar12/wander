@@ -146,6 +146,23 @@ export default function ProfileSetup() {
                   onChange={(event) => setUsername(event.target.value)} // save username from user input
                 />
 
+                {/* Age field */}
+                <TextField label="Age" />
+
+                {/* Age field */}
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Gender"
+                  >
+                    <MenuItem value={10}>Male</MenuItem>
+                    <MenuItem value={20}>Female</MenuItem>
+                    <MenuItem value={20}>Others</MenuItem>
+                  </Select>
+                </FormControl>
+
                 {/* Get Started button */}
                 <Button
                   variant="contained"
