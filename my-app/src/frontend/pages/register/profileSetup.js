@@ -149,7 +149,7 @@ export default function ProfileSetup() {
                 {/* Age field */}
                 <TextField label="Age" />
 
-                {/* Age field */}
+                {/* Gender field */}
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                   <Select
@@ -159,7 +159,7 @@ export default function ProfileSetup() {
                   >
                     <MenuItem value={10}>Male</MenuItem>
                     <MenuItem value={20}>Female</MenuItem>
-                    <MenuItem value={20}>Others</MenuItem>
+                    <MenuItem value={30}>Others</MenuItem>
                   </Select>
                 </FormControl>
 

@@ -4,6 +4,10 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import DialogActions from "@mui/material/DialogActions";
 import * as React from "react";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
@@ -241,6 +245,25 @@ export default function EditProfile() {
               setUname(event.target.value);
             }}
           />
+
+          {/* Age field */}
+          <TextField label="Age" defaultValue="36" />
+
+          {/* Gender field */}
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Gender"
+              defaultValue={10}
+              style={{ textAlign: "left" }}
+            >
+              <MenuItem value={10}>Male</MenuItem>
+              <MenuItem value={20}>Female</MenuItem>
+              <MenuItem value={30}>Others</MenuItem>
+            </Select>
+          </FormControl>
 
           {/* Submit + Delete Buttons */}
           <Stack
