@@ -48,7 +48,7 @@ export default function EditProfile() {
     const response = db.collection("users");
     const data = await response.get();
     data.docs.forEach((item) => {
-      if (item.data().email == auth.currentUser.email) {
+      if (item.data().email === auth.currentUser.email) {
         setUserInfo(item.data());
       }
     });
@@ -64,7 +64,7 @@ export default function EditProfile() {
   ) => {
     var userRef = db.collection("users").doc(email);
 
-    if (password != userInfo.password && password) {
+    if (password !== userInfo.password && password) {
       signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
       String(password);
       if (password.length < 6) {
@@ -92,7 +92,7 @@ export default function EditProfile() {
       { merge: true }
     );
 
-    if (email != auth.currentUser.email) {
+    if (email !== auth.currentUser.email) {
       db.collection("users").doc(auth.currentUser.email).delete();
       updateEmail(auth.currentUser, email);
     }
@@ -202,7 +202,7 @@ export default function EditProfile() {
             uppercase={false}
             onClick={handleUpload}
           >
-            Delete Profile picture
+            Delete Profile Picture
           </Button>
         </Stack>
 
@@ -241,30 +241,6 @@ export default function EditProfile() {
               setUname(event.target.value);
             }}
           />
-          <TextField
-            label="Email Address"
-            defaultValue="name@email.com"
-            value={e ? userInfo.email : email}
-            onChange={(event) => {
-              setE("");
-              setEmail(event.target.value);
-            }}
-          />
-          <TextField
-            label="Old Password"
-            type="password"
-            onChange={(event) => {
-              setOldpass(event.target.value);
-            }}
-          />
-          <TextField
-            label="New Password"
-            type="password"
-            onChange={(event) => {
-              setNewpass(event.target.value);
-            }}
-          />
-          <TextField label="Confirm Password" type="password" />
 
           {/* Submit + Delete Buttons */}
           <Stack
