@@ -109,68 +109,23 @@ function Register() {
                 spacing={2}
                 width="70%"
               >
-                {/* Email field */}
+                {/* First name field */}
                 <TextField
-                  label="Email Address"
-                  onChange={(event) => setEmail(event.target.value)} // save email from user input
+                  label="First Name"
+                  onChange={(event) => setFirstName(event.target.value)} // save first name from user input
                 />
 
-                {/* Password field */}
+                {/* Last name field */}
                 <TextField
-                  label="Password"
-                  type="password"
-                  onChange={(event) => setPassword(event.target.value)} // save password from user input
+                  label="Last Name"
+                  onChange={(event) => setLastName(event.target.value)} // save last name from user input
                 />
 
-                {/* Questionaire 1: What is your favorite sport? */}
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    What is your favorite sport
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="sport"
-                    onClick={(event) => setSecurity1(event.target.innerText)}
-                  >
-                    <MenuItem value={10}>Tennis</MenuItem>
-                    <MenuItem value={20}>Soccer</MenuItem>
-                    <MenuItem value={30}>Football</MenuItem>
-                    <MenuItem value={40}>Swimming</MenuItem>
-                    <MenuItem value={50}>Dancing</MenuItem>
-                    <MenuItem value={60}>Cheerleading</MenuItem>
-                    <MenuItem value={60}>Baseball</MenuItem>
-                    <MenuItem value={70}>Badminton</MenuItem>
-                    <MenuItem value={80}>Basketball</MenuItem>
-                    <MenuItem value={90}>Rugby</MenuItem>
-                    <MenuItem value={100}>Figure Skating</MenuItem>
-                  </Select>
-                </FormControl>
-
-                {/* Questionaire 2: What is your favorite color? */}
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    What is your favorite color?
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="color"
-                    onClick={(event) => setSecurity2(event.target.innerText)}
-                  >
-                    <MenuItem value={10}>Red</MenuItem>
-                    <MenuItem value={20}>Green</MenuItem>
-                    <MenuItem value={30}>Blue</MenuItem>
-                    <MenuItem value={40}>Yellow</MenuItem>
-                    <MenuItem value={50}>Purple</MenuItem>
-                    <MenuItem value={60}>Black</MenuItem>
-                    <MenuItem value={60}>White</MenuItem>
-                    <MenuItem value={70}>Orange</MenuItem>
-                    <MenuItem value={80}>Teal</MenuItem>
-                    <MenuItem value={90}>Cyan</MenuItem>
-                    <MenuItem value={100}>Fuchsia</MenuItem>
-                  </Select>
-                </FormControl>
+                {/* Username field */}
+                <TextField
+                  label="Username"
+                  onChange={(event) => setUsername(event.target.value)} // save username from user input
+                />
 
                 {/* Get Started button */}
                 <Button
