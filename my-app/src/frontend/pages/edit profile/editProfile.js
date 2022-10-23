@@ -13,6 +13,7 @@ import {auth, db, record, storage} from "../../../firebase"
 import { deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import '../edit profile/editProfile.css';
 
 export default function EditProfile() {
 
@@ -136,8 +137,12 @@ export default function EditProfile() {
             console.log(error.message);
           });
       };
-      
 
+    const submit = () => {
+        handleUpload();
+        modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "");
+    }
+      
 
     const [first, setFirst] = React.useState("");
     const [f, setF] = React.useState("abcd");
@@ -173,7 +178,10 @@ export default function EditProfile() {
             src={url || userInfo?.profilePicture}
             sx={{ width: 150, height: 150 }}
           />
-          <input type="file" onChange={handleImageChange} accept="image/*" />
+
+          <label for="image-upload" class="custom-image-upload"> Select Image </label>
+          <input id="image-upload" type="file" onChange={handleImageChange} accept="image/*" />
+          
           <Button
             variant="contained"
             disableElevation
@@ -227,7 +235,7 @@ export default function EditProfile() {
 
                     {/* Submit + Delete Buttons */}
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button variant="contained" onClick={() => {modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "")}}>Submit</Button>
+                        <Button variant="contained" onClick={() => {submit()}}>Submit</Button>
                         <Button variant="contained" color="error" onClick={handleClickOpen}>Delete Account</Button>
                         <Dialog open={open} onClose={handleClose}>
                             <DialogTitle>Confirm Account Action</DialogTitle>
