@@ -1,47 +1,132 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
 import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { useState, useEffect } from "react";
+import {
+  signInWithEmailAndPassword,
+  updateEmail,
+  updatePassword,
+} from "firebase/auth";
+import { auth, db, record, storage } from "../../../firebase";
 
 export default function Settings() {
+  const [user, setUser] = useState("");
 
-    return (
-        <Box>
-            {/* My Profile Title */}
-            <Stack
-                alignItems={"flex-start"}
-                style={{ marginLeft: "50px", marginRight: "50px" }}
-            >
-                <h1>Settings</h1>
-            </Stack>
+  const [userInfo, setUserInfo] = useState("");
 
-            <Stack direction="column" spacing={3}>
-                <Stack direction="column" alignItems="flex-start" justifyContent="center" style={{marginLeft: "50px", marginRight: "50px"}}>
-                    <p> Appearance</p>
-                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                        <Select
-                            labelId="demo-select-small"
-                            id="demo-select-small"
-                        >
-                            <MenuItem value={10}>Light</MenuItem>
-                            <MenuItem value={20}>Dark</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Stack>
+  const [email, setEmail] = React.useState("");
+  const [e, setE] = React.useState("abcd");
 
+  const [oldpass, setOldpass] = React.useState("");
+  const [newpass, setNewpass] = React.useState("");
+  const modifyData = async (
+    first,
+    last,
+    uname,
+    email,
+    oldpassword,
+    password
+  ) => {
+    var userRef = db.collection("users").doc(email);
 
-                <Stack direction="column" alignItems="flex-start" justifyContent="center" style={{marginLeft: "50px", marginRight: "50px"}}>
-                    <Button variant="contained">Save</Button>
-                </Stack>
+    if (password !== userInfo.password && password) {
+      signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
+      String(password);
+      if (password.length < 6) {
+        alert("Weak Password! Please try again!");
+        return;
+      }
+      updatePassword(auth.currentUser, password);
+      userRef.set(
+        {
+          password: password,
+        },
+        { merge: true }
+      );
+    } else {
+      password = oldpassword;
+    }
 
-            </Stack>
+    userRef.set(
+      {
+        firstName: first,
+        lastName: last,
+        username: uname,
+        email: email,
+      },
+      { merge: true }
+    );
 
-        </Box>
+    if (email !== auth.currentUser.email) {
+      db.collection("users").doc(auth.currentUser.email).delete();
+      updateEmail(auth.currentUser, email);
+    }
+  };
+  return (
+    <Box>
+      {/* My Profile Title */}
+      <Stack
+        alignItems={"flex-start"}
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+      >
+        <h1>Settings</h1>
+      </Stack>
 
-    )
-
+      {/* Text Fields */}
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="stretch"
+        spacing={2}
+        width="70%"
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+      >
+        <TextField
+          label="Email Address"
+          defaultValue="name@email.com"
+          value={e ? userInfo.email : email}
+          onChange={(event) => {
+            setE("");
+            setEmail(event.target.value);
+          }}
+        />
+        <TextField
+          label="Old Password"
+          type="password"
+          onChange={(event) => {
+            setOldpass(event.target.value);
+          }}
+        />
+        <TextField
+          label="New Password"
+          type="password"
+          onChange={(event) => {
+            setNewpass(event.target.value);
+          }}
+        />
+        <TextField label="Confirm Password" type="password" />
+        {/* Submit + Delete Buttons */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Button
+            variant="contained"
+            onClick={() => {
+              modifyData(
+                email ? email : userInfo.email,
+                oldpass ? oldpass : userInfo.password,
+                newpass ? newpass : ""
+              );
+            }}
+          >
+            Submit
+          </Button>
+        </Stack>
+      </Stack>
+    </Box>
+  );
 }
