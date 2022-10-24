@@ -1,7 +1,14 @@
-import { Card, CardActionArea, CardContent, Button } from "@mui/material";
-import { Stack, Box } from "@mui/system";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Button,
+  Divider,
+} from "@mui/material";
+import { Stack } from "@mui/system";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 function Home() {
   const navigate = useNavigate();
   return (
@@ -10,6 +17,7 @@ function Home() {
         sx={{
           marginTop: "5%",
           width: "60%",
+          height: "80%",
           bgcolor: "#F5F7FA",
           borderRadius: "16px",
           boxShadow: 3,
@@ -20,11 +28,14 @@ function Home() {
         <CardActionArea>
           <CardContent sx={{ marginX: "1%" }}>
             {" "}
-            <h1 align="Left" style={{ fontSize: "40px" }}>
+            <h2
+              align="Left"
+              style={{ fontSize: "35px", marginTop: 0, marginBottom: 20 }}
+            >
               Current Trip
-            </h1>
+            </h2>
             <Stack direction={"row"} spacing={4}>
-              <Stack direction={"column"} spacing={4}>
+              <Stack direction={"column"} spacing={2}>
                 <Stack>
                   <Card
                     sx={{
@@ -37,18 +48,29 @@ function Home() {
                         <p
                           align="Left"
                           style={{
-                            fontSize: "20px",
+                            fontSize: "17px",
                             margin: 0,
                             fontWeight: "bold",
                           }}
                         >
                           Source Location:
                         </p>
-                        <br></br>
+                        <HorizontalRuleIcon
+                          sx={{
+                            rotate: "90deg",
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            margin: 0,
+                            fontSize: "50px",
+                            fontWeight: "normal",
+                          }}
+                        />
                         <p
                           align="Left"
                           style={{
-                            fontSize: "20px",
+                            fontSize: "17px",
+                            marginBottom: 0,
                             margin: 0,
                             fontWeight: "bold",
                           }}
@@ -63,14 +85,17 @@ function Home() {
                 <Stack>
                   <Card
                     sx={{
-                      maxHeight: 130,
-                      margin: "1%",
-                      maxWidth: 800,
+                      maxHeight: 140,
+
+                      maxWidth: "100%",
                       boxShadow: "3",
                       borderRadius: "16px",
                     }}
                   >
-                    <CardActionArea onClick={() => navigate("../playlist")}>
+                    <CardActionArea
+                      onClick={() => navigate("../playlist")}
+                      sx={{ paddingBottom: "2%" }}
+                    >
                       <Playlist></Playlist>
                     </CardActionArea>
                   </Card>
@@ -80,7 +105,8 @@ function Home() {
               <Stack>
                 <Card
                   sx={{
-                    width: 500,
+                    maxWidth: 500,
+                    minWidth: 500,
                     minHeight: 290,
                     boxShadow: "3",
                     borderRadius: "16px",
@@ -102,10 +128,11 @@ function Home() {
       <Button
         variant="contained"
         sx={{
-          marginRight: "49%",
+          marginRight: "48%",
           marginTop: "1%",
           bgcolor: "#007A1B",
           textTransform: "none",
+          fontSize: "20px",
         }}
         onClick={() => navigate("/newtrip")}
         size="large"
