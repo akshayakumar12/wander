@@ -1,16 +1,26 @@
-import Header from "../header/header";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import DialogActions from "@mui/material/DialogActions";
 import * as React from "react";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useState, useEffect } from "react";
 import { auth, db, record, storage } from "../../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  deleteUser,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateEmail,
+  updatePassword,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -42,23 +52,63 @@ export default function EditProfile() {
     const response = db.collection("users");
     const data = await response.get();
     data.docs.forEach((item) => {
-      if (item.data().email == auth.currentUser.email) {
+      if (item.data().email === auth.currentUser.email) {
         setUserInfo(item.data());
       }
     });
   };
 
-  const modifyData = async (first, last, uname) => {
-    //        db.collections('users').doc(auth.currentUser.email);
-    var userRef = db.collection("users").doc(auth.currentUser.email);
+  const modifyData = async (
+    first,
+    last,
+    uname,
+    email,
+    oldpassword,
+    password
+  ) => {
+    var userRef = db.collection("users").doc(email);
+
+    if (password !== userInfo.password && password) {
+      signInWithEmailAndPassword(auth, auth.currentUser.email, oldpassword);
+      String(password);
+      if (password.length < 6) {
+        alert("Weak Password! Please try again!");
+        return;
+      }
+      updatePassword(auth.currentUser, password);
+      userRef.set(
+        {
+          password: password,
+        },
+        { merge: true }
+      );
+    } else {
+      password = oldpassword;
+    }
+
     userRef.set(
       {
         firstName: first,
         lastName: last,
         username: uname,
+        email: email,
       },
       { merge: true }
     );
+
+    if (email !== auth.currentUser.email) {
+      db.collection("users").doc(auth.currentUser.email).delete();
+      updateEmail(auth.currentUser, email);
+    }
+  };
+
+  const deleteUserFromBase = async (email, pass) => {
+    await signInWithEmailAndPassword(auth, email, pass);
+    await db.collection("users").doc(email).delete();
+    //await signOut(auth);
+    await deleteUser(auth.currentUser);
+    await setOpen(false);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -67,7 +117,6 @@ export default function EditProfile() {
     });
   }, []);
 
-  // PROFILE PICTURE FUNCTIONALITY
   const [image, setImage] = useState(null);
   const [url, setURL] = useState(null);
 
@@ -118,10 +167,17 @@ export default function EditProfile() {
   const [uname, setUname] = React.useState("");
   const [u, setU] = React.useState("abcd");
 
+  const [email, setEmail] = React.useState("");
+  const [e, setE] = React.useState("abcd");
+
+  const [oldpass, setOldpass] = React.useState("");
+  const [newpass, setNewpass] = React.useState("");
+
+  const [deleteuser, setDeleteuser] = React.useState("");
+  const [deletepass, setDeletepass] = React.useState("");
+
   return (
     <Box>
-      {/* Header */}
-
       {/* My Profile Title */}
       <Stack
         alignItems={"flex-start"}
@@ -150,7 +206,7 @@ export default function EditProfile() {
             uppercase={false}
             onClick={handleUpload}
           >
-            Upload new photo
+            Delete Profile Picture
           </Button>
         </Stack>
 
@@ -189,14 +245,25 @@ export default function EditProfile() {
               setUname(event.target.value);
             }}
           />
-          <TextField
-            label="Email Address"
-            defaultValue="name@email.com"
-            value={userInfo.email}
-          />
-          <TextField label="Old Password" type="password" />
-          <TextField label="New Password" type="password" />
-          <TextField label="Confirm Password" type="password" />
+
+          {/* Age field */}
+          <TextField label="Age" defaultValue="36" />
+
+          {/* Gender field */}
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Gender"
+              defaultValue={10}
+              style={{ textAlign: "left" }}
+            >
+              <MenuItem value={10}>Male</MenuItem>
+              <MenuItem value={20}>Female</MenuItem>
+              <MenuItem value={30}>Others</MenuItem>
+            </Select>
+          </FormControl>
 
           {/* Submit + Delete Buttons */}
           <Stack
@@ -206,11 +273,16 @@ export default function EditProfile() {
           >
             <Button
               variant="contained"
-              onClick={modifyData(
-                first ? first : userInfo.firstName,
-                last ? last : userInfo.lastName,
-                uname ? uname : userInfo.username
-              )}
+              onClick={() => {
+                modifyData(
+                  first ? first : userInfo.firstName,
+                  last ? last : userInfo.lastName,
+                  uname ? uname : userInfo.username,
+                  email ? email : userInfo.email,
+                  oldpass ? oldpass : userInfo.password,
+                  newpass ? newpass : ""
+                );
+              }}
             >
               Submit
             </Button>
@@ -221,15 +293,18 @@ export default function EditProfile() {
               <DialogTitle>Confirm Account Action</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Are you sure you want to delete your wander account? This
+                  Are you sure you want to delete you wander account? This
                   action is permanent and cannot be reverse. If yes, please
-                  reenter your username and password.
+                  reenter your email and password.
                 </DialogContentText>
                 <TextField
                   autoFocus
                   margin="dense"
                   id="name"
-                  label="Enter Username"
+                  onChange={(event) => {
+                    setDeleteuser(event.target.value);
+                  }}
+                  label="Enter Email"
                   fullWidth
                   variant="standard"
                 />
@@ -237,6 +312,9 @@ export default function EditProfile() {
                   autoFocus
                   margin="dense"
                   id="name"
+                  onChange={(event) => {
+                    setDeletepass(event.target.value);
+                  }}
                   label="Enter Password"
                   fullWidth
                   type="password"
@@ -245,7 +323,13 @@ export default function EditProfile() {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Delete Account</Button>
+                <Button
+                  onClick={(event) => {
+                    deleteUserFromBase(deleteuser, deletepass);
+                  }}
+                >
+                  Delete Account
+                </Button>
               </DialogActions>
             </Dialog>
           </Stack>

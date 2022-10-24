@@ -55,6 +55,10 @@ function Profile() {
     }
   };
 
+  const pastQuizPref_click = () => {
+    navigate("/pastQuizPreferences");
+  };
+
   const navigate = useNavigate();
   const logout_fb = async () => {
     await signOut(auth);
@@ -153,12 +157,10 @@ function Profile() {
               Disconnect from Spotify
             </Button>
           )}
-          <Button
-            onClick={() => {
-              navigate("/quizhistory");
-            }}
-          >
-            Quiz History
+
+          <Button variant="contained" onClick={pastQuizPref_click}>
+            Past Quiz Preferences
+
           </Button>
         </Stack>
       </Stack>
