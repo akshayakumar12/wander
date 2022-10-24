@@ -45,7 +45,7 @@ function Profile() {
     Profile();
   };
 
-  const settings_click= () => {
+  const settings_click = () => {
     navigate("/settings");
   };
 
@@ -144,6 +144,7 @@ function Profile() {
               href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join(
                 "%20"
               )}&response_type=${RESPONSE_TYPE}&show_dialog=true`}
+              mt="4"
             >
               Connect to Spotify
             </Button>
@@ -152,6 +153,13 @@ function Profile() {
               Disconnect from Spotify
             </Button>
           )}
+          <Button
+            onClick={() => {
+              navigate("/quizhistory");
+            }}
+          >
+            Quiz History
+          </Button>
         </Stack>
       </Stack>
 

@@ -14,6 +14,8 @@ import Playlist from "./frontend/pages/playlist/playlist";
 import NewPassword from "./frontend/pages/login/newPassword";
 import Settings from "./frontend/pages/settings/settings";
 import { useLocation } from "react-router-dom";
+import QuizHistory from "./frontend/pages/quiz/quiz_history";
+import TripView from "./frontend/pages/trip/trip";
 function App() {
   const location = useLocation();
   console.log("pathname", location);
@@ -41,6 +43,8 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
+        <Route path="quizhistory" element={<QuizHistory />} />
+        <Route path="/tripview" element={<TripView />}></Route>
       </Routes>
     </div>
   );
