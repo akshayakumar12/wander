@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
@@ -73,7 +74,6 @@ export default function Settings() {
       >
         <h1>Settings</h1>
       </Stack>
-
       {/* Text Fields */}
       <Stack
         direction="column"

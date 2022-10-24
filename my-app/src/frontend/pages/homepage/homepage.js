@@ -13,11 +13,17 @@ function Home() {
           <Stack direction={"column"}>
             <Stack>
               <Card>
-                <CardContent>
-                  <p align="Left">Source Location</p>
-                  <br></br>
-                  <p align="Left">Destination</p>
-                </CardContent>
+                <CardActionArea onClick={() => navigate("../tripview")}>
+                  <CardContent>
+                    <p align="Left" style={{ fontSize: "20px" }}>
+                      Source Location:
+                    </p>
+                    <br></br>
+                    <p align="Left" style={{ fontSize: "20px" }}>
+                      Destination:
+                    </p>
+                  </CardContent>
+                </CardActionArea>
               </Card>
             </Stack>
             <br></br>
@@ -32,7 +38,14 @@ function Home() {
           <br></br>
           <Stack>
             <Card sx={{ minWidth: 400, minHeight: 200 }}>Map</Card>
-            <Button variant="contained" sx={{ width: 200, padding: 2, margin: 2 }} onClick={() => navigate("/quiz")}> {"Take Quiz"}</Button>
+            <Button
+              variant="contained"
+              sx={{ width: 200, padding: 2, margin: 2 }}
+              onClick={() => navigate("/quiz")}
+            >
+              {" "}
+              {"Take Quiz"}
+            </Button>
           </Stack>
         </Stack>
       </Container>
