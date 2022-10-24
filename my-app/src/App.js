@@ -21,6 +21,9 @@ import TripView from "./frontend/pages/trip/trip";
 import PastQuizPref from "./frontend/pages/quiz/pastQuizPref";
 import ProfileSetup from "./frontend/pages/register/profileSetup";
 
+import NewTrip from "./frontend/pages/trip/newTrip";
+import NewHome from "./frontend/pages/homepage/newhome";
+
 function App() {
   const location = useLocation();
   console.log("pathname", location);
@@ -55,6 +58,8 @@ function App() {
 
         <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
 
+        <Route path="/newtrip" element={<NewTrip></NewTrip>} />
+        <Route path="/newhome" element={<NewHome></NewHome>} />
       </Routes>
     </div>
   );

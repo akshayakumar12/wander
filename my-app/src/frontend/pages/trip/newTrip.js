@@ -1,25 +1,22 @@
-import { Button, Stack, TextField } from "@mui/material";
-
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
   Radio,
   RadioGroup,
+  Stack,
+  TextField,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-function TripView() {
+function NewTrip() {
   const navigate = useNavigate();
   return (
     <>
-      <Container
-        sx={{ justifyContent: "left" }}
-        disableGutters="true"
-        padding="1%"
-      >
+      <Container sx={{ justifyContent: "left" }} disableGutters="true">
         <Stack alignItems="flex-start" spacing={4}>
-          <h1 align="left">Edit Trip Details</h1>
+          <h1 align="left">Create Trip</h1>
           <h3 align="left">Starting Location</h3>
           <TextField
             label="Starting Location"
@@ -37,7 +34,7 @@ function TripView() {
             <RadioGroup>
               <FormControlLabel value="Car" control={<Radio />} label="Car" />
               <FormControlLabel
-                value="Plane"
+                value="plane"
                 control={<Radio />}
                 label="Plane"
               />
@@ -55,13 +52,13 @@ function TripView() {
               width: "12%",
               marginTop: "1%",
             }}
-            onClick={() => navigate("../home")}
+            onClick={() => navigate("../quiz")}
           >
-            Edit Changes
+            Submit Changes
           </Button>
         </Stack>
       </Container>
     </>
   );
 }
-export default TripView;
+export default NewTrip;

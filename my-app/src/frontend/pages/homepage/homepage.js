@@ -14,7 +14,7 @@ function Home() {
             <Stack>
               <Card>
                 <CardActionArea onClick={() => navigate("../tripview")}>
-                  <CardContent>
+                  <CardContent style={{ backgroundColor: "F5F7FA" }}>
                     <p align="Left" style={{ fontSize: "20px" }}>
                       Source Location:
                     </p>
