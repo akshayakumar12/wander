@@ -6,8 +6,9 @@ function NewHome() {
     <>
       <Box
         sx={{
-          height: "100vh",
-          padding: "10%",
+          height: "40vh",
+          margin: "5%",
+          paddingY: "5%",
         }}
       >
         <h1 style={{ fontSize: "100px", margin: 0, padding: 0 }}>
@@ -27,7 +28,7 @@ function NewHome() {
           }}
           onClick={() => navigate("../newtrip")}
         >
-          + Create New Trip!
+          + New Trip
         </Button>
       </Box>
     </>
