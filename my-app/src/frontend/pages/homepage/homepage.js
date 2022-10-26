@@ -49,28 +49,18 @@ function Home() {
                           align="Left"
                           style={{
                             fontSize: "17px",
-                            margin: 0,
+                            marginBottom: 20,
                             fontWeight: "bold",
                           }}
                         >
                           Source Location:
                         </p>
-                        <HorizontalRuleIcon
-                          sx={{
-                            rotate: "90deg",
-                            display: "flex",
-                            alignItems: "center",
-                            flexWrap: "wrap",
-                            margin: 0,
-                            fontSize: "50px",
-                            fontWeight: "normal",
-                          }}
-                        />
+
                         <p
                           align="Left"
                           style={{
                             fontSize: "17px",
-                            marginBottom: 0,
+                            marginTop: 30,
                             margin: 0,
                             fontWeight: "bold",
                           }}

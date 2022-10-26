@@ -24,6 +24,8 @@ import ProfileSetup from "./frontend/pages/register/profileSetup";
 import NewTrip from "./frontend/pages/trip/newTrip";
 import NewHome from "./frontend/pages/homepage/newhome";
 
+import Confirm from "./frontend/pages/quiz/quizConf";
+
 function App() {
   const location = useLocation();
   console.log("pathname", location);
@@ -60,6 +62,7 @@ function App() {
 
         <Route path="/newtrip" element={<NewTrip></NewTrip>} />
         <Route path="/newhome" element={<NewHome></NewHome>} />
+        <Route path="/confirmation" element={<Confirm></Confirm>} />
       </Routes>
     </div>
   );

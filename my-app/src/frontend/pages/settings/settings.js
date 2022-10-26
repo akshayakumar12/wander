@@ -2,9 +2,9 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import { Button } from "@mui/material";
+import { Button, FormControlLabel, FormGroup, Switch } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   signInWithEmailAndPassword,
   updateEmail,
@@ -19,6 +19,11 @@ export default function Settings() {
 
   const [email, setEmail] = React.useState("");
   const [e, setE] = React.useState("abcd");
+
+  const [checked, setChecked] = React.useState(false);
+  const toggleChecked = () => {
+    setChecked((prev) => !prev);
+  };
 
   const [oldpass, setOldpass] = React.useState("");
   const [newpass, setNewpass] = React.useState("");
@@ -83,6 +88,23 @@ export default function Settings() {
         width="70%"
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
+        <h2 align="left">Personalization</h2>
+        <FormGroup>
+          <FormControlLabel
+            control={<Switch />}
+            label="Explicit Content"
+          ></FormControlLabel>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={checked}
+                onChange={toggleChecked}
+                color="default"
+              />
+            }
+            label={`${checked ? "Dark Mode" : "Light Mode"}`}
+          ></FormControlLabel>
+        </FormGroup>
         <TextField
           label="Email Address"
           defaultValue="name@email.com"
