@@ -133,11 +133,24 @@ function Profile() {
           </Stack>
 
           {/* Edit Profile and Settings Box */}
-          <Paper style={{ backgroundColor: "#f3f5f9" }}>
-            <Button onClick={edit_profile_click}>Edit Profile</Button>
-            <br></br>
-            <Button onClick={settings_click}>Settings</Button>
-          </Paper>
+
+          <Stack spacing={2}>
+            <Button
+              onClick={edit_profile_click}
+              variant="contained"
+              style={{ backgroundColor: "#f3f5f9", color: "default" }}
+            >
+              Edit Profile
+            </Button>
+
+            <Button
+              onClick={settings_click}
+              variant="contained"
+              style={{ backgroundColor: "#f3f5f9", color: "blue" }}
+            >
+              Settings
+            </Button>
+          </Stack>
         </Stack>
 
         {/* Spotify Buttons */}
@@ -160,7 +173,6 @@ function Profile() {
 
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
-
           </Button>
         </Stack>
       </Stack>

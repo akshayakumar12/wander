@@ -95,7 +95,13 @@ export default function Settings() {
             label="Explicit Content"
           ></FormControlLabel>
           <FormControlLabel
-            control={<Switch checked={checked} onChange={toggleChecked} />}
+            control={
+              <Switch
+                checked={checked}
+                onChange={toggleChecked}
+                color="default"
+              />
+            }
             label={`${checked ? "Dark Mode" : "Light Mode"}`}
           ></FormControlLabel>
         </FormGroup>

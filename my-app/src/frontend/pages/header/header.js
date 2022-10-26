@@ -84,7 +84,7 @@ function Header() {
                 width: 240,
                 flexShrink: 0,
                 color: "#02407F",
-                backgroundColor: "#F5ECE3",
+                backgroundColor: "#FAF5F1",
                 "& .MuiDrawer-paper": {
                   width: 240,
                   boxSizing: "border-box",
@@ -94,7 +94,12 @@ function Header() {
           >
             <List>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/home");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
                     {" "}
                     <HomeIcon />
@@ -103,7 +108,12 @@ function Header() {
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/profile");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
                     {" "}
                     <AccountCircleIcon />
@@ -112,7 +122,12 @@ function Header() {
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/pasttrips");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
                     {" "}
                     <CardTravelIcon />
@@ -121,7 +136,12 @@ function Header() {
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/settings");
+                    setDrawerOpen(false);
+                  }}
+                >
                   <ListItemIcon>
                     {" "}
                     <SettingsIcon />
