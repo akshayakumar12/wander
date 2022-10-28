@@ -133,11 +133,24 @@ function Profile() {
           </Stack>
 
           {/* Edit Profile and Settings Box */}
-          <Paper style={{ backgroundColor: "#f3f5f9" }}>
-            <Button onClick={edit_profile_click}>Edit Profile</Button>
-            <br></br>
-            <Button onClick={settings_click}>Settings</Button>
-          </Paper>
+
+          <Stack spacing={2}>
+            <Button
+              onClick={edit_profile_click}
+              variant="contained"
+              style={{ backgroundColor: "#f3f5f9", color: "default" }}
+            >
+              Edit Profile
+            </Button>
+
+            <Button
+              onClick={settings_click}
+              variant="contained"
+              style={{ backgroundColor: "#f3f5f9", color: "blue" }}
+            >
+              Settings
+            </Button>
+          </Stack>
         </Stack>
 
         {/* Spotify Buttons */}
@@ -148,6 +161,7 @@ function Profile() {
               href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join(
                 "%20"
               )}&response_type=${RESPONSE_TYPE}&show_dialog=true`}
+              mt="4"
             >
               Connect to Spotify
             </Button>
@@ -156,6 +170,7 @@ function Profile() {
               Disconnect from Spotify
             </Button>
           )}
+
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
           </Button>

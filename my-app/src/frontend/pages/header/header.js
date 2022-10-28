@@ -12,10 +12,23 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CardTravelIcon from "@mui/icons-material/CardTravel";
+import SettingsIcon from "@mui/icons-material/Settings";
+import HomeIcon from "@mui/icons-material/Home";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon,
+} from "@mui/material";
 
 function Header() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const getData = async () => {
     const response = db.collection("users");
@@ -57,47 +70,87 @@ function Header() {
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
+            onClick={() => setDrawerOpen(true)}
           >
-            <MenuIcon sx={{ color: "#023a7e" }} />
+            <MenuIcon sx={{ color: "#023a7e" }} size="large" />
           </IconButton>
-
           {/* Dropdown Menu */}
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            PaperProps={{
+              sx: {
+                width: 240,
+                flexShrink: 0,
+                color: "#02407F",
+                backgroundColor: "#FAF5F1",
+                "& .MuiDrawer-paper": {
+                  width: 240,
+                  boxSizing: "border-box",
+                },
+              },
             }}
           >
-            <MenuItem
-              onClick={() => {
-                navigate("/home");
-                handleClose();
-              }}
-            >
-              Home
-            </MenuItem>
-            <MenuItem>Past Trips</MenuItem>
-            <MenuItem
-              onClick={() => {
-                navigate("/profile");
-                handleClose();
-              }}
-            >
-              Profile
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                navigate("/settings");
-                handleClose();
-              }}
-            >
-                Settings
-            </MenuItem>
-          </Menu>
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/home");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Home"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/profile");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Profile"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/pasttrips");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <CardTravelIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Past Trips"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/settings");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <SettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Settings"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
 
           {/* Logo */}
           <img

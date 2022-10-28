@@ -14,8 +14,18 @@ import Playlist from "./frontend/pages/playlist/playlist";
 import NewPassword from "./frontend/pages/login/newPassword";
 import Settings from "./frontend/pages/settings/settings";
 import { useLocation } from "react-router-dom";
+
+import QuizHistory from "./frontend/pages/quiz/quiz_history";
+import TripView from "./frontend/pages/trip/trip";
+
 import PastQuizPref from "./frontend/pages/quiz/pastQuizPref";
 import ProfileSetup from "./frontend/pages/register/profileSetup";
+
+import NewTrip from "./frontend/pages/trip/newTrip";
+import NewHome from "./frontend/pages/homepage/newhome";
+
+import Confirm from "./frontend/pages/quiz/quizConf";
+
 function App() {
   const location = useLocation();
   console.log("pathname", location);
@@ -44,7 +54,15 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
+
+        <Route path="quizhistory" element={<QuizHistory />} />
+        <Route path="/tripview" element={<TripView />}></Route>
+
         <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
+
+        <Route path="/newtrip" element={<NewTrip></NewTrip>} />
+        <Route path="/newhome" element={<NewHome></NewHome>} />
+        <Route path="/confirmation" element={<Confirm></Confirm>} />
       </Routes>
     </div>
   );
