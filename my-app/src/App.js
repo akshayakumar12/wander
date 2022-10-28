@@ -30,7 +30,9 @@ function App() {
   const location = useLocation();
   console.log("pathname", location);
   const hideHeader =
-    location.pathname === "/" || location.pathname === "/register" ? null : (
+    location.pathname === "/" ||
+    location.pathname === "/register" ||
+    location.pathname === "/profileSetup" ? null : (
       <Header></Header>
     );
   return (
