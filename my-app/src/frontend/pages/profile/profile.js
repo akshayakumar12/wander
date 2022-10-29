@@ -11,6 +11,32 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { getTokenFromUrl } from "../../../backend/pages/profile/connectSpotify";
 import { collection, getDocs } from "firebase/firestore";
+import { Buffer } from "buffer";
+
+const TOKEN = "https://accounts.spotify.com/api/token"
+const REDIRECT_URI = "http://localhost:3000/profile";
+const real_access_token = "";
+const real_refresh_token = "";
+const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
+const CLEINT_SECRET = "5e69ca6de47f4d9589d9d05441a28cfe"
+
+const modifyData2 = async (tok) => {
+  var userRef = db.collection("users").doc(auth.currentUser.email);
+  console.log("Modifying Data");
+  userRef.set(
+    {real_access_token: tok},
+    {merge: true}
+  )
+};
+
+const modifyData3 = async (tok) => {
+  var userRef = db.collection("users").doc(auth.currentUser.email);
+  console.log("Modifying Data");
+  userRef.set(
+    {real_refresh_token: tok},
+    {merge: true}
+  )
+};
 
 const getSpotifyParams = (hash) => {
   const stringAfterHash = hash.substring(1);
@@ -24,6 +50,96 @@ const getSpotifyParams = (hash) => {
 
   return paramsSplitUp
 };
+
+
+function onPageLoad(){
+  if ( window.location.search.length > 0 ){
+      console.log("I should only print after button click")
+      handleRedirect();
+  }
+}
+
+const handleRedirect = () => {
+  console.log("Handling redirect");
+  let code = getCode();
+  fetchAccessToken(code);
+}
+
+const fetchAccessToken = (code) => {
+  console.log("Fetching Token");
+  let body = "grant_type=authorization_code";
+  body += "&code=" + code;
+  body += "&redirect_uri=" + encodeURI(REDIRECT_URI);
+  body += "&client_id=" + "cd4b2dc4fd9a40d08077c8e883502bc9";
+  body += "&client_secret=5e69ca6de47f4d9589d9d05441a28cfe";
+  callAuthApi(body);
+}
+
+const callAuthApi = (body) => {
+  console.log("Calling API");
+  let xhr = new XMLHttpRequest();
+
+  const x = Buffer.from((CLIENT_ID + ":" + CLEINT_SECRET), 'utf8').toString('base64');
+
+  xhr.open("POST", TOKEN, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader('Authorization', 'Basic ' + x);
+  xhr.send(body);
+  xhr.onload = () => {
+    console.log("Handling Response");
+    console.log(xhr);
+    if (xhr.status == 200) {
+      console.log("Status 200!!")
+      var data = JSON.parse(xhr.responseText);
+      console.log(data);
+      console.log(data.access_token);
+      if (data.access_token != "") {
+//        real_access_token = data.access_token;
+        console.log("modifying data");
+        modifyData2(data.access_token);
+      }
+      if (data.refresh_token != undefined) {
+//        real_refresh_token = data.refresh_token;
+        console.log("modifying data")
+        modifyData3(data.refresh_token);
+      }
+  
+  //    onPageLoad();
+    }
+  };
+}
+
+/*
+const handleAuthResp = () => {
+  console.log("Handling Response");
+  if (this.status == 200) {
+    console.log("Status 200!!")
+    var data = JSON.parse(this.responseText);
+    if (data.access_token != undefined) {
+      real_access_token = data.access_token;
+      console.log("modifying data");
+      modifyData2(real_access_token);
+    }
+    if (data.refresh_token != undefined) {
+      real_refresh_token = data.refresh_token;
+      console.log("modifying data")
+      modifyData3(real_refresh_token);
+    }
+
+//    onPageLoad();
+  }
+}
+*/
+const getCode = () => {
+  console.log("Getting Code");
+  let code = null;
+  const queryString = window.location.search;
+  if (queryString.length > 0) {
+    const urlParams = new URLSearchParams(queryString);
+    code = urlParams.get('code')
+  }
+  return code;
+}
 
 function Profile() {
   const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
@@ -82,6 +198,12 @@ function Profile() {
     navigate("/");
   };
 
+
+  useEffect(() => {
+    console.log("I should only print once");
+    onPageLoad();
+  }, [])
+
   const [user, setUser] = useState("");
   useEffect(() => {
     onAuthStateChanged(auth, () => {
@@ -105,6 +227,9 @@ function Profile() {
   };
 
   useEffect(() => {
+//    handleRedirect();
+//    console.log("I should only print once")
+//    onPageLoad();
     getData();
   }, []);
 
@@ -115,9 +240,10 @@ function Profile() {
         expires_in,
         token_type,
       } = getSpotifyParams(window.location.hash);
-      modifyData(access_token);
+//      modifyData(access_token);
+//      handleRedirect();
     }
-  })
+  }, [])
 
   const modifyData = async (tok) => {
     var userRef = db.collection("users").doc(auth.currentUser.email);
@@ -220,7 +346,8 @@ function Profile() {
             </Button>
           )}
           */}
-          <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
+{      //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
+          }          <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
           </Button>
