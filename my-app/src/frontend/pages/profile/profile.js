@@ -4,13 +4,26 @@ import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
 import Header from "../header/header";
+import Test from "./Test"
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { getTokenFromUrl } from "../../../backend/pages/profile/connectSpotify";
-import SpotifyWebApi from "spotify-web-api-js";
 import { collection, getDocs } from "firebase/firestore";
+
+const getSpotifyParams = (hash) => {
+  const stringAfterHash = hash.substring(1);
+  const paramsInUrl = stringAfterHash.split("&");
+  const paramsSplitUp = paramsInUrl.reduce((accumulator, currentValue) => {
+    console.log(currentValue)
+    const [key, value] = currentValue.split("=");
+    accumulator[key] = value;
+    return accumulator;
+  }, {});
+
+  return paramsSplitUp
+};
 
 function Profile() {
   const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
@@ -24,8 +37,12 @@ function Profile() {
     "user-top-read",
     "user-modify-playback-state",
   ];
+  // client_secret = 5e69ca6de47f4d9589d9d05441a28cfe
 
-  const spotify = new SpotifyWebApi();
+  const SCOPES_URL = SCOPES.join("%20");
+
+  //const spotify = new SpotifyWebApi();
+  /*
   const [spotifyToken, setSpotifyToken] = useState("");
 
   useEffect(() => {
@@ -44,7 +61,7 @@ function Profile() {
     window.localStorage.removeItem("spotifyToken");
     Profile();
   };
-
+  */
   const settings_click = () => {
     navigate("/settings");
   };
@@ -86,12 +103,42 @@ function Profile() {
       }
     });
   };
+
   useEffect(() => {
-    onAuthStateChanged(auth, () => {
-      getData();
-    });
+    getData();
   }, []);
 
+  useEffect(() => {
+    if(window.location.hash) {
+      const {
+        access_token,
+        expires_in,
+        token_type,
+      } = getSpotifyParams(window.location.hash);
+      modifyData(access_token);
+    }
+  })
+
+  const modifyData = async (tok) => {
+    var userRef = db.collection("users").doc(auth.currentUser.email);
+    console.log("Modifying Data");
+    userRef.set(
+      {access_token: tok},
+      {merge: true}
+    )
+  };
+
+  const [token, setToken] = useState("")
+  useEffect(() => {
+    
+  })
+
+  /*
+  const setAuthToken = async () => {
+    var userRef = db.collections("users").doc(auth.currentUser.email)
+    if (userRef.)
+  }
+  */
   return (
     <Box>
       <Stack spacing={2}>
@@ -154,7 +201,9 @@ function Profile() {
         </Stack>
 
         {/* Spotify Buttons */}
+        
         <Stack spacing={2} justifyContent="center" direction="row">
+          {/*
           {!spotifyToken ? (
             <Button
               variant="contained"
@@ -170,16 +219,18 @@ function Profile() {
               Disconnect from Spotify
             </Button>
           )}
-
+          */}
+          <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
           </Button>
         </Stack>
       </Stack>
-
+  
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
         Logout
       </Button>
+      <Test />
     </Box>
   );
 }
