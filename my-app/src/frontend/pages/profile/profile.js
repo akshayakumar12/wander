@@ -20,6 +20,22 @@ const real_refresh_token = "";
 const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
 const CLEINT_SECRET = "5e69ca6de47f4d9589d9d05441a28cfe"
 
+const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+const RESPONSE_TYPE = "token";
+const SCOPES = [
+    "user-read-currently-playing",
+    "user-read-recently-played",
+    "user-read-playback-state",
+    "user-top-read",
+    "user-modify-playback-state",
+];
+
+const SCOPES_URL = SCOPES.join("%20");
+
+const handleClick = () => {
+  window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`
+}
+
 const modifyData2 = async (tok) => {
   var userRef = db.collection("users").doc(auth.currentUser.email);
   console.log("Modifying Data");
@@ -52,7 +68,7 @@ const getSpotifyParams = (hash) => {
 };
 
 
-function onPageLoad(){
+async function onPageLoad(){
   if ( window.location.search.length > 0 ){
       console.log("I should only print after button click")
       handleRedirect();
@@ -85,7 +101,7 @@ const callAuthApi = (body) => {
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.setRequestHeader('Authorization', 'Basic ' + x);
   xhr.send(body);
-  xhr.onload = () => {
+//  xhr.onload = async () => {
     console.log("Handling Response");
     console.log(xhr);
     if (xhr.status == 200) {
@@ -94,20 +110,35 @@ const callAuthApi = (body) => {
       console.log(data);
       console.log(data.access_token);
       if (data.access_token != "") {
-//        real_access_token = data.access_token;
         console.log("modifying data");
         modifyData2(data.access_token);
       }
-      if (data.refresh_token != undefined) {
-//        real_refresh_token = data.refresh_token;
+      if (data.refresh_token != "") {
         console.log("modifying data")
         modifyData3(data.refresh_token);
       }
-  
-  //    onPageLoad();
-    }
+      
+      return;
+//      onPageLoad();
+  //  }
   };
 }
+
+/*
+const callApi = (method, url, body) => {
+  let xhr = new XMLHttpRequest();
+  xhr.open(method, url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+  xhr.send(body);
+  xhr.onload = () => {
+    if (xhr.status == 200) {
+      var data = JSON.parse(xhr.responseText);
+      console.log(data);
+    }
+  }
+}
+*/
 
 /*
 const handleAuthResp = () => {
@@ -198,12 +229,6 @@ function Profile() {
     navigate("/");
   };
 
-
-  useEffect(() => {
-    console.log("I should only print once");
-    onPageLoad();
-  }, [])
-
   const [user, setUser] = useState("");
   useEffect(() => {
     onAuthStateChanged(auth, () => {
@@ -217,11 +242,15 @@ function Profile() {
 
   const [userInfo, setUserInfo] = useState("");
   const getData = async () => {
+    console.log("Logging Data");
     const response = db.collection("users");
     const data = await response.get();
     data.docs.forEach((item) => {
       if (item.data().email == auth.currentUser.email) {
         setUserInfo(item.data());
+        console.log("Logging Current Token");
+        console.log(userInfo);
+        console.log(userInfo);
       }
     });
   };
@@ -230,9 +259,23 @@ function Profile() {
 //    handleRedirect();
 //    console.log("I should only print once")
 //    onPageLoad();
+    console.log("Getting Data 260")
+    getData();
+    console.log("Loading Page 262")
+    onPageLoad();
+    console.log("Getting Data 264")
     getData();
   }, []);
-
+/*
+  useEffect(() => {
+    console.log("Logging UserInfo");
+    console.log(userInfo);
+    if (!userInfo) {
+      console.log("I should only print once!")
+      onPageLoad();
+    }
+  }, [])
+*/
   useEffect(() => {
     if(window.location.hash) {
       const {
@@ -347,7 +390,9 @@ function Profile() {
           )}
           */}
 {      //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
-          }          <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
+//                    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
+}
+          <Button variant="contained" onClick={handleClick}>Click Me</Button>
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
           </Button>
@@ -357,7 +402,8 @@ function Profile() {
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
         Logout
       </Button>
-      <Test />
+      {//<Test />
+}
     </Box>
   );
 }
