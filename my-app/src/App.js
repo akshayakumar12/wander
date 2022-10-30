@@ -25,6 +25,7 @@ import NewTrip from "./frontend/pages/trip/newTrip";
 import NewHome from "./frontend/pages/homepage/newhome";
 
 import Confirm from "./frontend/pages/quiz/quizConf";
+import Loading from "./frontend/pages/quiz/loading";
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
+        <Route path="/loading" element={<Loading />} />
 
         <Route path="/quizhistory" element={<QuizHistory />} />
         <Route path="/tripview" element={<TripView />}></Route>
