@@ -74,7 +74,7 @@ function Quiz() {
     const [currentQuestion, setCurrentQuestion] = useState(0); // keeps track of question number
     const [showEnd, setShowEnd] = useState(false); // Determines whether ending page is shown or not
     const [answers, setAnswers] = useState([]); // keeps track of user's answers
-    const [flag, setFlag] = React.useState(true); // color change? flag = not selected, !flag = selected
+    const [flag, setFlag] = React.useState(false); // color change? flag = not selected, !flag = selected
     const navigate = useNavigate();
     const [selectedAns, setSelectedAns] = useState();
 
@@ -86,7 +86,8 @@ function Quiz() {
     const handleAnsClick = (answerOption) => { 
 
         answers[currentQuestion] = answerOption;
-        //setFlag(!flag);
+        setFlag(!flag);
+
         /*if (answers.length == currentQuestion) { //nothing selected
             answers.push(answerOption)
         } else {
@@ -159,16 +160,17 @@ function Quiz() {
                     <div className='answer-section'>
                         {questions[currentQuestion].answerOptions.map((answerOption, index) => (
                             <>
-                            <Button variant="outlined" sx={{ width: 200, padding: 1, margin: 2 }} 
-                                onClick={() => handleAnsClick(answerOption.answerText)}
-                                color={answerOption.answerText === answers[currentQuestion] ? "success" : "primary"}>
-                            {answerOption.answerText}</Button>
+                            <Button variant="contained" sx={{ width: 200, padding: 1, margin: 2 }} 
+                                color={answerOption.answerText === answers[currentQuestion] ? "success" : "primary"}
+                                onClick={() => {handleAnsClick(answerOption.answerText)}}>
+                            {answerOption.answerText}
+                            </Button>
                             <br></br>
                             </>
                         ))}
                     </div>
-                    <Button variant="contained" sx={{ width: 100, padding: 1, margin: 1 }} onClick={() => handlePrevButtonClick()}> {"Prev"}</Button>
-                    <Button variant="contained" sx={{ width: 100, padding: 1, margin: 1 }} onClick={() => answers[currentQuestion] ? handleNextButtonClick() : alert("Please select an answer")}> {"Next"}</Button>
+                    <Button variant="outlined" sx={{ width: 100, padding: 1, margin: 1 }} onClick={() => handlePrevButtonClick()}> {"Prev"}</Button>
+                    <Button variant="outlined" sx={{ width: 100, padding: 1, margin: 1 }} onClick={() => answers[currentQuestion] ? handleNextButtonClick() : alert("Please select an answer")}> {"Next"}</Button>
                 </>
         	)}
         </div>
