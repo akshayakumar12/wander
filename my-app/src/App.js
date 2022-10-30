@@ -57,7 +57,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
 
-        <Route path="quizhistory" element={<QuizHistory />} />
+        <Route path="/quizhistory" element={<QuizHistory />} />
         <Route path="/tripview" element={<TripView />}></Route>
 
         <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
