@@ -20,22 +20,34 @@ function QuizHistory() {
 
     return unsub;
   }, []);*/
-  useEffect(()=> {
-    onAuthStateChanged(auth, () => {getUserPastQuizData();})
-  }, [])
 
   const getUserPastQuizData = async () => {
-    const response = db.collection('quizAnswersAll');
-    const data = await response.get();
-    data.docs.forEach(item=>{
-        if (item.data().quiz_id == auth.currentUser.email) {
-            userPastQuizzes.push(item.data())
-        }
-    })
-    console.log(userPastQuizzes)
+    try {
+      const response = db.collection('quizAnswersAll');
+      const data = await response.get();
+      const temp = []
+      data.docs.forEach(item=>{
+          if (item.data().quiz_id == auth.currentUser.email) {
+              temp.push(item.data())
+          }
+      })
+
+      // sort temp by time
+      temp.sort((a, b) => b.timestamp - a.timestamp)
+      console.log(temp)
+
+      setUserPastQuizzes(temp);
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
-
+  useEffect(()=> {
+    onAuthStateChanged(auth, () => {
+      getUserPastQuizData();
+    })
+  }, [])
 
   return (
     <Container>
