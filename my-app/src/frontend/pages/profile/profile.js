@@ -424,8 +424,7 @@ function Profile() {
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
         Logout
       </Button>
-      {//<Test />
-}
+      <Test />
     </Box>
   );
 }

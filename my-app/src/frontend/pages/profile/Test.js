@@ -1,20 +1,42 @@
 import React, {useState} from "react";
-import axios from 'axios';
+import {auth, db} from "../../../firebase"
 
 //const ACCESS_TOKEN = "BQB_beh1V_60gRpN2LWPeYWv119TizcGm_vQQ3KGTBQrJyGQPNi6KDQ-GktV0XvBLQKKLVRMAN61F9C80lf61EvLJO6Nx-NjIRAjNvkucAv17_G8HUx0xB-jWeOGXqoMg1c-jpLiFP1fyHuMC3Jzomqs1ZafOHo-9F7tSYFba-eRdeJibSdPKt2v"
 
 const SpotifyGetPlaylists = () => {
-    const ACCESS_TOKEN = "BQDvcV_4OrzR8cIh6XYDpzywbLVSpP1iM7feJZGqhJykW1DdwBNOFXutOMAJ6qfmOYNUUv2IDPjPoaoaTKm7z54wcvAQO6G6DCM9TdZXRk0gbkqTpftWIoPcE6g5ct4oD5LvDwU82T9YTD8r2qJDJnhdpeif9rJHd_y7XpVS9btHG4xr_1qna0AT"
-    const [data, setData] = useState({});
+    
+    const [userInfo, setUserInfo] = useState("");
+    const getData = async () => {
+    console.log("Logging Data");
+    const response = db.collection("users");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      if (item.data().email == auth.currentUser.email) {
+        setUserInfo(item.data());
+        console.log("Logging Current Token");
+        console.log(userInfo);
+        console.log(userInfo);
+      }
+    });
+    };
 
     const handleGetPlaylists = () => {
-        axios.get("https://api.spotify.com/v1/me/playlists", {
-            headers: {
-                Authorization: `Bearer ${ACCESS_TOKEN}`,
-            },
-        }).then(response => {
-            setData(response.data);
-        })
+        getData();
+        if (userInfo == undefined) {
+            handleGetPlaylists();
+        }
+        console.log(userInfo.real_access_token)
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.spotify.com/v1/me/playlists", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + userInfo.real_access_token);
+        xhr.send(null);
+        xhr.onload = () => {
+            if (xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+                console.log(data);
+            }
+        }
     }
 
     return <button onClick={handleGetPlaylists}>Get Playlists</button>
