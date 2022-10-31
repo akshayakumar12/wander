@@ -359,7 +359,6 @@ function Profile() {
               sx={{ width: 150, height: 150 }}
             />
           </Box>
-
           {/* User Information */}
           <Stack direction="column" spacing={1}>
             <h2>
@@ -421,10 +420,17 @@ function Profile() {
         </Stack>
       </Stack>
   
+      <h2>Your Top Artists</h2>
+
+      <Stack spacing={2} justifyContent="center" direction="row">
+        <Test />
+      </Stack>
+
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
         Logout
       </Button>
-      <Test />
+    {//  <Test />
+    }
     </Box>
   );
 }
