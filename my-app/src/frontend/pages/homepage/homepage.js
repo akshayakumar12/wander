@@ -25,7 +25,7 @@ function Home() {
         }}
         disableTouchRipple="true"
       >
-        <CardActionArea>
+        <CardActionArea onClick={() => navigate("../expandedTrip")}>
           <CardContent sx={{ marginX: "1%" }}>
             {" "}
             <h2

@@ -26,6 +26,7 @@ import NewHome from "./frontend/pages/homepage/newhome";
 
 import Confirm from "./frontend/pages/quiz/quizConf";
 import Loading from "./frontend/pages/quiz/loading";
+import ExpandedTrip from "./frontend/pages/trip/expandedTrip";
 
 function App() {
   const location = useLocation();
@@ -60,7 +61,8 @@ function App() {
         <Route path="/loading" element={<Loading />} />
 
         <Route path="/quizhistory" element={<QuizHistory />} />
-        <Route path="/tripview" element={<TripView />}></Route>
+        <Route path="/tripview" element={<TripView />} />
+        <Route path="/expandedTrip" element={<ExpandedTrip />} />
 
         <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
 
