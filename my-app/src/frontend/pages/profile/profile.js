@@ -36,6 +36,11 @@ const handleClick = () => {
   window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`
 }
 
+const handleDisconnect = () => {
+  modifyData2("");
+  modifyData3("");
+}
+
 const modifyData2 = async (tok) => {
   const currentUser = auth.currentUser;
   if (currentUser) {
@@ -125,11 +130,11 @@ const callAuthApi = (body) => {
       var data = JSON.parse(xhr.responseText);
       console.log(data);
       console.log(data.access_token);
-      if (data.access_token != "") {
+      if (data.access_token != undefined) {
         console.log("modifying data");
         modifyData2(data.access_token);
       }
-      if (data.refresh_token != "") {
+      if (data.refresh_token != undefined) {
         console.log("modifying data")
         modifyData3(data.refresh_token);
       }
@@ -408,7 +413,8 @@ function Profile() {
 {      //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
 //                    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
 }
-          <Button variant="contained" onClick={handleClick}>Click Me</Button>
+          <Button variant="contained" onClick={handleClick}>Connect to Spotify</Button>
+          <Button variant="contained" onClick={handleDisconnect}>Disconnect from Spotify</Button>
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
           </Button>
