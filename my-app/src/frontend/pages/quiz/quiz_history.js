@@ -5,6 +5,13 @@ function quizHistory() {
   return (
     <Container>
       <Stack
+        alignItems={"flex-start"}
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+      >
+        <h1>Past Quiz Preferences</h1>
+      </Stack>
+
+      <Stack
         justifyContent="center"
         direction={"column"}
         spacing={4}

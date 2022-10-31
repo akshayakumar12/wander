@@ -25,12 +25,16 @@ import NewTrip from "./frontend/pages/trip/newTrip";
 import NewHome from "./frontend/pages/homepage/newhome";
 
 import Confirm from "./frontend/pages/quiz/quizConf";
+import Loading from "./frontend/pages/quiz/loading";
+import ExpandedTrip from "./frontend/pages/trip/expandedTrip";
 
 function App() {
   const location = useLocation();
   console.log("pathname", location);
   const hideHeader =
-    location.pathname === "/" || location.pathname === "/register" ? null : (
+    location.pathname === "/" ||
+    location.pathname === "/register" ||
+    location.pathname === "/profileSetup" ? null : (
       <Header></Header>
     );
   return (
@@ -54,9 +58,11 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
+        <Route path="/loading" element={<Loading />} />
 
-        <Route path="quizhistory" element={<QuizHistory />} />
-        <Route path="/tripview" element={<TripView />}></Route>
+        <Route path="/quizhistory" element={<QuizHistory />} />
+        <Route path="/tripview" element={<TripView />} />
+        <Route path="/expandedTrip" element={<ExpandedTrip />} />
 
         <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
 
