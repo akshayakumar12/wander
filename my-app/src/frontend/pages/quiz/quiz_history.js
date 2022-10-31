@@ -56,7 +56,9 @@ function QuizHistory() {
       <div className='card-section'>
           {userPastQuizzes.map((curCard) => (
               <>
-              <Card><h4 align="left">{curCard.quiz_ans}</h4></Card>
+              <Card sx={{ padding: "1%" }}>
+                {curCard.quiz_ans}
+              </Card>
               <br></br>
               </>
           ))}
