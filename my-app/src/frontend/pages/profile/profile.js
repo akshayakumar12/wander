@@ -37,21 +37,37 @@ const handleClick = () => {
 }
 
 const modifyData2 = async (tok) => {
-  var userRef = db.collection("users").doc(auth.currentUser.email);
-  console.log("Modifying Data");
-  userRef.set(
-    {real_access_token: tok},
-    {merge: true}
-  )
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    var userRef = db.collection("users").doc(currentUser?.email);
+    await new Promise(r => setTimeout(r, 2000));
+    console.log("Modifying Data");
+    userRef ? userRef.set(
+      {real_access_token: tok},
+      {merge: true}
+    ) : await new Promise(r => setTimeout(r, 2000));
+  } else {
+//    console.log("Waiting")
+    await new Promise(r => setTimeout(r, 2000));
+    modifyData2();
+  }
 };
 
 const modifyData3 = async (tok) => {
-  var userRef = db.collection("users").doc(auth.currentUser.email);
-  console.log("Modifying Data");
-  userRef.set(
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    var userRef = db.collection("users").doc(currentUser?.email);
+    await new Promise(r => setTimeout(r, 2000));
+    console.log("Modifying Data");
+    userRef ? userRef.set(
     {real_refresh_token: tok},
     {merge: true}
-  )
+  ) : await new Promise(r => setTimeout(r, 2000));
+  } else {
+//    console.log("Waiting")
+    await new Promise(r => setTimeout(r, 2000));
+    modifyData3();
+  }
 };
 
 const getSpotifyParams = (hash) => {
@@ -101,7 +117,7 @@ const callAuthApi = (body) => {
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.setRequestHeader('Authorization', 'Basic ' + x);
   xhr.send(body);
-//  xhr.onload = async () => {
+  xhr.onload = async () => {
     console.log("Handling Response");
     console.log(xhr);
     if (xhr.status == 200) {
@@ -117,10 +133,10 @@ const callAuthApi = (body) => {
         console.log("modifying data")
         modifyData3(data.refresh_token);
       }
-      
+//      window.location.reload(false);
       return;
 //      onPageLoad();
-  //  }
+    }
   };
 }
 
