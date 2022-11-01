@@ -69,7 +69,18 @@ function QuizHistory() {
           {userPastQuizzes.map((curCard) => (
               <>
               <Card sx={{ padding: "1%" }}>
-                {curCard.quiz_ans}
+                <CardActionArea>
+                  <h4 align="left">
+                    {/*curCard.timestamp.toDate().getTime()*/
+                      curCard.timestamp.toDate().toString()
+                    }
+                  </h4>
+                  <body>
+                    <ul align="left">
+                      <li>{curCard.quiz_ans}</li>
+                    </ul>
+                  </body>
+                </CardActionArea>
               </Card>
               <br></br>
               </>
