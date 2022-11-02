@@ -18,7 +18,6 @@ import { useLocation } from "react-router-dom";
 import QuizHistory from "./frontend/pages/quiz/quiz_history";
 import TripView from "./frontend/pages/trip/trip";
 
-import PastQuizPref from "./frontend/pages/quiz/pastQuizPref";
 import ProfileSetup from "./frontend/pages/register/profileSetup";
 
 import NewTrip from "./frontend/pages/trip/newTrip";
@@ -63,8 +62,6 @@ function App() {
         <Route path="/quizhistory" element={<QuizHistory />} />
         <Route path="/tripview" element={<TripView />} />
         <Route path="/expandedTrip" element={<ExpandedTrip />} />
-
-        <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
 
         <Route path="/newtrip" element={<NewTrip></NewTrip>} />
         <Route path="/newhome" element={<NewHome></NewHome>} />
