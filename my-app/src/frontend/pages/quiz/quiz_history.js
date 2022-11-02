@@ -2,13 +2,11 @@ import { Button, Card, CardActionArea, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../../../firebase";
+import { auth, db, firestore } from "../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function QuizHistory() {
-  const [pastQuizzes, setPastQuizzes] = useState([{ quiz_id: "Loading...", quiz_ans: "initial" }]);
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
-  const [currentCard, setCurrentCard] = useState(0); // keeps track of card number
 
   /*useEffect(() => {
     const collectionRef = collection(db, "quizAnswersAll");
@@ -20,6 +18,47 @@ function QuizHistory() {
 
     return unsub;
   }, []);*/
+
+  const deleteAllQuizData = async () => {
+    try {
+      const response = db.collection('quizAnswersAll');
+      const data = await response.get();
+      const temp = []
+      /*data.docs.forEach(item=>{
+          if (item.data().quiz_id == auth.currentUser.email) {
+              item.remove();
+          }
+      })*/
+
+      /*db.ref('quizAllAnswers').on('value', snapshot => {
+        snapshot.forEach(snap => {
+          if(snap.val().quiz_id == auth.currentUser.email){
+            snap.ref.remove()
+            console.log("in")
+          };
+       });
+      });*/
+
+      /*const query = db.collection('quizAllAnswers')
+      console.log(query)
+      query.get().then(function(querySnapshot) {
+        console.log(querySnapshot)
+        querySnapshot.forEach(function(doc) {
+          console.log("foreach")
+          if (doc.data().email == auth.currentUser.email) {
+            doc.ref.delete();
+          }
+        });
+      });*/
+
+      temp.push("NO QUIZZES")
+      setUserPastQuizzes(temp);
+      console.log(userPastQuizzes)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  };
 
   const getUserPastQuizData = async () => {
     try {
@@ -65,32 +104,38 @@ function QuizHistory() {
         alignItems="center"
         marginTop={4}
       >
+      
       <div className='card-section'>
+          { userPastQuizzes[0] == "NO QUIZZES" ? (<h1>You have no quizzes in your history </h1>) : (
+          <>
           {userPastQuizzes.map((curCard) => (
-              <>
-              <Card sx={{ padding: "1%" }}>
-                <CardActionArea>
-                  <h4 align="left">
-                    {/*curCard.timestamp.toDate().getTime()*/
-                      curCard.timestamp.toDate().toString()
-                    }
-                  </h4>
-                  <body>
-                    <ul align="left">
-                      <li>{curCard.quiz_ans}</li>
-                    </ul>
-                  </body>
-                </CardActionArea>
-              </Card>
-              <br></br>
-              </>
+            <>
+            <Card sx={{ padding: "1%" }}>
+              <CardActionArea>
+                <h4 align="left">
+                  {/*curCard.timestamp.toDate().getTime()*/
+                    curCard.timestamp.toDate().toString()
+                  }
+                </h4>
+                <body>
+                  <ul align="left">
+                    <li>{curCard.quiz_ans}</li>
+                  </ul>
+                </body>
+              </CardActionArea>
+            </Card>
+            <br></br>
+            </>
           ))}
+          </>
+        )}
       </div>
       </Stack>
 
       <Button
         sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
         variant="contained"
+        onClick={() => {deleteAllQuizData()}}
       >
         Delete History
       </Button>
