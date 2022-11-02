@@ -37,8 +37,11 @@ const handleClick = () => {
 }
 
 const handleDisconnect = () => {
+  console.log("Removing Access Token");
   modifyData2("");
+  console.log("Removing Refresh Token");
   modifyData3("");
+//  window.location.reload(false);
 }
 
 const modifyData2 = async (tok) => {
@@ -139,8 +142,8 @@ const callAuthApi = (body) => {
         modifyData3(data.refresh_token);
       }
 //      window.location.reload(false);
-      return;
-//      onPageLoad();
+//      return;
+      onPageLoad();
     }
   };
 }
@@ -419,12 +422,14 @@ function Profile() {
           </Button>
         </Stack>
       </Stack>
-  
-      <h2>Your Top Artists</h2>
 
-      <Stack spacing={2} justifyContent="center" direction="row">
-        <Test />
-      </Stack>
+        {userInfo.real_access_token?
+          <> <h2>Your Top Artists</h2>
+          <Stack spacing={2} justifyContent="center" direction="row">
+          <Test /> </Stack>
+          <h2>Your Top Tracks</h2> </>: <></>
+          
+        }
 
       <Button onClick={logout_fb} style={{ position: "absolute", bottom: 40 }}>
         Logout

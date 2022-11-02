@@ -51,12 +51,14 @@ const SpotifyGetPlaylists = () => {
     }
 
     if (!userInfo) {
-        getData();
+        setTimeout(getData, 1000);
     }
 
     if (!playlistInfo) {
-        handleGetPlaylists();
+        setTimeout(handleGetPlaylists, 1000);
+//        handleGetPlaylists();
     }
+    
 
     return (
         <Box>
