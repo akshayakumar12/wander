@@ -55,7 +55,8 @@ function Home() {
                         >
                           Source Location:
                         </p>
-
+                          {//<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
+                          }
                         <p
                           align="Left"
                           style={{
