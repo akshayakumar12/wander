@@ -124,7 +124,7 @@ export default function ProfileSetup() {
                       uppercase={false}
                       style={{ fontSize: "12px" }}
                     >
-                      Delete Profile Picture
+                      Upload Profile Picture
                     </Button>
                   </Stack>
                 </Stack>
