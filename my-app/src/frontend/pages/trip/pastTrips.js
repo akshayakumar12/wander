@@ -22,24 +22,6 @@ export default function PastTrips() {
   const [noPast, setNoPast] = useState(false);
   const [show, setShow] = useState(false);
 
-  /*const trips = [
-		{
-			source: "Indiana",
-			dest: "Alabama",
-      playlist: "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?si=552ad61f22504731/?utm_source=generator"
-		},
-    {
-			source: "LA",
-			dest: "San Francisco",
-      playlist: "https://open.spotify.com/embed/playlist/37i9dQZEVXbMDoHDwVN2tF?si=60a9c8c7bc9940f8/?utm_source=generator"
-		},
-    {
-			source: "Ohio",
-			dest: "Ohio",
-      playlist: "https://open.spotify.com/embed/playlist/37i9dQZF1DX2L0iB23Enbq?si=5d2cef0520924318?utm_source=generator"
-		}
-  ];*/
-
   const getUserPastTripData = async () => {
     try {
       const response = db.collection('pastTrips');
@@ -72,12 +54,51 @@ export default function PastTrips() {
     })
   }, [])
 
+  const deleteAllTripData = async () => {
+    try {
+      const response = db.collection('pastTrips');
+      const data = await response.get();
+      const temp = []
+      data.docs.forEach((item) =>{
+          if (item.data().email == auth.currentUser.email) {
+              item.ref.delete();
+          }
+      })
+
+      setNoPast(true);
+      setUserPastTrips(temp)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  };
+
   return (
     show ? (
     <>
       <Stack alignItems={"center"} marginTop="2%" spacing={2}>
         <h1 align="left">Past Trips</h1>
 
+      {noPast ? (
+          <>
+          <Stack
+                justifyContent="center"
+                direction={"column"}
+                spacing={4}
+                alignItems="center"
+                marginTop={4}
+              >
+          <h2>You have no past trips</h2>
+          <Button
+                disabled
+                sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
+                variant="contained">
+                Delete History
+          </Button>
+          </Stack>
+          </>
+      ) : (
+        <>
         {userPastTrips.map((currentTrip) => (
             <Card
             sx={{
@@ -205,6 +226,16 @@ export default function PastTrips() {
             </CardActionArea>
           </Card>
         ))} {/*end of mapping*/}
+
+        <Button
+          sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
+          variant="contained"
+          onClick={() => { deleteAllTripData() } }
+        >
+            Delete History
+        </Button>
+        </>
+        )}
       </Stack>
     </>
     ) :
