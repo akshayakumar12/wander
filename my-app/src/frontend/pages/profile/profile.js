@@ -32,7 +32,7 @@ const SCOPES = [
 
 const SCOPES_URL = SCOPES.join("%20");
 
-const handleClick = () => {
+const handleClick2 = () => {
   window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`
 }
 
@@ -415,7 +415,7 @@ function Profile() {
 {      //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
 //                    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
 }
-          <Button variant="contained" onClick={handleClick}>Connect to Spotify</Button>
+          <Button variant="contained" onClick={handleClick2}>Connect to Spotify</Button>
           <Button variant="contained" onClick={handleDisconnect}>Disconnect from Spotify</Button>
           <Button variant="contained" onClick={pastQuizPref_click}>
             Past Quiz Preferences
