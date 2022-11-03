@@ -36,7 +36,7 @@ function ForgotPassword() {
           <h1 style={{ textAlign: "left" }}>Forgot Password</h1>
           <p style={{ textAlign: "left" }}>
             {" "}
-            Enter your email address to reset your password
+            Enter your email address to reset your password.
           </p>
           <TextField label="Email Address" />
           <Stack
