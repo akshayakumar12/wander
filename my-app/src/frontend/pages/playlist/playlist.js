@@ -6,7 +6,7 @@ function Playlist() {
       <h2>Playlist for your current trip</h2>
       <body>
         <iframe
-          src="https://open.spotify.com/embed/playlist/37i9dQZF1DXca8AyWK6Y7g?utm_source=generator"
+          src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
           width="100%"
           height={700}
         ></iframe>
