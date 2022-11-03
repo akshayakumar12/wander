@@ -1,20 +1,18 @@
-import { doc, setDoc, addDoc, collection } from 'firebase/firestore/lite';
-import { auth, firestore } from '../../../firebase';
+import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore/lite';
+import { db, auth, firestore} from '../../../firebase';
 
 async function QuizSend(email, answers) {
-  const docRef = doc(firestore, "quizAnswers", email);
+
   const data = {
     quiz_id: email,
     quiz_ans: answers,
+    timestamp: serverTimestamp()
   };
 
+    const docRef = doc(firestore, "quizAnswers", email);
     await setDoc(docRef, data);
 
-    /*await addDoc(collection(firestore, "quizAnswers"), 
-    {
-        quiz_id: qid,
-        quiz_ans: answers,
-    });*/
+    await addDoc(collection(firestore, "quizAnswersAll"), data);
 }
 
 export default QuizSend;
