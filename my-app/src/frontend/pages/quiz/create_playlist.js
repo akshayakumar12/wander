@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import firebase from 'firebase/compat/app'
+import { serverTimestamp } from "firebase/firestore/lite";
 
 //const ACCESS_TOKEN = "BQB_beh1V_60gRpN2LWPeYWv119TizcGm_vQQ3KGTBQrJyGQPNi6KDQ-GktV0XvBLQKKLVRMAN61F9C80lf61EvLJO6Nx-NjIRAjNvkucAv17_G8HUx0xB-jWeOGXqoMg1c-jpLiFP1fyHuMC3Jzomqs1ZafOHo-9F7tSYFba-eRdeJibSdPKt2v"
 let trackInfo = null;
@@ -27,6 +28,19 @@ const modifyData2 = async (tok) => {
       await new Promise(r => setTimeout(r, 2000));
       modifyData2();
     }
+};
+
+const sendToPastTrips = async (embedLink) => {
+    const response = db.collection('pastTrips');
+    const data = await response.get();
+    const temp = []
+    data.docs.forEach((item) =>{
+        if (item.data().email == auth.currentUser.email && item.data().latest) {
+            item.ref.update({
+                playlist: embedLink
+            });
+        }
+    })
 };
 
 const SpotifyGetPlaylists = () => {
@@ -228,7 +242,8 @@ const SpotifyGetPlaylists = () => {
                 embedSrc += "?utm_source=generator";
                 console.log("Logging Embed Link");
                 console.log(embedSrc);
-                modifyData2(playlistID);
+                //modifyData2(playlistID);
+                sendToPastTrips(embedSrc);
             }
         }
     }
