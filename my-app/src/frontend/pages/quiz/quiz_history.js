@@ -24,11 +24,12 @@ function QuizHistory() {
       const response = db.collection('quizAnswersAll');
       const data = await response.get();
       const temp = []
-      /*data.docs.forEach(item=>{
+      data.docs.forEach((item) =>{
           if (item.data().quiz_id == auth.currentUser.email) {
-              item.remove();
+              item.ref.delete();
           }
-      })*/
+      })
+      db.collection("quizAnswers").doc(auth.currentUser.email).delete();
 
       /*db.ref('quizAllAnswers').on('value', snapshot => {
         snapshot.forEach(snap => {
@@ -40,20 +41,27 @@ function QuizHistory() {
       });*/
 
       /*const query = db.collection('quizAllAnswers')
-      console.log(query)
-      query.get().then(function(querySnapshot) {
-        console.log(querySnapshot)
-        querySnapshot.forEach(function(doc) {
+      query.get().then((querySnapshot) => {
+        querySnapshot.docs.forEach((snap) => {
           console.log("foreach")
-          if (doc.data().email == auth.currentUser.email) {
-            doc.ref.delete();
+          if (snap.data().email == auth.currentUser.email) {
+            snap.ref.delete();
           }
+        });
+      });
+
+      db.collection("quizAnswers").doc(auth.currentUser.email).delete();*/
+
+      /*const dbRef = db.database().ref("quizAllAnswers");
+      dbRef.orderByChild('quiz_id').equalTo(auth.currentUser.email).once('value', (snapshot)=> {
+        snapshot.forEach((childSnapshot)=> {
+          let nodeKey = childSnapshot.key;
+          db.database().ref("quizAllAnswers").child(nodeKey).remove();
         });
       });*/
 
       temp.push("NO QUIZZES")
-      setUserPastQuizzes(temp);
-      console.log(userPastQuizzes)
+      setUserPastQuizzes(temp)
     }
     catch (error) {
       console.log(error)
@@ -74,6 +82,10 @@ function QuizHistory() {
       // sort temp by time
       temp.sort((a, b) => b.timestamp - a.timestamp)
       console.log(temp)
+
+      if (temp.length == 0) {
+        temp.push("NO QUIZZES");
+      }
 
       setUserPastQuizzes(temp);
     }
