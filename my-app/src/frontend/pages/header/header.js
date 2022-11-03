@@ -124,7 +124,7 @@ function Header() {
               <ListItem disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    navigate("/pasttrips");
+                    navigate("/pastTrips");
                     setDrawerOpen(false);
                   }}
                 >
