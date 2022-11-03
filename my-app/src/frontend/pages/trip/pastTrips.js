@@ -71,29 +71,37 @@ export default function PastTrips() {
     }
   };
 
-  const [age, setAge] = React.useState("");
+  const [filter, setFilter] = React.useState("");
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setFilter(event.target.value);
   };
   return show ? (
     <>
-      <Stack alignItems={"center"} marginTop="2%" spacing={2}>
-        <h1 align="left">Past Trips</h1>
-
-        <FormControl align="right">
-          <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Age"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>3 Months</MenuItem>
-            <MenuItem value={20}>6 Months</MenuItem>
-            <MenuItem value={30}>12 Months</MenuItem>
-          </Select>
-        </FormControl>
+      <Stack marginX="20%" marginTop="2%" spacing={2}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          width="100%"
+          alignItems="center"
+        >
+          <h1 align="left">Past Trips</h1>
+          <Box sx={{ width: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filter}
+                label="Filter"
+                onChange={handleChange}
+              >
+                <MenuItem value={3}>3 Months</MenuItem>
+                <MenuItem value={6}>6 Months</MenuItem>
+                <MenuItem value={12}>12 Months</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
 
         {noPast ? (
           <>
@@ -124,7 +132,7 @@ export default function PastTrips() {
             {userPastTrips.map((currentTrip) => (
               <Card
                 sx={{
-                  width: "60%",
+                  width: "100%",
                   height: "80%",
                   bgcolor: "#F5F7FA",
                   borderRadius: "16px",
