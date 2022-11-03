@@ -7,6 +7,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function QuizHistory() {
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
+  const [noPast, setNoPast] = useState(false);
 
   /*useEffect(() => {
     const collectionRef = collection(db, "quizAnswersAll");
@@ -60,7 +61,7 @@ function QuizHistory() {
         });
       });*/
 
-      temp.push("NO QUIZZES")
+      setNoPast(true);
       setUserPastQuizzes(temp)
     }
     catch (error) {
@@ -84,7 +85,7 @@ function QuizHistory() {
       console.log(temp)
 
       if (temp.length == 0) {
-        temp.push("NO QUIZZES");
+        setNoPast(true);
       }
 
       setUserPastQuizzes(temp);
@@ -106,51 +107,75 @@ function QuizHistory() {
         alignItems={"flex-start"}
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
-        <h1>Past Quiz Preferences</h1>
+        <h1>Quiz History</h1>
       </Stack>
 
+    { noPast ? (
+    
+    <>
+    <Stack
+          justifyContent="center"
+          direction={"column"}
+          spacing={4}
+          alignItems="center"
+          marginTop={4}
+        >
+    <h1>You have no quizzes in your history </h1>
+    <Button
+          disabled
+          sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
+          variant="contained">
+          Delete History
+    </Button>
+    </Stack>
+    </>
+    
+    ) : ( 
+      <>
       <Stack
-        justifyContent="center"
-        direction={"column"}
-        spacing={4}
-        alignItems="center"
-        marginTop={4}
-      >
-      
-      <div className='card-section'>
-          { userPastQuizzes[0] == "NO QUIZZES" ? (<h1>You have no quizzes in your history </h1>) : (
-          <>
-          {userPastQuizzes.map((curCard) => (
-            <>
-            <Card sx={{ padding: "1%" }}>
-              <CardActionArea>
-                <h4 align="left">
-                  {/*curCard.timestamp.toDate().getTime()*/
-                    curCard.timestamp.toDate().toString()
-                  }
-                </h4>
-                <body>
-                  <ul align="left">
-                    <li>{curCard.quiz_ans}</li>
-                  </ul>
-                </body>
-              </CardActionArea>
-            </Card>
-            <br></br>
-            </>
-          ))}
-          </>
-        )}
-      </div>
-      </Stack>
+          justifyContent="center"
+          direction={"column"}
+          spacing={4}
+          alignItems="center"
+          marginTop={4}
+        >
 
-      <Button
-        sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
-        variant="contained"
-        onClick={() => {deleteAllQuizData()}}
-      >
-        Delete History
-      </Button>
+
+          <div className='card-section'>
+            <>
+              {userPastQuizzes.map((curCard) => (
+                <>
+                  <Card sx={{ padding: "1%" }}>
+                    <CardActionArea>
+                      <h4 align="left">
+                        {/*curCard.timestamp.toDate().getTime()*/curCard.timestamp.toDate().toString()}
+                      </h4>
+                      <body>
+                        <ul align="left">
+                          <li>{curCard.quiz_ans}</li>
+                        </ul>
+                      </body>
+                    </CardActionArea>
+                  </Card>
+                  <br></br>
+                </>
+              ))}
+            </>
+
+          </div>
+
+        </Stack>
+        
+        <Button
+          sx={{ bottom: 0, right: "4%", position: "absolute", bottom: "1%" }}
+          variant="contained"
+          onClick={() => { deleteAllQuizData(); } }
+        >
+            Delete History
+          </Button>
+        </>
+    )}
+
     </Container>
   );
 }
