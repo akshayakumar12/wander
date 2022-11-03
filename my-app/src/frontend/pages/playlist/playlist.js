@@ -1,12 +1,12 @@
 import Button from "@mui/material/Button";
 
-function Playlist() {
+function Playlist(props) {
   return (
     <div>
-      <h2>Playlist for your current trip</h2>
+      <h2>{props.text}</h2>
       <body>
         <iframe
-          src="https://open.spotify.com/embed/playlist/37i9dQZF1DXca8AyWK6Y7g?utm_source=generator"
+          src={props.src}
           width="100%"
           height={700}
         ></iframe>

@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   FormControl,
   FormControlLabel,
@@ -10,25 +11,42 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+
+import { useState } from 'react';
+import { useJsApiLoader, AutoComplete } from '@react-google-maps/api';
+
+
 function NewTrip() {
   const navigate = useNavigate();
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ['places']
+  })
+
   return (
     <>
       <Container sx={{ justifyContent: "left" }} disableGutters="true">
         <Stack alignItems="flex-start" spacing={4}>
           <h1 align="left">Create Trip</h1>
+          
           <h3 align="left">Starting Location</h3>
-          <TextField
-            label="Starting Location"
-            variant="outlined"
-            style={{ width: "50%" }}
-          ></TextField>
+          <Autocomplete>
+            <TextField
+              label = "Source"
+              variant="outlined"
+              style={{ width: "50%" }}
+            />
+          </Autocomplete>
+          
           <h3 align="left">Destination</h3>
-          <TextField
-            label="Destination"
-            variant="outlined"
-            style={{ width: "50%" }}
-          ></TextField>
+          <Autocomplete>
+            <TextField
+              label="Destination"
+              variant="outlined"
+              style={{ width: "50%" }}
+            />
+          </Autocomplete>
+          
           <FormControl>
             <FormLabel>Travel Preference</FormLabel>
             <RadioGroup>
@@ -40,6 +58,7 @@ function NewTrip() {
               />
             </RadioGroup>
           </FormControl>
+          
           <Button
             variant="contained"
             display="flex"
@@ -52,13 +71,14 @@ function NewTrip() {
               width: "12%",
               marginTop: "1%",
             }}
-            onClick={() => navigate("../quiz")}
+            onClick={() => navigate("../quiz") }
           >
-            Submit Changes
+            Create Trip
           </Button>
         </Stack>
       </Container>
     </>
   );
 }
+
 export default NewTrip;
