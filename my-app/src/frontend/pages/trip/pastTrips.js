@@ -28,7 +28,7 @@ export default function PastTrips() {
       const data = await response.get();
       const temp = [];
       data.docs.forEach((item) => {
-        if (item.data().email == auth.currentUser.email) {
+        if (item.data().email === auth.currentUser.email) {
           temp.push(item.data());
         }
       });
@@ -37,7 +37,7 @@ export default function PastTrips() {
       temp.sort((a, b) => b.timestamp - a.timestamp);
       console.log(temp);
 
-      if (temp.length == 0) {
+      if (temp.length === 0) {
         setNoPast(true);
       }
 
@@ -59,7 +59,7 @@ export default function PastTrips() {
       const data = await response.get();
       const temp = [];
       data.docs.forEach((item) => {
-        if (item.data().email == auth.currentUser.email) {
+        if (item.data().email === auth.currentUser.email) {
           item.ref.delete();
         }
       });
@@ -116,7 +116,7 @@ export default function PastTrips() {
               <Button
                 disabled
                 sx={{
-                  bottom: 0,
+                  //bottom: 0,
                   right: "4%",
                   position: "absolute",
                   bottom: "1%",
@@ -133,7 +133,7 @@ export default function PastTrips() {
               <Card
                 sx={{
                   width: "100%",
-                  height: "80%",
+                  height: "100%",
                   bgcolor: "#F5F7FA",
                   borderRadius: "16px",
                   boxShadow: 3,
@@ -155,7 +155,7 @@ export default function PastTrips() {
                         sx={{
                           boxShadow: "3",
                           borderRadius: "16px",
-                          width: "70%",
+                          width: "60%",
                           height: "100%",
                         }}
                       >
@@ -211,9 +211,9 @@ export default function PastTrips() {
                         sx={{
                           boxShadow: "3",
                           borderRadius: "16px",
-                          width: "30%",
+                          width: "40%",
                           height: "100%",
-                          maxHeight: 140,
+                          maxHeight: 225,
                         }}
                       >
                         <CardActionArea
@@ -224,24 +224,26 @@ export default function PastTrips() {
                         >
                           <CardContent width="100%" height="1000px">
                             <Stack
-                              direction="row"
+                              direction="column"
                               width="100%"
                               height="100%"
                               justifyContent="center"
                             >
-                              {/*<p
-                            align="center"
-                            style={{
-                              fontSize: "17px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            <LibraryMusicIcon sx={{ paddingTop: "10%" }} />{" "}
-                            Playlist
-                          </p>*/}
-                              <Playlist src={currentTrip.playlist}></Playlist>
+                              <p
+                                align="center"
+                                style={{
+                                  fontSize: "17px",
+                                  fontWeight: "bold",
+                                  margin: "0",
+                                  marginTop: "3%",
+                                  marginBottom: "3%",
+                                }}
+                              >
+                                <LibraryMusicIcon sx={{}} /> Playlist
+                              </p>
+                              <Stack sx={{ height: "500px" }}>
+                                <Playlist src={currentTrip.playlist}></Playlist>
+                              </Stack>
                             </Stack>
                           </CardContent>
                         </CardActionArea>
@@ -255,7 +257,7 @@ export default function PastTrips() {
             {/*end of mapping*/}
             <Button
               sx={{
-                bottom: 0,
+                //bottom: 0,
                 right: "4%",
                 position: "absolute",
                 bottom: "1%",
