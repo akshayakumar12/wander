@@ -78,7 +78,6 @@ function Home() {
                   <Card
                     sx={{
                       maxHeight: 140,
-
                       maxWidth: "100%",
                       boxShadow: "3",
                       borderRadius: "16px",
@@ -88,7 +87,10 @@ function Home() {
                       onClick={() => navigate("../playlist")}
                       sx={{ paddingBottom: "2%" }}
                     >
-                      <Playlist></Playlist>
+                      <Playlist 
+                        text={"Playlist for your current trip"} 
+                        src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator">
+                      </Playlist>
                     </CardActionArea>
                   </Card>
                 </Stack>
