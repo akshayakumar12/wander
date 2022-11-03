@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import { auth, db } from "../../../firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import Quiz, { resultAns } from "./quiz";
+import Create from "./create_playlist"
 
 function Result() {
 
@@ -47,7 +48,6 @@ function Result() {
           <Card>
             <CardContent>{quizData?.quiz_ans}</CardContent>
           </Card>
-
           {/*
           <Card>
             <CardContent>Christain Rock</CardContent>
@@ -63,6 +63,7 @@ function Result() {
           */}
         </Stack>
       </div>
+      <Create />
       </>
   );
 }

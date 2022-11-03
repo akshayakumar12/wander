@@ -36,6 +36,8 @@ const SCOPES = [
     "user-read-playback-state",
     "user-top-read",
     "user-modify-playback-state",
+    "playlist-modify-private",
+    "playlist-modify-public"
 ];
 
 const SCOPES_URL = SCOPES.join("%20");
