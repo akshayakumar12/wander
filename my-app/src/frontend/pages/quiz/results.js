@@ -56,6 +56,7 @@ function Result() {
           </Card>
         </Stack>
       </div>
+      <Create />
     </>
     ) : (
       <>
