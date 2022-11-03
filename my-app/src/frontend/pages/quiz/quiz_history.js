@@ -1,24 +1,14 @@
 import { Button, Card, CardActionArea, Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { auth, db, firestore } from "../../../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth, db} from "../../../firebase";
+import { onAuthStateChanged} from "firebase/auth";
+import Loading from "./loading";
 
 function QuizHistory() {
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
   const [noPast, setNoPast] = useState(false);
-
-  /*useEffect(() => {
-    const collectionRef = collection(db, "quizAnswersAll");
-    const q = query(collectionRef, orderBy("timestamp", "desc"));
-
-    const unsub = onSnapshot(q, (snapshot) =>
-      setPastQuizzes(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.ids })))
-    );
-
-    return unsub;
-  }, []);*/
+  const [show, setShow] = useState(false);
 
   const deleteAllQuizData = async () => {
     try {
@@ -31,35 +21,6 @@ function QuizHistory() {
           }
       })
       db.collection("quizAnswers").doc(auth.currentUser.email).delete();
-
-      /*db.ref('quizAllAnswers').on('value', snapshot => {
-        snapshot.forEach(snap => {
-          if(snap.val().quiz_id == auth.currentUser.email){
-            snap.ref.remove()
-            console.log("in")
-          };
-       });
-      });*/
-
-      /*const query = db.collection('quizAllAnswers')
-      query.get().then((querySnapshot) => {
-        querySnapshot.docs.forEach((snap) => {
-          console.log("foreach")
-          if (snap.data().email == auth.currentUser.email) {
-            snap.ref.delete();
-          }
-        });
-      });
-
-      db.collection("quizAnswers").doc(auth.currentUser.email).delete();*/
-
-      /*const dbRef = db.database().ref("quizAllAnswers");
-      dbRef.orderByChild('quiz_id').equalTo(auth.currentUser.email).once('value', (snapshot)=> {
-        snapshot.forEach((childSnapshot)=> {
-          let nodeKey = childSnapshot.key;
-          db.database().ref("quizAllAnswers").child(nodeKey).remove();
-        });
-      });*/
 
       setNoPast(true);
       setUserPastQuizzes(temp)
@@ -89,6 +50,7 @@ function QuizHistory() {
       }
 
       setUserPastQuizzes(temp);
+      setShow(true);
     }
     catch (error) {
       console.log(error)
@@ -102,7 +64,8 @@ function QuizHistory() {
   }, [])
 
   return (
-    <Container>
+    show ? (
+      <Container>
       <Stack
         alignItems={"flex-start"}
         style={{ marginLeft: "50px", marginRight: "50px" }}
@@ -172,11 +135,14 @@ function QuizHistory() {
           onClick={() => { deleteAllQuizData(); } }
         >
             Delete History
-          </Button>
+        </Button>
         </>
     )}
 
     </Container>
+    ) : (
+      <Loading></Loading>
+    )
   );
 }
 

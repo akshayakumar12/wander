@@ -22,7 +22,10 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import '../edit profile/editProfile.css';
 
 export default function EditProfile() {
   const [open, setOpen] = React.useState(false);
@@ -136,10 +139,8 @@ export default function EditProfile() {
 
   const handleUpload = () => {
     const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
-    uploadBytes(imageRef, image)
-      .then(() => {
-        getDownloadURL(imageRef)
-          .then((url) => {
+    uploadBytes(imageRef, image).then(() => {
+        getDownloadURL(imageRef).then((url) => {
             setURL(url);
             db.collection("users").doc(auth.currentUser.email).set(
               {
@@ -147,16 +148,36 @@ export default function EditProfile() {
               },
               { merge: true }
             );
-          })
-          .catch((error) => {
+          }).catch((error) => {
             console.log(error.message, "error getting the image url");
           });
-        setImage(null);
-      })
-      .catch((error) => {
+        setImage(url);
+      }).catch((error) => {
         console.log(error.message);
       });
   };
+
+  const submit = () => {
+    handleUpload();
+    modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "");
+    document.getElementById('profilepic').src = url;
+  }
+
+  const handleDelete = () => {
+    const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
+    deleteObject(imageRef);
+    setURL(null);
+    setImage(null);
+    db.collection("users").doc(auth.currentUser.email).set(
+      {
+        profilePicture: null,
+      },
+      { merge: true }
+    );
+    toggleModal();
+    document.getElementById('profilepic').src = null;
+  }
+
 
   const [first, setFirst] = React.useState("");
   const [f, setF] = React.useState("abcd");
@@ -175,6 +196,17 @@ export default function EditProfile() {
 
   const [deleteuser, setDeleteuser] = React.useState("");
   const [deletepass, setDeletepass] = React.useState("");
+
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  if(modal) {
+    document.body.classList.add('active-modal')
+  } else {
+    document.body.classList.remove('active-modal')
+  }
 
   return (
     <Box>
@@ -196,18 +228,44 @@ export default function EditProfile() {
         {/* Profile Picture*/}
         <Stack spacing={2} alignItems="center" width="25%">
           <Avatar
-            src={url || userInfo?.profilePicture}
+            src={userInfo?.profilePicture || url}
+            id="profilepic"
             sx={{ width: 150, height: 150 }}
           />
-          <input type="file" onChange={handleImageChange} accept="image/*" />
-          <Button
-            variant="contained"
-            disableElevation
-            uppercase={false}
-            onClick={handleUpload}
+
+          <Button 
+            variant="contained" 
+            component="label" 
+            onChange={handleImageChange}
+            sx={{ "&:hover": {backgroundColor: '#f0dccf'}, color: 'black', backgroundColor: "#F6EAE2"}}
           >
-            Delete Profile Picture
+            Edit Profile Picture
+            <input hidden accept="image/*" type="file" />
           </Button>
+          
+          <Button
+              variant="contained"
+              disableElevation
+              uppercase={false}
+              className = "btn-modal"
+              onClick={toggleModal}
+              sx={{ boxShadow: 3, "&:hover": {backgroundColor: '#f0cfd2', boxShadow: 3}, color: 'black', backgroundColor: "#f6e2e4"}}
+            >
+              Delete Profile Picture
+          </Button>
+          
+            {modal && (
+              <div className="modal">
+                <div onClick={toggleModal} className="overlay"></div>
+                <div className="modal-content">
+                  <h3> Are you sure you want to delete your profile picture?</h3>
+                  <p> This action cannot easily be undone. </p>
+                  <button className="close-modal" onClick={toggleModal}> X </button>
+                  <button className="delete-modal" onClick={handleDelete}> DELETE </button>
+                </div>
+              </div>
+            )}
+
         </Stack>
 
         {/* Text Fields */}
@@ -274,14 +332,7 @@ export default function EditProfile() {
             <Button
               variant="contained"
               onClick={() => {
-                modifyData(
-                  first ? first : userInfo.firstName,
-                  last ? last : userInfo.lastName,
-                  uname ? uname : userInfo.username,
-                  email ? email : userInfo.email,
-                  oldpass ? oldpass : userInfo.password,
-                  newpass ? newpass : ""
-                );
+                submit();
               }}
             >
               Submit
