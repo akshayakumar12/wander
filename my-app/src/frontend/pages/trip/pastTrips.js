@@ -10,11 +10,19 @@ import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import Loading from "../quiz/loading";
+import React, { useEffect, useState } from "react";
+import { auth, db} from "../../../firebase";
+import { onAuthStateChanged} from "firebase/auth";
 
 
 export default function PastTrips() {
   const navigate = useNavigate();
-  const trips = [
+  const [userPastTrips, setUserPastTrips] = useState([]);
+  const [noPast, setNoPast] = useState(false);
+  const [show, setShow] = useState(false);
+
+  /*const trips = [
 		{
 			source: "Indiana",
 			dest: "Alabama",
@@ -30,14 +38,47 @@ export default function PastTrips() {
 			dest: "Ohio",
       playlist: "https://open.spotify.com/embed/playlist/37i9dQZF1DX2L0iB23Enbq?si=5d2cef0520924318?utm_source=generator"
 		}
-  ];
+  ];*/
+
+  const getUserPastTripData = async () => {
+    try {
+      const response = db.collection('pastTrips');
+      const data = await response.get();
+      const temp = []
+      data.docs.forEach(item=>{
+          if (item.data().email == auth.currentUser.email) {
+              temp.push(item.data())
+          }
+      })
+
+      // sort temp by time
+      temp.sort((a, b) => b.timestamp - a.timestamp)
+      console.log(temp)
+
+      if (temp.length == 0) {
+        setNoPast(true);
+      }
+
+      setUserPastTrips(temp);
+      setShow(true);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=> {
+    onAuthStateChanged(auth, () => {
+      getUserPastTripData();
+    })
+  }, [])
 
   return (
+    show ? (
     <>
       <Stack alignItems={"center"} marginTop="2%" spacing={2}>
         <h1 align="left">Past Trips</h1>
 
-        {trips.map((currentTrip) => (
+        {userPastTrips.map((currentTrip) => (
             <Card
             sx={{
               width: "60%",
@@ -107,7 +148,7 @@ export default function PastTrips() {
                               fontWeight: "bold",
                             }}
                           >
-                            {currentTrip.dest}
+                            {currentTrip.destination}
                           </p>
                         </Stack>
                       </CardContent>
@@ -159,12 +200,17 @@ export default function PastTrips() {
                     </CardActionArea>
                   </Card>
                 </Stack>
+                {currentTrip.timestamp.toDate().toString()}
               </CardContent>
             </CardActionArea>
           </Card>
         ))} {/*end of mapping*/}
       </Stack>
     </>
+    ) :
+    (
+      <Loading></Loading>
+    )
   ); 
 }
 
