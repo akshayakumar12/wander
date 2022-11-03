@@ -148,11 +148,10 @@ export default function EditProfile() {
               },
               { merge: true }
             );
-            document.getElementById('profilepic').src = url;
           }).catch((error) => {
             console.log(error.message, "error getting the image url");
           });
-        setImage(null);
+        setImage(url);
       }).catch((error) => {
         console.log(error.message);
       });
@@ -161,6 +160,7 @@ export default function EditProfile() {
   const submit = () => {
     handleUpload();
     modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "");
+    document.getElementById('profilepic').src = url;
   }
 
   const handleDelete = () => {
@@ -168,7 +168,6 @@ export default function EditProfile() {
     deleteObject(imageRef);
     setURL(null);
     setImage(null);
-    document.getElementById('profilepic').src = 'null.jpg';
     db.collection("users").doc(auth.currentUser.email).set(
       {
         profilePicture: null,
@@ -176,6 +175,7 @@ export default function EditProfile() {
       { merge: true }
     );
     toggleModal();
+    document.getElementById('profilepic').src = null;
   }
 
 
@@ -228,7 +228,7 @@ export default function EditProfile() {
         {/* Profile Picture*/}
         <Stack spacing={2} alignItems="center" width="25%">
           <Avatar
-            src={url || userInfo?.profilePicture}
+            src={userInfo?.profilePicture || url}
             id="profilepic"
             sx={{ width: 150, height: 150 }}
           />
@@ -236,13 +236,13 @@ export default function EditProfile() {
           <Button 
             variant="contained" 
             component="label" 
-            onClick={handleImageChange}
+            onChange={handleImageChange}
             sx={{ "&:hover": {backgroundColor: '#f0dccf'}, color: 'black', backgroundColor: "#F6EAE2"}}
           >
             Edit Profile Picture
             <input hidden accept="image/*" type="file" />
           </Button>
-
+          
           <Button
               variant="contained"
               disableElevation
