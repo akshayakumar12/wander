@@ -1,26 +1,45 @@
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Card, CardActionArea, CardContent } from "@mui/material";
 import { Stack } from "@mui/system";
-import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import * as React from "react";
 
 export default function PastTrips() {
   const navigate = useNavigate();
+  const [age, setAge] = React.useState("");
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <>
-      <Stack alignItems={"center"} marginTop="2%" spacing={2}>
+      <Stack marginX="20%" marginTop="2%" spacing={2}>
         <h1 align="left">Past Trips</h1>
+
+        <FormControl align="right">
+          <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            label="Age"
+            onChange={handleChange}
+          >
+            <MenuItem value={10}>3 Months</MenuItem>
+            <MenuItem value={20}>6 Months</MenuItem>
+            <MenuItem value={30}>12 Months</MenuItem>
+          </Select>
+        </FormControl>
+
         {/* Outer Card */}
         <Card
           sx={{
-            width: "60%",
+            width: "100%",
             height: "80%",
             bgcolor: "#F5F7FA",
             borderRadius: "16px",
