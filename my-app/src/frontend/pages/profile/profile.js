@@ -12,6 +12,14 @@ import { useNavigate } from "react-router-dom";
 import { getTokenFromUrl } from "../../../backend/pages/profile/connectSpotify";
 import { collection, getDocs } from "firebase/firestore";
 import { Buffer } from "buffer";
+import * as React from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CreateIcon from "@mui/icons-material/Create";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+
 
 const TOKEN = "https://accounts.spotify.com/api/token"
 const REDIRECT_URI = "http://localhost:3000/profile";
@@ -332,6 +340,16 @@ function Profile() {
     if (userRef.)
   }
   */
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
   return (
     <Box>
       <Stack spacing={2}>
@@ -353,6 +371,7 @@ function Profile() {
             padding: "30px",
             marginLeft: "50px",
             marginRight: "50px",
+            borderRadius: "16px",
           }}
         >
           {/* Profile Picture*/}
@@ -362,6 +381,7 @@ function Profile() {
               sx={{ width: 150, height: 150 }}
             />
           </Box>
+
           {/* User Information */}
           <Stack direction="column" spacing={1}>
             <h2>
@@ -373,23 +393,31 @@ function Profile() {
 
           {/* Edit Profile and Settings Box */}
 
-          <Stack spacing={2}>
-            <Button
-              onClick={edit_profile_click}
-              variant="contained"
-              style={{ backgroundColor: "#f3f5f9", color: "default" }}
-            >
-              Edit Profile
-            </Button>
-
-            <Button
-              onClick={settings_click}
-              variant="contained"
-              style={{ backgroundColor: "#f3f5f9", color: "blue" }}
-            >
-              Settings
-            </Button>
-          </Stack>
+          <Button
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <MoreHorizIcon></MoreHorizIcon>
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={edit_profile_click}>
+              <CreateIcon></CreateIcon> Edit Profile
+            </MenuItem>
+            <MenuItem onClick={settings_click}>
+              <SettingsIcon></SettingsIcon>Settings
+            </MenuItem>
+          </Menu>
         </Stack>
 
         {/* Spotify Buttons */}

@@ -18,19 +18,23 @@ import { useLocation } from "react-router-dom";
 import QuizHistory from "./frontend/pages/quiz/quiz_history";
 import TripView from "./frontend/pages/trip/trip";
 
-import PastQuizPref from "./frontend/pages/quiz/pastQuizPref";
 import ProfileSetup from "./frontend/pages/register/profileSetup";
 
 import NewTrip from "./frontend/pages/trip/newTrip";
 import NewHome from "./frontend/pages/homepage/newhome";
 
 import Confirm from "./frontend/pages/quiz/quizConf";
+import Loading from "./frontend/pages/quiz/loading";
+import ExpandedTrip from "./frontend/pages/trip/expandedTrip";
+import PastTrips from "./frontend/pages/trip/pastTrips";
 
 function App() {
   const location = useLocation();
   console.log("pathname", location);
   const hideHeader =
-    location.pathname === "/" || location.pathname === "/register" ? null : (
+    location.pathname === "/" ||
+    location.pathname === "/register" ||
+    location.pathname === "/profileSetup" ? null : (
       <Header></Header>
     );
   return (
@@ -54,11 +58,12 @@ function App() {
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/playlist" element={<Playlist />} />
+        <Route path="/loading" element={<Loading />} />
 
-        <Route path="quizhistory" element={<QuizHistory />} />
-        <Route path="/tripview" element={<TripView />}></Route>
-
-        <Route path="/pastQuizPreferences" element={<PastQuizPref />} />
+        <Route path="/quizhistory" element={<QuizHistory />} />
+        <Route path="/tripview" element={<TripView />} />
+        <Route path="/expandedTrip" element={<ExpandedTrip />} />
+        <Route path="/pastTrips" element={<PastTrips />} />
 
         <Route path="/newtrip" element={<NewTrip></NewTrip>} />
         <Route path="/newhome" element={<NewHome></NewHome>} />

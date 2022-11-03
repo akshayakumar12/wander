@@ -31,6 +31,7 @@ function Home() {
             <h2
               align="Left"
               style={{ fontSize: "35px", marginTop: 0, marginBottom: 20 }}
+              onClick={() => navigate("../expandedTrip")}
             >
               Current Trip
             </h2>
