@@ -252,7 +252,7 @@ function Profile() {
   };
 
   const pastQuizPref_click = () => {
-    navigate("/pastQuizPreferences");
+    navigate("/quizhistory");
   };
 
   const navigate = useNavigate();
