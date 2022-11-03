@@ -4,10 +4,12 @@ import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { auth, db, firestore } from "../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import Loading from "./loading";
 
 function QuizHistory() {
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
   const [noPast, setNoPast] = useState(false);
+  const [show, setShow] = useState(false);
 
   /*useEffect(() => {
     const collectionRef = collection(db, "quizAnswersAll");
@@ -89,6 +91,7 @@ function QuizHistory() {
       }
 
       setUserPastQuizzes(temp);
+      setShow(true);
     }
     catch (error) {
       console.log(error)
@@ -102,7 +105,8 @@ function QuizHistory() {
   }, [])
 
   return (
-    <Container>
+    show ? (
+      <Container>
       <Stack
         alignItems={"flex-start"}
         style={{ marginLeft: "50px", marginRight: "50px" }}
@@ -172,11 +176,14 @@ function QuizHistory() {
           onClick={() => { deleteAllQuizData(); } }
         >
             Delete History
-          </Button>
+        </Button>
         </>
     )}
 
     </Container>
+    ) : (
+      <Loading></Loading>
+    )
   );
 }
 
