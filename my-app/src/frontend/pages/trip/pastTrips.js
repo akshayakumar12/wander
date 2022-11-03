@@ -28,7 +28,7 @@ export default function PastTrips() {
       const data = await response.get();
       const temp = [];
       data.docs.forEach((item) => {
-        if (item.data().email == auth.currentUser.email) {
+        if (item.data().email === auth.currentUser.email) {
           temp.push(item.data());
         }
       });
@@ -37,7 +37,7 @@ export default function PastTrips() {
       temp.sort((a, b) => b.timestamp - a.timestamp);
       console.log(temp);
 
-      if (temp.length == 0) {
+      if (temp.length === 0) {
         setNoPast(true);
       }
 
@@ -59,7 +59,7 @@ export default function PastTrips() {
       const data = await response.get();
       const temp = [];
       data.docs.forEach((item) => {
-        if (item.data().email == auth.currentUser.email) {
+        if (item.data().email === auth.currentUser.email) {
           item.ref.delete();
         }
       });
@@ -71,29 +71,37 @@ export default function PastTrips() {
     }
   };
 
-  const [age, setAge] = React.useState("");
+  const [filter, setFilter] = React.useState("");
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setFilter(event.target.value);
   };
   return show ? (
     <>
-      <Stack alignItems={"center"} marginTop="2%" spacing={2}>
-        <h1 align="left">Past Trips</h1>
-
-        <FormControl align="right">
-          <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Age"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>3 Months</MenuItem>
-            <MenuItem value={20}>6 Months</MenuItem>
-            <MenuItem value={30}>12 Months</MenuItem>
-          </Select>
-        </FormControl>
+      <Stack marginX="20%" marginTop="2%" spacing={2}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          width="100%"
+          alignItems="center"
+        >
+          <h1 align="left">Past Trips</h1>
+          <Box sx={{ width: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filter}
+                label="Filter"
+                onChange={handleChange}
+              >
+                <MenuItem value={3}>3 Months</MenuItem>
+                <MenuItem value={6}>6 Months</MenuItem>
+                <MenuItem value={12}>12 Months</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
 
         {noPast ? (
           <>
@@ -108,7 +116,7 @@ export default function PastTrips() {
               <Button
                 disabled
                 sx={{
-                  bottom: 0,
+                  //bottom: 0,
                   right: "4%",
                   position: "absolute",
                   bottom: "1%",
@@ -124,8 +132,8 @@ export default function PastTrips() {
             {userPastTrips.map((currentTrip) => (
               <Card
                 sx={{
-                  width: "60%",
-                  height: "80%",
+                  width: "100%",
+                  height: "100%",
                   bgcolor: "#F5F7FA",
                   borderRadius: "16px",
                   boxShadow: 3,
@@ -147,7 +155,7 @@ export default function PastTrips() {
                         sx={{
                           boxShadow: "3",
                           borderRadius: "16px",
-                          width: "70%",
+                          width: "60%",
                           height: "100%",
                         }}
                       >
@@ -203,9 +211,9 @@ export default function PastTrips() {
                         sx={{
                           boxShadow: "3",
                           borderRadius: "16px",
-                          width: "30%",
+                          width: "40%",
                           height: "100%",
-                          maxHeight: 140,
+                          maxHeight: 225,
                         }}
                       >
                         <CardActionArea
@@ -216,24 +224,26 @@ export default function PastTrips() {
                         >
                           <CardContent width="100%" height="1000px">
                             <Stack
-                              direction="row"
+                              direction="column"
                               width="100%"
                               height="100%"
                               justifyContent="center"
                             >
-                              {/*<p
-                            align="center"
-                            style={{
-                              fontSize: "17px",
-                              marginTop: "10px",
-                              marginBottom: "10px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            <LibraryMusicIcon sx={{ paddingTop: "10%" }} />{" "}
-                            Playlist
-                          </p>*/}
-                              <Playlist src={currentTrip.playlist}></Playlist>
+                              <p
+                                align="center"
+                                style={{
+                                  fontSize: "17px",
+                                  fontWeight: "bold",
+                                  margin: "0",
+                                  marginTop: "3%",
+                                  marginBottom: "3%",
+                                }}
+                              >
+                                <LibraryMusicIcon sx={{}} /> Playlist
+                              </p>
+                              <Stack sx={{ height: "500px" }}>
+                                <Playlist src={currentTrip.playlist}></Playlist>
+                              </Stack>
                             </Stack>
                           </CardContent>
                         </CardActionArea>
@@ -247,7 +257,7 @@ export default function PastTrips() {
             {/*end of mapping*/}
             <Button
               sx={{
-                bottom: 0,
+                //bottom: 0,
                 right: "4%",
                 position: "absolute",
                 bottom: "1%",
