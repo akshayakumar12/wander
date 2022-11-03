@@ -18,7 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CreateIcon from "@mui/icons-material/Create";
 import SettingsIcon from "@mui/icons-material/Settings";
-
+import Tracks from "./tracks"
 
 
 const TOKEN = "https://accounts.spotify.com/api/token"
@@ -36,6 +36,8 @@ const SCOPES = [
     "user-read-playback-state",
     "user-top-read",
     "user-modify-playback-state",
+    "playlist-modify-private",
+    "playlist-modify-public"
 ];
 
 const SCOPES_URL = SCOPES.join("%20");
@@ -455,7 +457,9 @@ function Profile() {
           <> <h2>Your Top Artists</h2>
           <Stack spacing={2} justifyContent="center" direction="row">
           <Test /> </Stack>
-          <h2>Your Top Tracks</h2> </>: <></>
+          <Stack spacing={2} justifyContent="center" direction="row">
+          <Tracks /> </Stack>
+          </>: <></>
           
         }
 

@@ -6,7 +6,10 @@ import {useNavigate } from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import { auth, db } from "../../../firebase"
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import Quiz, { resultAns } from "./quiz";
+import Create from "./create_playlist"
 import Loading from "./loading";
+
 
 function Result() {
 
@@ -35,7 +38,7 @@ function Result() {
     navigate('/quiz')
   }
 
-  return (
+   return (
     showResults ? (
       <>
       <div>
