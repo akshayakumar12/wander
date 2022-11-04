@@ -15,10 +15,12 @@ import { auth, db } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Button from "@mui/material/Button";
 import Playlist from "../playlist/playlist";
+import { serverTimestamp } from "firebase/firestore/lite";
 
 export default function PastTrips() {
   const navigate = useNavigate();
   const [userPastTrips, setUserPastTrips] = useState([]);
+  const [holdPastTrips, setHoldPastTrips] = useState([]);
   const [noPast, setNoPast] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -42,6 +44,7 @@ export default function PastTrips() {
       }
 
       setUserPastTrips(temp);
+      setHoldPastTrips(temp);
       setShow(true);
     } catch (error) {
       console.log(error);
@@ -66,14 +69,46 @@ export default function PastTrips() {
 
       setNoPast(true);
       setUserPastTrips(temp);
+      setHoldPastTrips(temp);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const [filter, setFilter] = React.useState("");
+  const [filter, setFilter] = React.useState("3");
   const handleChange = (event) => {
-    setFilter(event.target.value);
+
+      setFilter(event.target.value)
+      console.log("filter:" + filter)
+
+      const temp = [];
+
+      if (filter == 3) {
+        console.log("3 months")
+        holdPastTrips.forEach((curTrip) => {
+            if (curTrip.timestamp.toDate() > new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000)) {
+              temp.push(curTrip);
+            }
+        })
+      }
+      else if (filter == 6) {
+        console.log("6 months")
+        holdPastTrips.forEach((curTrip) => {
+            if (curTrip.timestamp.toDate() > new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000)) {
+              temp.push(curTrip);
+            }
+        })
+      }
+      else if (filter == 12) {
+          console.log("all");
+          holdPastTrips.forEach((curTrip) => {
+              temp.push(curTrip);
+        })
+      }
+
+      console.log("Change the trips")
+      setUserPastTrips(temp)
+      console.log("Change the trips done")
   };
   return show ? (
     <>
@@ -93,13 +128,15 @@ export default function PastTrips() {
                 id="demo-simple-select"
                 value={filter}
                 label="Filter"
+                /*onChange={setFilter(event.target.innerText)}*/
                 onChange={handleChange}
               >
                 <MenuItem value={3}>3 Months</MenuItem>
                 <MenuItem value={6}>6 Months</MenuItem>
-                <MenuItem value={12}>12 Months</MenuItem>
+                <MenuItem value={12}>All Time</MenuItem>
               </Select>
             </FormControl>
+            {/*<Button onClick={handleChange}> Set Filters </Button>*/}
           </Box>
         </Stack>
 
