@@ -36,7 +36,8 @@ const sendToPastTrips = async (embedLink) => {
     data.docs.forEach((item) =>{
         if (item.data().email == auth.currentUser.email && item.data().latest) {
             item.ref.update({
-                playlist: embedLink
+                playlist: embedLink,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
         }
     })
