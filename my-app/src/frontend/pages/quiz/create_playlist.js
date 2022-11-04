@@ -29,6 +29,19 @@ const modifyData2 = async (tok) => {
     }
 };
 
+const sendToPastTrips = async (embedLink) => {
+    const response = db.collection('pastTrips');
+    const data = await response.get();
+    const temp = []
+    data.docs.forEach((item) =>{
+        if (item.data().email == auth.currentUser.email && item.data().latest) {
+            item.ref.update({
+                playlist: embedLink
+            });
+        }
+    })
+};
+
 const SpotifyGetPlaylists = () => {
     
     const [userInfo, setUserInfo] = useState("");
@@ -228,7 +241,8 @@ const SpotifyGetPlaylists = () => {
                 embedSrc += "?utm_source=generator";
                 console.log("Logging Embed Link");
                 console.log(embedSrc);
-                modifyData2(playlistID);
+                //modifyData2(playlistID);
+                sendToPastTrips(embedSrc);
             }
         }
     }
