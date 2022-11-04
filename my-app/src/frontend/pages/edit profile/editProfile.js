@@ -67,7 +67,9 @@ export default function EditProfile() {
     uname,
     email,
     oldpassword,
-    password
+    password,
+    age,
+    gender
   ) => {
     var userRef = db.collection("users").doc(email);
 
@@ -95,6 +97,8 @@ export default function EditProfile() {
         lastName: last,
         username: uname,
         email: email,
+        age: age,
+        gender: gender
       },
       { merge: true }
     );
@@ -159,7 +163,7 @@ export default function EditProfile() {
 
   const submit = () => {
     handleUpload();
-    modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "");
+    modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "", age ? age : userInfo.age, gender ? gender : userInfo.gender);
     document.getElementById('profilepic').src = url;
   }
 
@@ -196,6 +200,12 @@ export default function EditProfile() {
 
   const [deleteuser, setDeleteuser] = React.useState("");
   const [deletepass, setDeletepass] = React.useState("");
+
+  const [age, setAge] = React.useState("");
+  const [a, setA] = React.useState("abcd");
+
+  const [gender, setGender] = React.useState("");
+  const [g, setG] = React.useState("abcd")
 
   const [modal, setModal] = useState(false);
   const toggleModal = () => {
@@ -305,7 +315,14 @@ export default function EditProfile() {
           />
 
           {/* Age field */}
-          <TextField label="Age" defaultValue="36" />
+          <TextField 
+            label="Age"
+            defaultValue="36"
+            value={a ? userInfo.age : age}
+            onChange={(event) => {
+            setA("");
+            setAge(event.target.value);
+          }}/>
 
           {/* Gender field */}
           <FormControl fullWidth>
@@ -314,12 +331,16 @@ export default function EditProfile() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="Gender"
-              defaultValue={10}
+              defaultValue={"Male"}
               style={{ textAlign: "left" }}
+              onChange={(event) => {
+                setG("");
+                setGender(event.target.value);
+              }}
             >
-              <MenuItem value={10}>Male</MenuItem>
-              <MenuItem value={20}>Female</MenuItem>
-              <MenuItem value={30}>Others</MenuItem>
+              <MenuItem value={"Male"}>Male</MenuItem>
+              <MenuItem value={"Female"}>Female</MenuItem>
+              <MenuItem value={"Other"}>Others</MenuItem>
             </Select>
           </FormControl>
 
