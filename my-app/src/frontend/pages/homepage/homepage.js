@@ -19,9 +19,12 @@ function Home() {
     const response = db.collection("pastTrips");
     const data = await response.get();
     data.docs.forEach((item) => {
-      if ((item.data().email == auth.currentUser.email) && (item.data().latest == "true")) {
+      if (
+        item.data().email == auth.currentUser.email &&
+        item.data().latest == "true"
+      ) {
         setPastTrip(item.data());
-        console.log()
+        console.log();
       }
     });
   };
@@ -72,7 +75,7 @@ function Home() {
                           fontWeight: "bold",
                         }}
                       >
-                        Source Location:
+                        Source: {pastTrip?.source}
                       </p>
                       {
                         //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
@@ -86,7 +89,7 @@ function Home() {
                           fontWeight: "bold",
                         }}
                       >
-                        Destination:
+                        Destination: {pastTrip?.destination}
                       </p>
                     </CardContent>
                   </CardActionArea>
