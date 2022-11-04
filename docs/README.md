@@ -10,4 +10,6 @@ The **Design Document** does the following:
 
 The **Sprint Planning Documents** discuss the overview of each sprint, the user stories to be implemented as well as well-defined, self-contained tasks and acceptance criteria for each user story, and the remaining backlog. 
 
+The **Sprint Testing Documents** list the manual testing done for each user story in a given sprint.
+
 The **Sprint Retrospectives** reflect on the previous sprint and discuss what went well, what did not go well, and how we can improve.
