@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./frontend/pages/login/forgetPassword";
 import SecurityQuestionnaire from "./frontend/pages/login/securityQuestionnaire";
 import Header from "./frontend/pages/header/header";
-import Playlist from "./frontend/pages/playlist/playlist";
+import PlaylistPage from "./frontend/pages/playlist/playlistPage";
 import NewPassword from "./frontend/pages/login/newPassword";
 import Settings from "./frontend/pages/settings/settings";
 import { useLocation } from "react-router-dom";
@@ -57,7 +57,7 @@ function App() {
         />
         <Route path="/newPassword" element={<NewPassword />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/playlist" element={<Playlist />} />
+        <Route path="/playlist" element={<PlaylistPage />} />
         <Route path="/loading" element={<Loading />} />
 
         <Route path="/quizhistory" element={<QuizHistory />} />
