@@ -11,54 +11,118 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-
 import { useState } from 'react';
-import { useJsApiLoader, AutoComplete } from '@react-google-maps/api';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import '../../../backend/pages/trip/createNewTrip';
+import createTrip from "../../../backend/pages/trip/createNewTrip";
+import "./trip.css";
 
 
 function NewTrip() {
   const navigate = useNavigate();
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places']
-  })
+
+  function createNewTrip(source, destination, preference) {
+    createTrip(source, destination, preference);
+    navigate("../quiz");
+  }
+
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
+  const [preference, setPreference] = useState("");
+
+  const handleSelectSource = async (value) => {
+    setSource(value);
+  }
+  const handleSelectDestination = async (value) => {
+    setDestination(value);
+  }
 
   return (
     <>
       <Container sx={{ justifyContent: "left" }} disableGutters="true">
         <Stack alignItems="flex-start" spacing={4}>
           <h1 align="left">Create Trip</h1>
-          
+
           <h3 align="left">Starting Location</h3>
-          <Autocomplete>
-            <TextField
-              label = "Source"
-              variant="outlined"
-              style={{ width: "50%" }}
-            />
-          </Autocomplete>
-          
+          <div>
+            <PlacesAutocomplete
+              value={source}
+              onChange={setSource}
+              onSelect={handleSelectSource}
+            >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input {...getInputProps({ placeholder: "Enter Source" })} />
+                <div>
+                  {loading ? <div> Loading... </div> : null}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    const style = suggestion.active
+                      ? { backgroundColor: '#74a8db', cursor: 'pointer' }
+                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                    return (
+                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            </PlacesAutocomplete>
+          </div>
+
           <h3 align="left">Destination</h3>
-          <Autocomplete>
-            <TextField
-              label="Destination"
-              variant="outlined"
-              style={{ width: "50%" }}
-            />
-          </Autocomplete>
-          
-          <FormControl>
+          <div>
+            <PlacesAutocomplete
+              value={destination}
+              onChange={setDestination}
+              onSelect={handleSelectDestination}
+            >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input class="autocomplete-field" {...getInputProps({ placeholder: "Enter Destination" })} />
+                <div>
+                  {loading ? <div> Loading... </div> : null}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    const style = suggestion.active
+                      ? { backgroundColor: '#74a8db', cursor: 'pointer' }
+                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                    return (
+                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            </PlacesAutocomplete>
+          </div>
+
+          <FormControl name="preference">
             <FormLabel>Travel Preference</FormLabel>
-            <RadioGroup>
-              <FormControlLabel value="Car" control={<Radio />} label="Car" />
+            <RadioGroup
+              onChange={(event) => setPreference(event.target.value)}
+            >
               <FormControlLabel
-                value="plane"
+                value="Car"
+                control={<Radio />}
+                label="Car"
+              />
+              <FormControlLabel
+                value="Plane"
                 control={<Radio />}
                 label="Plane"
               />
             </RadioGroup>
           </FormControl>
-          
+
           <Button
             variant="contained"
             display="flex"
@@ -71,7 +135,7 @@ function NewTrip() {
               width: "12%",
               marginTop: "1%",
             }}
-            onClick={() => navigate("../quiz") }
+            onClick={() => createNewTrip(source, destination, preference)}
           >
             Create Trip
           </Button>
