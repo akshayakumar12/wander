@@ -34,7 +34,7 @@ const sendToPastTrips = async (embedLink) => {
     const data = await response.get();
     const temp = []
     data.docs.forEach((item) =>{
-        if (item.data().email == auth.currentUser.email && item.data().latest) {
+        if (item.data().email == auth.currentUser.email && (item.data().latest == "true")) {
             item.ref.update({
                 playlist: embedLink,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
