@@ -1,4 +1,5 @@
-import { addDoc, doc, setDoc, collection } from 'firebase/firestore/lite';
+import { serverTimestamp } from 'firebase/firestore';
+import { addDoc, doc, setDoc, collection} from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
 
 async function createTrip(source, destination, preference) {
@@ -14,7 +15,7 @@ async function createTrip(source, destination, preference) {
             preference: preference,
             latest: "true",
             playlist: null,
-            timestamp: null
+            timestamp: serverTimestamp()
         }
         
         await addDoc(collection(firestore, "pastTrips"), data);
