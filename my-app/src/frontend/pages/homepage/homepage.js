@@ -8,9 +8,28 @@ import {
 import { Stack } from "@mui/system";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { auth, db } from "../../../firebase";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 function Home() {
   const navigate = useNavigate();
+
+  const [pastTrip, setPastTrip] = useState("");
+  const getData = async () => {
+    const response = db.collection("pastTrips");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      if ((item.data().email == auth.currentUser.email) && (item.data().latest == "true")) {
+        setPastTrip(item.data());
+        console.log()
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Stack alignItems={"center"}>
       <Card
