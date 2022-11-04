@@ -248,6 +248,11 @@ const SpotifyGetPlaylists = () => {
         }
     }
 
+    /*
+    useEffect(() => {
+        embedSrc = false;
+    }, [])
+    */
 
     return (
         <Box>
@@ -302,6 +307,7 @@ const SpotifyGetPlaylists = () => {
                 height={700}
             ></iframe> : <></>
             }
+            {showEmbed = false}
         </Box>
     )
 }
