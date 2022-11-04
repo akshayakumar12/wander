@@ -11,6 +11,7 @@ import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { auth, db } from "../../../firebase";
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 import editTrip from "../../../backend/pages/trip/editTrip";
 
@@ -20,6 +21,13 @@ function TripView() {
   const [newSource, setNewSource] = useState("");
   const [newDestination, setNewDestination] = useState("");
   const [newPreference, setNewPreference] = useState("");
+
+  const handleSelectNewSource = async (value) => {
+    setNewSource(value);
+  }
+  const handleSelectNewDestination = async (value) => {
+    setNewDestination(value);
+  }
 
   const [pastTrip, setPastTrip] = useState("");
   const getData = async () => {
@@ -51,19 +59,68 @@ function TripView() {
         <Stack alignItems="flex-start" spacing={4}>
           <h1 align="left">Edit Trip Details</h1>
           <h3 align="left">Starting Location</h3>
-          <TextField
-            label="Starting Location"
-            variant="outlined"
-            style={{ width: "50%" }}
-            onChange={(event) => setNewSource(event.target.value)}
-          ></TextField>
+          <div>
+            <PlacesAutocomplete
+              value={newSource}
+              onChange={setNewSource}
+              onSelect={handleSelectNewSource}
+            >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input {...getInputProps({ placeholder: "Enter New Source" })} />
+                <div>
+                  {loading ? <div> Loading... </div> : null}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    const style = suggestion.active
+                      ? { backgroundColor: '#74a8db', cursor: 'pointer' }
+                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                    return (
+                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            </PlacesAutocomplete>
+          </div>
+
+
           <h3 align="left">Destination</h3>
-          <TextField
-            label="Destination"
-            variant="outlined"
-            style={{ width: "50%" }}
-            onChange={(event) => setNewDestination(event.target.value)}
-          ></TextField>
+          <div>
+            <PlacesAutocomplete
+              value={newDestination}
+              onChange={setNewDestination}
+              onSelect={handleSelectNewDestination}
+            >{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input class="autocomplete-field" {...getInputProps({ placeholder: "Enter Destination" })} />
+                <div>
+                  {loading ? <div> Loading... </div> : null}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active
+                      ? 'suggestion-item--active'
+                      : 'suggestion-item';
+                    const style = suggestion.active
+                      ? { backgroundColor: '#74a8db', cursor: 'pointer' }
+                      : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                    return (
+                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            </PlacesAutocomplete>
+          </div>
+
           <FormControl>
             <FormLabel>Travel Preference</FormLabel>
             <RadioGroup 

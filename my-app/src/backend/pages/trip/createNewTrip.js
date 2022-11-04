@@ -9,9 +9,9 @@ async function createTrip(source, destination, preference) {
 
         const data = {
             email: user.email,
-            sourceLocation: source,
-            destinationLocation: destination,
-            travelPreference: preference,
+            source: source,
+            destination: destination,
+            preference: preference,
             latest: "true",
             playlist: null,
             timestamp: null
