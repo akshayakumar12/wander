@@ -12,8 +12,8 @@ import {
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import '../../../backend/pages/trip/trip';
-import createTrip from "../../../backend/pages/trip/trip";
+import '../../../backend/pages/trip/createNewTrip';
+import createTrip from "../../../backend/pages/trip/createNewTrip";
 
 
 function NewTrip() {
@@ -21,7 +21,7 @@ function NewTrip() {
 
   function createNewTrip(source, destination, preference) {    
     createTrip(source, destination, preference);
-    // navigate("../quiz");
+    navigate("../quiz");
   }
 
   const [source, setSource] = useState("");

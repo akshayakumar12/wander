@@ -37,5 +37,4 @@ function checkIfLatest(email) {
     })
 }
 
-
 export default createTrip;

@@ -8,9 +8,28 @@ import {
 import { Stack } from "@mui/system";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { auth, db } from "../../../firebase";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 function Home() {
   const navigate = useNavigate();
+
+  const [pastTrip, setPastTrip] = useState("");
+  const getData = async () => {
+    const response = db.collection("pastTrips");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      if ((item.data().email == auth.currentUser.email) && (item.data().latest == "true")) {
+        setPastTrip(item.data());
+        console.log()
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Stack alignItems={"center"}>
       <Card
@@ -54,7 +73,7 @@ function Home() {
                             fontWeight: "bold",
                           }}
                         >
-                          Source Location:
+                          Source: {pastTrip?.source}
                         </p>
                           {//<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
                           }
@@ -67,7 +86,7 @@ function Home() {
                             fontWeight: "bold",
                           }}
                         >
-                          Destination:
+                          Destination: {pastTrip?.destination}
                         </p>
                       </CardContent>
                     </CardActionArea>
