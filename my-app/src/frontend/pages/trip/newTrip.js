@@ -11,54 +11,63 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-
 import { useState } from 'react';
-import { useJsApiLoader, AutoComplete } from '@react-google-maps/api';
+import '../../../backend/pages/trip/trip';
+import createTrip from "../../../backend/pages/trip/trip";
 
 
 function NewTrip() {
   const navigate = useNavigate();
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places']
-  })
+
+  function createNewTrip(source, destination, preference) {    
+    createTrip(source, destination, preference);
+    // navigate("../quiz");
+  }
+
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
+  const [preference, setPreference] = useState(""); 
 
   return (
     <>
       <Container sx={{ justifyContent: "left" }} disableGutters="true">
         <Stack alignItems="flex-start" spacing={4}>
           <h1 align="left">Create Trip</h1>
-          
+
           <h3 align="left">Starting Location</h3>
-          <Autocomplete>
-            <TextField
-              label = "Source"
-              variant="outlined"
-              style={{ width: "50%" }}
-            />
-          </Autocomplete>
-          
+          <TextField
+            label="Source"
+            variant="outlined"
+            style={{ width: "50%" }}
+            onChange={(event) => setSource(event.target.value)}
+          />
+
           <h3 align="left">Destination</h3>
-          <Autocomplete>
-            <TextField
-              label="Destination"
-              variant="outlined"
-              style={{ width: "50%" }}
-            />
-          </Autocomplete>
-          
-          <FormControl>
+          <TextField
+            label="Destination"
+            variant="outlined"
+            style={{ width: "50%" }}
+            onChange={(event) => setDestination(event.target.value)}
+          />
+
+          <FormControl name="preference">
             <FormLabel>Travel Preference</FormLabel>
-            <RadioGroup>
-              <FormControlLabel value="Car" control={<Radio />} label="Car" />
+            <RadioGroup     
+              onChange={(event) => setPreference(event.target.value)}
+            >
+              <FormControlLabel 
+                value="Car" 
+                control={<Radio />} 
+                label="Car" 
+              />
               <FormControlLabel
-                value="plane"
+                value="Plane"
                 control={<Radio />}
                 label="Plane"
               />
             </RadioGroup>
           </FormControl>
-          
+
           <Button
             variant="contained"
             display="flex"
@@ -71,7 +80,7 @@ function NewTrip() {
               width: "12%",
               marginTop: "1%",
             }}
-            onClick={() => navigate("../quiz") }
+            onClick={() => createNewTrip(source, destination, preference) } 
           >
             Create Trip
           </Button>
