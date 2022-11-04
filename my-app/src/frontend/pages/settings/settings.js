@@ -11,6 +11,7 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { auth, db, record, storage } from "../../../firebase";
+import ToggleSend from "../../../backend/settings/toggle";
 
 export default function Settings() {
   const [user, setUser] = useState("");
@@ -20,9 +21,16 @@ export default function Settings() {
   const [email, setEmail] = React.useState("");
   const [e, setE] = React.useState("abcd");
 
+  const [explicit, setExplicit] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
+  const explicitChecked = () => {
+    setExplicit((prev) => !prev);
+    ToggleSend(auth.currentUser.email, !explicit, checked);
+  };
+
   const toggleChecked = () => {
     setChecked((prev) => !prev);
+    ToggleSend(auth.currentUser.email, explicit, !checked);
   };
 
   const [oldpass, setOldpass] = React.useState("");
@@ -91,7 +99,13 @@ export default function Settings() {
         <h2 align="left">Personalization</h2>
         <FormGroup>
           <FormControlLabel
-            control={<Switch />}
+            control={
+              <Switch
+                checked={explicit}
+                onChange={explicitChecked}
+                color="default"
+              />
+            }
             label="Explicit Content"
           ></FormControlLabel>
           <FormControlLabel
