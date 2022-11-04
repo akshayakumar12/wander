@@ -177,7 +177,7 @@ const SpotifyGetPlaylists = () => {
                 
                 var arr = [];
                 while(arr.length < 10){
-                    var r = Math.floor(Math.random() * 100) + 1;
+                    var r = Math.floor(Math.random() * 50) + 1;
                     if(arr.indexOf(r) === -1) arr.push(r);
                 }
                 let index = 0;
