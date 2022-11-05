@@ -10,9 +10,16 @@ import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
-import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+
 function Home() {
+  //window.location.reload(false);
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
 
   const [pastTrip, setPastTrip] = useState("");
   const getData = async () => {
@@ -52,7 +59,10 @@ function Home() {
           <h2
             align="Left"
             style={{ fontSize: "35px", marginTop: 0, marginBottom: 20 }}
-            onClick={() => navigate("../expandedTrip")}
+            onClick={() => {
+              navigate("../expandedTrip");
+              window.location.reload(true);
+            }}
           >
             Current Trip
           </h2>
@@ -65,7 +75,11 @@ function Home() {
                     borderRadius: "16px",
                   }}
                 >
-                  <CardActionArea onClick={() => navigate("../tripview")}>
+                  <CardActionArea
+                    onClick={() => {
+                      navigate("/tripview");
+                    }}
+                  >
                     <CardContent>
                       <p
                         align="Left"
