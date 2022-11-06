@@ -84,9 +84,8 @@ function Result() {
           {" "}
           {"Take Quiz"}
         </Button>
-        <Button>
-          <Create />
-        </Button>
+
+        <Create />
       </Stack>
     </>
   ) : (
