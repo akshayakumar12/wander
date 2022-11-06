@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import CardContent from "@mui/material/CardContent";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
@@ -47,14 +47,7 @@ function Result() {
     <>
       <div>
         <h1>These are your current preferences</h1>
-        <Button
-          variant="contained"
-          sx={{ width: 200, padding: 2, margin: 2 }}
-          onClick={handleTakeQuiz}
-        >
-          {" "}
-          {"Take Quiz"}
-        </Button>
+
         <Stack
           alignItems="center"
           spacing={1}
@@ -65,17 +58,36 @@ function Result() {
             .split(",")
             .slice(0, 5)
             .map((answerOption, index) => (
-              <Card>
-                <CardContent>
-                  <p style={{ margin: 0 }}>
-                    {questions[index]}:&nbsp;{answerOption}
-                  </p>
-                </CardContent>
-              </Card>
+              <Box
+                width={"30%"}
+                style={{ background: "#F2F8F4" }}
+                sx={{
+                  borderRadius: 4,
+                  boxShadow: "1px 1px 1px silver",
+                }}
+                padding="1%"
+              >
+                <p style={{ margin: 0 }}>
+                  {questions[index]}:&nbsp;{answerOption}
+                </p>
+              </Box>
             ))}
         </Stack>
       </div>
-      <Create />
+      <br></br>
+      <Stack direction={"row"} justifyContent="center">
+        <Button
+          variant="contained"
+          sx={{ width: 150, height: 50, padding: 2, margin: 2 }}
+          onClick={handleTakeQuiz}
+        >
+          {" "}
+          {"Take Quiz"}
+        </Button>
+        <Button>
+          <Create />
+        </Button>
+      </Stack>
     </>
   ) : (
     <>
