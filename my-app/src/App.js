@@ -30,7 +30,6 @@ import PastTrips from "./frontend/pages/trip/pastTrips";
 
 function App() {
   const location = useLocation();
-  console.log("pathname", location);
   const hideHeader =
     location.pathname === "/" ||
     location.pathname === "/register" ||
@@ -42,33 +41,40 @@ function App() {
     <div className="App">
       {hideHeader}
       <Routes>
+        {/* login and register*/}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profileSetup" element={<ProfileSetup />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/results" element={<Results />} />
         <Route
           path="/securityQuestionnaire"
           element={<SecurityQuestionnaire />}
         />
         <Route path="/newPassword" element={<NewPassword />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/playlist" element={<PlaylistPage />} />
-        <Route path="/loading" element={<Loading />} />
 
+        {/*Profile */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/settings" element={<Settings />} />
+
+        {/*Home */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/newhome" element={<NewHome></NewHome>} />
+
+        {/*Quiz*/}
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/loading" element={<Loading />} />
         <Route path="/quizhistory" element={<QuizHistory />} />
+        <Route path="/confirmation" element={<Confirm></Confirm>} />
+        <Route path="/playlist" element={<PlaylistPage />} />
+
+        {/*Trip */}
         <Route path="/tripview" element={<TripView />} />
         <Route path="/expandedTrip" element={<ExpandedTrip />} />
         <Route path="/pastTrips" element={<PastTrips />} />
-
         <Route path="/newtrip" element={<NewTrip></NewTrip>} />
-        <Route path="/newhome" element={<NewHome></NewHome>} />
-        <Route path="/confirmation" element={<Confirm></Confirm>} />
       </Routes>
     </div>
   );

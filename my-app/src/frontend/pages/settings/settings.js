@@ -85,7 +85,7 @@ export default function Settings() {
         alignItems={"flex-start"}
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
-        <h1>Settings</h1>
+        <h1 style={{ marginBottom: 5 }}>Settings</h1>
       </Stack>
       {/* Text Fields */}
       <Stack
@@ -96,8 +96,10 @@ export default function Settings() {
         width="70%"
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
-        <h2 align="left">Personalization</h2>
-        <FormGroup>
+        <h3 align="left" style={{ marginBottom: 2 }}>
+          Personalization
+        </h3>
+        <FormGroup style={{ margin: 0 }}>
           <FormControlLabel
             control={
               <Switch
@@ -119,6 +121,9 @@ export default function Settings() {
             label={`${checked ? "Dark Mode" : "Light Mode"}`}
           ></FormControlLabel>
         </FormGroup>
+        <h3 align="left" style={{ marginBottom: 2 }}>
+          Change Password
+        </h3>
         <TextField
           label="Email Address"
           defaultValue="name@email.com"

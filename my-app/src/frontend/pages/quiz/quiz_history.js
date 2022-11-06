@@ -112,8 +112,17 @@ function QuizHistory() {
             spacing={4}
             alignItems="center"
           >
-            <div className="card-section">
-              <Grid container spacing={5} rowSpacing={2} columnSpacing={6}>
+            <div
+              className="card-section"
+              //style={{ padding: 1, width: "100%" }}
+            >
+              <Grid
+                container
+                spacing={4}
+                rowSpacing={2}
+                columnSpacing={6}
+                sx={{ marginLeft: "1%" }}
+              >
                 {userPastQuizzes.map((curCard, index) => (
                   <Grid xs={6} sm={3} key={index} spacing={8}>
                     <Card
@@ -121,9 +130,16 @@ function QuizHistory() {
                         margin: 4,
                         boxShadow: 1,
                         backgroundColor: "#F2F8F4",
+                        borderRadius: 4,
                       }}
                     >
-                      <Box sx={{ margin: 1, border: "3px solid black" }}>
+                      <Box
+                        sx={{
+                          margin: 1,
+                          border: "3px solid black",
+                          borderRadius: 4,
+                        }}
+                      >
                         <h3
                           align="center"
                           style={{ marginBottom: 3, padding: 0 }}
@@ -153,6 +169,7 @@ function QuizHistory() {
                         style={{
                           padding: 0,
                           border: "3px solid black",
+                          borderRadius: 14,
                           margin: 6,
                         }}
                       >
