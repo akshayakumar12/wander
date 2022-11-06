@@ -10,18 +10,15 @@ import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
+import { useLocation } from "react-router-dom";
 
 function Home() {
   //window.location.reload(false);
   const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
+  let location = useLocation();
 
   const [pastTrip, setPastTrip] = useState("");
+
   const getData = async () => {
     const response = db.collection("pastTrips");
     const data = await response.get();
@@ -31,14 +28,13 @@ function Home() {
         item.data().latest == "true"
       ) {
         setPastTrip(item.data());
-        console.log();
       }
     });
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [location]);
 
   return (
     <Stack alignItems={"center"}>
@@ -61,12 +57,11 @@ function Home() {
             style={{ fontSize: "35px", marginTop: 0, marginBottom: 20 }}
             onClick={() => {
               navigate("../expandedTrip");
-              window.location.reload(true);
             }}
           >
             Current Trip
           </h2>
-          <Stack direction={"row"} spacing={4}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={4}>
             <Stack direction={"column"} spacing={2}>
               <Stack>
                 <Card
@@ -135,8 +130,7 @@ function Home() {
             <Stack>
               <Card
                 sx={{
-                  maxWidth: 500,
-                  minWidth: 500,
+                  width: { sm: 500, xs: 250 },
                   minHeight: 290,
                   boxShadow: "3",
                   borderRadius: "16px",

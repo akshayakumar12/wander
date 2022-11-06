@@ -46,7 +46,11 @@ function Register() {
         {/* Left Stack */}
         <Stack
           //style={{ background: "#F5ECE3" }}
-          sx={{ height: "100vh", width: "100%" }}
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: { sm: "block", xs: "none" },
+          }}
           alignItems="flex-start"
           justifyContent="stretch"
           spacing={4}

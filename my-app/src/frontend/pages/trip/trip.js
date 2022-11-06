@@ -56,6 +56,11 @@ function TripView() {
       destination,
       preference
     );
+    delay(1000).then(() => navigate("/home"));
+  }
+
+  function delay(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 
   return (
@@ -189,17 +194,6 @@ function TripView() {
             }}
           >
             Edit Changes
-          </Button>
-          <Button
-            style={{
-              marginLeft: "32%",
-              color: "orange",
-            }}
-            onClick={() => {
-              navigate("/home");
-            }}
-          >
-            <ArrowLeftIcon></ArrowLeftIcon>
           </Button>
         </Stack>
       </Container>
