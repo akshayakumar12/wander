@@ -113,9 +113,9 @@ function QuizHistory() {
             alignItems="center"
           >
             <div className="card-section">
-              <Grid container spacing={2} rowSpacing={2} columnSpacing={3}>
+              <Grid container spacing={5} rowSpacing={2} columnSpacing={6}>
                 {userPastQuizzes.map((curCard, index) => (
-                  <Grid xs={3} key={index} spacing={8}>
+                  <Grid xs={6} sm={3} key={index} spacing={8}>
                     <Card
                       sx={{
                         margin: 4,
@@ -178,7 +178,7 @@ function QuizHistory() {
               left: "50%",
               position: "fixed",
               justifyContent: "flex-end",
-              marginLeft: 75,
+              marginLeft: { sm: 75, xs: 10 },
               flex: 1,
             }}
             variant="contained"
