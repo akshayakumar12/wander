@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  Container,
-  Divider,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Card, Container, Grid } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";

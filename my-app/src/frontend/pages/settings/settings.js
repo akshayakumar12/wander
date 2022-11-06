@@ -10,11 +10,11 @@ import {
   updateEmail,
   updatePassword,
 } from "firebase/auth";
-import { auth, db, record, storage } from "../../../firebase";
+import { auth, db } from "../../../firebase";
 import ToggleSend from "../../../backend/settings/toggle";
 
 export default function Settings() {
-  const [user, setUser] = useState("");
+  //const [user, setUser] = useState("");
 
   const [userInfo, setUserInfo] = useState("");
 

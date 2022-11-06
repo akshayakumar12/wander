@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import QuizSend from "../../../backend/pages/quiz/quizSend";
-import { auth, db } from "../../../firebase";
+import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
