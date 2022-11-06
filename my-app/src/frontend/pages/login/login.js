@@ -45,10 +45,18 @@ function Login() {
 
   return (
     <Container maxWidth="xl" disableGutters="true">
-      <Stack direction="row" justifyContent="flex-start" alignItems={"left"}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="flex-start"
+        alignItems={"left"}
+      >
         <Stack
           style={{ background: "#F5ECE3" }}
-          sx={{ height: "100vh", width: "100%" }}
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: { sm: "block", xs: "none" },
+          }}
           alignItems="flex-start"
         >
           <img
