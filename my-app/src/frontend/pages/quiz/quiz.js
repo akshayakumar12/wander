@@ -214,7 +214,11 @@ function Quiz() {
                     <Grid xs={8} sm={6} key={index}>
                       <Button
                         variant="outlined"
-                        sx={{ width: 200, padding: 1, margin: 2 }}
+                        sx={{
+                          width: 200,
+                          padding: 1,
+                          margin: { xs: 4, sm: 4 },
+                        }}
                         color={
                           answerOption.answerText === answers[currentQuestion]
                             ? "success"

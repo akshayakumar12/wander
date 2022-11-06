@@ -36,12 +36,8 @@ function NewTrip() {
 
   return (
     <>
-      <Container disableGutters="true">
-        <Stack
-          spacing={1}
-          direction={"column"}
-          sx={{ width: "35%", marginTop: "2%" }}
-        >
+      <Container sx={{ width: { sm: "29%", xs: "80%" }, margin: 3 }}>
+        <Stack spacing={1} direction={"column"}>
           <Stack alignItems="flex-start" spacing={1} direction={"column"}>
             <h1
               align="left"
@@ -152,7 +148,14 @@ function NewTrip() {
             </FormControl>
           </Stack>
 
-          <Stack alignItems={"flex-end"}>
+          <Stack
+            justifyContent="flex-end"
+            alignItems="center"
+            width={{ xs: "115%", sm: "105%" }}
+            m={0}
+            p={0}
+            direction={"row"}
+          >
             <Button
               variant="contained"
               style={{

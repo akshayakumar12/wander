@@ -66,135 +66,148 @@ function TripView() {
   return (
     <>
       <Container
-        sx={{ justifyContent: "left" }}
-        disableGutters="true"
-        padding="1%"
+        sx={{ width: { sm: "29%", xs: "80%" }, margin: 3 }}
+        //style={{ background: "#F5ECE3" }}
       >
-        <Stack alignItems="flex-start" spacing={1}>
-          <h1
-            align="left"
-            style={{ margin: 0, marginTop: "5%", marginBottom: "2%" }}
-          >
-            Edit Trip Details
-          </h1>
-          <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
-            Starting Location
-          </h3>
-          <div>
-            <PlacesAutocomplete
-              value={newSource}
-              onChange={setNewSource}
-              onSelect={handleSelectNewSource}
-              style={{ margin: 0 }}
+        <Stack>
+          <Stack alignItems="flex-start" spacing={1}>
+            <h1
+              align="left"
+              style={{ margin: 0, marginTop: "5%", marginBottom: "2%" }}
             >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading,
-              }) => (
-                <div>
-                  <input
-                    {...getInputProps({ placeholder: "Enter New Source" })}
-                  />
-                  <div>
-                    {loading ? <div> Loading... </div> : null}
-                    {suggestions.map((suggestion) => {
-                      const className = suggestion.active
-                        ? "suggestion-item--active"
-                        : "suggestion-item";
-                      const style = suggestion.active
-                        ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                        : { backgroundColor: "#ffffff", cursor: "pointer" };
-
-                      return (
-                        <div {...getSuggestionItemProps(suggestion, { style })}>
-                          {suggestion.description}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </PlacesAutocomplete>
-          </div>
-
-          <h3 align="left">Destination</h3>
-          <div>
-            <PlacesAutocomplete
-              value={newDestination}
-              onChange={setNewDestination}
-              onSelect={handleSelectNewDestination}
-            >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading,
-              }) => (
-                <div>
-                  <input
-                    class="autocomplete-field"
-                    {...getInputProps({ placeholder: "Enter Destination" })}
-                  />
-                  <div>
-                    {loading ? <div> Loading... </div> : null}
-                    {suggestions.map((suggestion) => {
-                      const className = suggestion.active
-                        ? "suggestion-item--active"
-                        : "suggestion-item";
-                      const style = suggestion.active
-                        ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                        : { backgroundColor: "#ffffff", cursor: "pointer" };
-
-                      return (
-                        <div {...getSuggestionItemProps(suggestion, { style })}>
-                          {suggestion.description}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </PlacesAutocomplete>
-          </div>
-
-          <FormControl>
-            <FormLabel>
-              <h3 style={{ margin: 0, color: "black" }}>Travel Preference</h3>
-            </FormLabel>
-            <RadioGroup
-              onChange={(event) => setNewPreference(event.target.value)}
-            >
-              <FormControlLabel
-                value="Car"
-                control={<Radio />}
-                label="Car"
+              Edit Trip Details
+            </h1>
+            <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
+              Starting Location
+            </h3>
+            <div>
+              <PlacesAutocomplete
+                value={newSource}
+                onChange={setNewSource}
+                onSelect={handleSelectNewSource}
                 style={{ margin: 0 }}
-              />
-              <FormControlLabel
-                value="Plane"
-                control={<Radio />}
-                label="Plane"
-                style={{ margin: 0 }}
-              />
-            </RadioGroup>
-          </FormControl>
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    <input
+                      {...getInputProps({ placeholder: "Enter New Source" })}
+                    />
+                    <div>
+                      {loading ? <div> Loading... </div> : null}
+                      {suggestions.map((suggestion) => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        const style = suggestion.active
+                          ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                          : { backgroundColor: "#ffffff", cursor: "pointer" };
 
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "#DE6600",
-              textTransform: "none",
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, { style })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
 
-              marginLeft: "25%",
-            }}
-            onClick={() => {
-              editTheTrip(newSource, newDestination, newPreference);
-            }}
+            <h3 align="left">Destination</h3>
+            <div>
+              <PlacesAutocomplete
+                value={newDestination}
+                onChange={setNewDestination}
+                onSelect={handleSelectNewDestination}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    <input
+                      class="autocomplete-field"
+                      {...getInputProps({ placeholder: "Enter Destination" })}
+                    />
+                    <div>
+                      {loading ? <div> Loading... </div> : null}
+                      {suggestions.map((suggestion) => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        const style = suggestion.active
+                          ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, { style })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+            </div>
+
+            <FormControl>
+              <FormLabel>
+                <h3 style={{ margin: 0, color: "black" }}>Travel Preference</h3>
+              </FormLabel>
+              <RadioGroup
+                onChange={(event) => setNewPreference(event.target.value)}
+              >
+                <FormControlLabel
+                  value="Car"
+                  control={<Radio />}
+                  label="Car"
+                  style={{ margin: 0 }}
+                />
+                <FormControlLabel
+                  value="Plane"
+                  control={<Radio />}
+                  label="Plane"
+                  style={{ margin: 0 }}
+                />
+              </RadioGroup>
+            </FormControl>
+          </Stack>
+          <Stack
+            justifyContent="flex-end"
+            alignItems="center"
+            width={{ xs: "115%", sm: "105%" }}
+            m={0}
+            p={0}
+            direction={"row"}
           >
-            Edit Changes
-          </Button>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#DE6600",
+                textTransform: "none",
+                margin: 0,
+                width: "50%",
+              }}
+              onClick={() => {
+                editTheTrip(newSource, newDestination, newPreference);
+              }}
+            >
+              Edit Changes
+            </Button>
+          </Stack>
         </Stack>
       </Container>
     </>
