@@ -73,11 +73,11 @@ function Register() {
             style={{
               border: "2px solid #525050",
               boxShadow: "10px 10px 5px #525050",
-              marginLeft: "10%",
+              marginRight: "10%",
             }}
           />
 
-          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "10%" }}>
+          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "20%" }}>
             Create the ultimate playlist for your travels
           </h3>
         </Stack>

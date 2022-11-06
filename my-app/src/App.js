@@ -34,6 +34,7 @@ function App() {
   const hideHeader =
     location.pathname === "/" ||
     location.pathname === "/register" ||
+    location.pathname === "/login" ||
     location.pathname === "/profileSetup" ? null : (
       <Header></Header>
     );

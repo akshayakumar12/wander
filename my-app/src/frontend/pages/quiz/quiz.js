@@ -152,26 +152,34 @@ function Quiz() {
       padding="2%"
     >
       {showEnd ? (
-        <div className="end-section">
+        <div className="end-section" align="center">
           <h1>Quiz</h1>
-          You have reached the end of the quiz
-          <br></br>
-          <Button
-            variant="contained"
-            sx={{ width: 200, padding: 2, margin: 2 }}
-            onClick={() => handlePrevButtonClick()}
-          >
-            {" "}
-            {"Start Over"}
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ width: 200, padding: 2, margin: 2 }}
-            onClick={handleSubmit}
-          >
-            {" "}
-            {"Submit Quiz"}
-          </Button>
+          <Box marginTop={10}>
+            <h1 style={{ fontWeight: "100" }}>
+              You have reached the end of the quiz
+            </h1>
+            <br></br>
+            <Stack direction={"row"} justifyContent="space-evenly">
+              <Button
+                variant="contained"
+                sx={{ width: 200, padding: 2, margin: 2 }}
+                style={{ backgroundColor: "#DE6600" }}
+                onClick={() => handlePrevButtonClick()}
+              >
+                {" "}
+                {"Start Over"}
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ width: 200, padding: 2, margin: 2 }}
+                style={{ backgroundColor: "#DE6600" }}
+                onClick={handleSubmit}
+              >
+                {" "}
+                {"Submit Quiz"}
+              </Button>
+            </Stack>
+          </Box>
         </div>
       ) : (
         <>
