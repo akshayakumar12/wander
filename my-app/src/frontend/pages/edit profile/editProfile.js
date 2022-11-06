@@ -22,10 +22,15 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import '../edit profile/editProfile.css';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import "../edit profile/editProfile.css";
 
 export default function EditProfile() {
   const [open, setOpen] = React.useState(false);
@@ -139,8 +144,10 @@ export default function EditProfile() {
 
   const handleUpload = () => {
     const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
-    uploadBytes(imageRef, image).then(() => {
-        getDownloadURL(imageRef).then((url) => {
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
             setURL(url);
             db.collection("users").doc(auth.currentUser.email).set(
               {
@@ -148,20 +155,29 @@ export default function EditProfile() {
               },
               { merge: true }
             );
-          }).catch((error) => {
+          })
+          .catch((error) => {
             console.log(error.message, "error getting the image url");
           });
         setImage(url);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error.message);
       });
   };
 
   const submit = () => {
     handleUpload();
-    modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "");
-    document.getElementById('profilepic').src = url;
-  }
+    modifyData(
+      first ? first : userInfo.firstName,
+      last ? last : userInfo.lastName,
+      uname ? uname : userInfo.username,
+      email ? email : userInfo.email,
+      oldpass ? oldpass : userInfo.password,
+      newpass ? newpass : ""
+    );
+    document.getElementById("profilepic").src = url;
+  };
 
   const handleDelete = () => {
     const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
@@ -175,9 +191,8 @@ export default function EditProfile() {
       { merge: true }
     );
     toggleModal();
-    document.getElementById('profilepic').src = null;
-  }
-
+    document.getElementById("profilepic").src = null;
+  };
 
   const [first, setFirst] = React.useState("");
   const [f, setF] = React.useState("abcd");
@@ -202,10 +217,10 @@ export default function EditProfile() {
     setModal(!modal);
   };
 
-  if(modal) {
-    document.body.classList.add('active-modal')
+  if (modal) {
+    document.body.classList.add("active-modal");
   } else {
-    document.body.classList.remove('active-modal')
+    document.body.classList.remove("active-modal");
   }
 
   return (
@@ -223,7 +238,7 @@ export default function EditProfile() {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        style={{ padding: "0px", marginLeft: "50px", marginRight: "50px" }}
+        //style={{ padding: "0px", marginLeft: "50px", marginRight: "50px" }}
       >
         {/* Profile Picture*/}
         <Stack spacing={2} alignItems="center" width="25%">
@@ -233,158 +248,181 @@ export default function EditProfile() {
             sx={{ width: 150, height: 150 }}
           />
 
-          <Button 
-            variant="contained" 
-            component="label" 
+          <Button
+            variant="contained"
+            component="label"
             onChange={handleImageChange}
-            sx={{ "&:hover": {backgroundColor: '#f0dccf'}, color: 'black', backgroundColor: "#F6EAE2"}}
+            sx={{
+              "&:hover": { backgroundColor: "#f0dccf" },
+              color: "black",
+              backgroundColor: "#F6EAE2",
+            }}
           >
             Edit Profile Picture
             <input hidden accept="image/*" type="file" />
           </Button>
-          
-          <Button
-              variant="contained"
-              disableElevation
-              uppercase={false}
-              className = "btn-modal"
-              onClick={toggleModal}
-              sx={{ boxShadow: 3, "&:hover": {backgroundColor: '#f0cfd2', boxShadow: 3}, color: 'black', backgroundColor: "#f6e2e4"}}
-            >
-              Delete Profile Picture
-          </Button>
-          
-            {modal && (
-              <div className="modal">
-                <div onClick={toggleModal} className="overlay"></div>
-                <div className="modal-content">
-                  <h3> Are you sure you want to delete your profile picture?</h3>
-                  <p> This action cannot easily be undone. </p>
-                  <button className="close-modal" onClick={toggleModal}> X </button>
-                  <button className="delete-modal" onClick={handleDelete}> DELETE </button>
-                </div>
-              </div>
-            )}
 
+          <Button
+            variant="contained"
+            disableElevation
+            uppercase={false}
+            className="btn-modal"
+            onClick={toggleModal}
+            sx={{
+              boxShadow: 3,
+              "&:hover": { backgroundColor: "#f0cfd2", boxShadow: 3 },
+              color: "black",
+              backgroundColor: "#f6e2e4",
+            }}
+          >
+            Delete Profile Picture
+          </Button>
+
+          {modal && (
+            <div className="modal">
+              <div onClick={toggleModal} className="overlay"></div>
+              <div className="modal-content">
+                <h3> Are you sure you want to delete your profile picture?</h3>
+                <p> This action cannot easily be undone. </p>
+                <button className="close-modal" onClick={toggleModal}>
+                  {" "}
+                  X{" "}
+                </button>
+                <button className="delete-modal" onClick={handleDelete}>
+                  {" "}
+                  DELETE{" "}
+                </button>
+              </div>
+            </div>
+          )}
         </Stack>
 
         {/* Text Fields */}
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={2}
-          width="70%"
-        >
-          <TextField
-            label="First Name"
-            defaultValue="First"
-            value={f ? userInfo.firstName : first}
-            onChange={(event) => {
-              setF("");
-              setFirst(event.target.value);
-            }}
-          />
-          <TextField
-            label="Last Name"
-            defaultValue="Last"
-            value={l ? userInfo.lastName : last}
-            onChange={(event) => {
-              setL("");
-              setLast(event.target.value);
-            }}
-          />
-          <TextField
-            label="Username"
-            defaultValue="username"
-            value={u ? userInfo.username : uname}
-            onChange={(event) => {
-              setU("");
-              setUname(event.target.value);
-            }}
-          />
-
-          {/* Age field */}
-          <TextField label="Age" defaultValue="36" />
-
-          {/* Gender field */}
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Gender"
-              defaultValue={10}
-              style={{ textAlign: "left" }}
-            >
-              <MenuItem value={10}>Male</MenuItem>
-              <MenuItem value={20}>Female</MenuItem>
-              <MenuItem value={30}>Others</MenuItem>
-            </Select>
-          </FormControl>
-
-          {/* Submit + Delete Buttons */}
+        <Box width={"60%"}>
           <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
+            direction="column"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={2}
+            width="80%"
           >
-            <Button
-              variant="contained"
-              onClick={() => {
-                submit();
+            <Box></Box>
+            <TextField
+              label="First Name"
+              defaultValue="First"
+              value={f ? userInfo.firstName : first}
+              onChange={(event) => {
+                setF("");
+                setFirst(event.target.value);
               }}
+            />
+            <TextField
+              label="Last Name"
+              defaultValue="Last"
+              value={l ? userInfo.lastName : last}
+              onChange={(event) => {
+                setL("");
+                setLast(event.target.value);
+              }}
+            />
+            <TextField
+              label="Username"
+              defaultValue="username"
+              value={u ? userInfo.username : uname}
+              onChange={(event) => {
+                setU("");
+                setUname(event.target.value);
+              }}
+            />
+
+            {/* Age field */}
+            <TextField label="Age" defaultValue="36" />
+
+            {/* Gender field */}
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Gender"
+                defaultValue={10}
+                style={{ textAlign: "left" }}
+              >
+                <MenuItem value={10}>Male</MenuItem>
+                <MenuItem value={20}>Female</MenuItem>
+                <MenuItem value={30}>Others</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Submit + Delete Buttons */}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
             >
-              Submit
-            </Button>
-            <Button variant="contained" color="error" onClick={handleClickOpen}>
-              Delete Account
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Confirm Account Action</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Are you sure you want to delete you wander account? This
-                  action is permanent and cannot be reverse. If yes, please
-                  reenter your email and password.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  onChange={(event) => {
-                    setDeleteuser(event.target.value);
-                  }}
-                  label="Enter Email"
-                  fullWidth
-                  variant="standard"
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  onChange={(event) => {
-                    setDeletepass(event.target.value);
-                  }}
-                  label="Enter Password"
-                  fullWidth
-                  type="password"
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button
-                  onClick={(event) => {
-                    deleteUserFromBase(deleteuser, deletepass);
-                  }}
-                >
-                  Delete Account
-                </Button>
-              </DialogActions>
-            </Dialog>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  submit();
+                }}
+              >
+                Submit
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleClickOpen}
+                margin={0}
+                display={{ xs: "none" }}
+              >
+                Delete Account
+              </Button>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Confirm Account Action</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Are you sure you want to delete you wander account? This
+                    action is permanent and cannot be reverse. If yes, please
+                    reenter your email and password.
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    onChange={(event) => {
+                      setDeleteuser(event.target.value);
+                    }}
+                    label="Enter Email"
+                    fullWidth
+                    variant="standard"
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    onChange={(event) => {
+                      setDeletepass(event.target.value);
+                    }}
+                    label="Enter Password"
+                    fullWidth
+                    type="password"
+                    variant="standard"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>Cancel</Button>
+                  <Button
+                    onClick={(event) => {
+                      deleteUserFromBase(deleteuser, deletepass);
+                    }}
+                  >
+                    Delete Account
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Stack>
           </Stack>
-        </Stack>
+        </Box>
       </Stack>
     </Box>
   );

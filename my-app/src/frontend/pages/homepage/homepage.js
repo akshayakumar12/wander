@@ -147,8 +147,8 @@ function Home() {
 
       <Button
         variant="contained"
+        justifyContent="flex-start"
         sx={{
-          marginRight: "48%",
           marginTop: "1%",
           bgcolor: "#007A1B",
           textTransform: "none",

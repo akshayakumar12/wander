@@ -14,6 +14,7 @@ import { auth, db } from "../../../firebase";
 import PlacesAutocomplete from "react-places-autocomplete";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import editTrip from "../../../backend/pages/trip/editTrip";
+import Box from "@mui/material/Box";
 
 function TripView() {
   const navigate = useNavigate();
@@ -65,8 +66,8 @@ function TripView() {
 
   return (
     <>
-      <Container
-        sx={{ width: { sm: "29%", xs: "80%" }, margin: 3 }}
+      <Box
+        marginLeft={4}
         //style={{ background: "#F5ECE3" }}
       >
         <Stack>
@@ -80,88 +81,90 @@ function TripView() {
             <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
               Starting Location
             </h3>
-            <div>
-              <PlacesAutocomplete
-                value={newSource}
-                onChange={setNewSource}
-                onSelect={handleSelectNewSource}
-                style={{ margin: 0 }}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading,
-                }) => (
-                  <div>
-                    <input
-                      {...getInputProps({ placeholder: "Enter New Source" })}
-                    />
+            <Box width="25%">
+              <div>
+                <PlacesAutocomplete
+                  value={newSource}
+                  onChange={setNewSource}
+                  onSelect={handleSelectNewSource}
+                  style={{ margin: 0 }}
+                >
+                  {({
+                    getInputProps,
+                    suggestions,
+                    getSuggestionItemProps,
+                    loading,
+                  }) => (
                     <div>
-                      {loading ? <div> Loading... </div> : null}
-                      {suggestions.map((suggestion) => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        const style = suggestion.active
-                          ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                      <input
+                        {...getInputProps({ placeholder: "Enter New Source" })}
+                      />
+                      <div>
+                        {loading ? <div> Loading... </div> : null}
+                        {suggestions.map((suggestion) => {
+                          const className = suggestion.active
+                            ? "suggestion-item--active"
+                            : "suggestion-item";
+                          const style = suggestion.active
+                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                            : { backgroundColor: "#ffffff", cursor: "pointer" };
 
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, { style })}
-                          >
-                            {suggestion.description}
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, { style })}
+                            >
+                              {suggestion.description}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </PlacesAutocomplete>
-            </div>
+                  )}
+                </PlacesAutocomplete>
+              </div>
 
-            <h3 align="left">Destination</h3>
-            <div>
-              <PlacesAutocomplete
-                value={newDestination}
-                onChange={setNewDestination}
-                onSelect={handleSelectNewDestination}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading,
-                }) => (
-                  <div>
-                    <input
-                      class="autocomplete-field"
-                      {...getInputProps({ placeholder: "Enter Destination" })}
-                    />
+              <h3 align="left">Destination</h3>
+              <div>
+                <PlacesAutocomplete
+                  value={newDestination}
+                  onChange={setNewDestination}
+                  onSelect={handleSelectNewDestination}
+                >
+                  {({
+                    getInputProps,
+                    suggestions,
+                    getSuggestionItemProps,
+                    loading,
+                  }) => (
                     <div>
-                      {loading ? <div> Loading... </div> : null}
-                      {suggestions.map((suggestion) => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        const style = suggestion.active
-                          ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                      <input
+                        class="autocomplete-field"
+                        {...getInputProps({ placeholder: "Enter Destination" })}
+                      />
+                      <div>
+                        {loading ? <div> Loading... </div> : null}
+                        {suggestions.map((suggestion) => {
+                          const className = suggestion.active
+                            ? "suggestion-item--active"
+                            : "suggestion-item";
+                          const style = suggestion.active
+                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                            : { backgroundColor: "#ffffff", cursor: "pointer" };
 
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, { style })}
-                          >
-                            {suggestion.description}
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, { style })}
+                            >
+                              {suggestion.description}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </PlacesAutocomplete>
-            </div>
+                  )}
+                </PlacesAutocomplete>
+              </div>
+            </Box>
 
             <FormControl>
               <FormLabel>
@@ -185,21 +188,13 @@ function TripView() {
               </RadioGroup>
             </FormControl>
           </Stack>
-          <Stack
-            justifyContent="flex-end"
-            alignItems="center"
-            width={{ xs: "115%", sm: "105%" }}
-            m={0}
-            p={0}
-            direction={"row"}
-          >
+          <Stack justifyContent="flex-start" m={0} p={0} direction={"row"}>
             <Button
               variant="contained"
               style={{
                 backgroundColor: "#DE6600",
                 textTransform: "none",
-                margin: 0,
-                width: "50%",
+                marginTop: 5,
               }}
               onClick={() => {
                 editTheTrip(newSource, newDestination, newPreference);
@@ -209,7 +204,7 @@ function TripView() {
             </Button>
           </Stack>
         </Stack>
-      </Container>
+      </Box>
     </>
   );
 }
