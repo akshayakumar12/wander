@@ -388,61 +388,18 @@ export default function EditProfile() {
               width="80%"
             >
               <Box></Box>
-              <TextField
-                label="First Name"
-                defaultValue="First"
-                value={f ? userInfo.firstName : first}
-                onChange={(event) => {
-                  setF("");
-                  setFirst(event.target.value);
-                }}
-              />
-              <TextField
-                label="Last Name"
-                defaultValue="Last"
-                value={l ? userInfo.lastName : last}
-                onChange={(event) => {
-                  setL("");
-                  setLast(event.target.value);
-                }}
-              />
-              <TextField
-                label="Username"
-                defaultValue="username"
-                value={u ? userInfo.username : uname}
-                onChange={(event) => {
-                  setU("");
-                  setUname(event.target.value);
-                }}
-              />
-
-              {/* Age field */}
-              <TextField label="Age" defaultValue="36" />
-
-              {/* Gender field */}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Gender"
-                  defaultValue={10}
-                  style={{ textAlign: "left" }}
-                >
-                  <MenuItem value={10}>Male</MenuItem>
-                  <MenuItem value={20}>Female</MenuItem>
-                  <MenuItem value={30}>Others</MenuItem>
-                </Select>
-              </FormControl>
 
               {/* Submit + Delete Buttons */}
               <Stack
                 direction="row"
                 alignItems="center"
+                spacing={8}
                 justifyContent="space-between"
+                width={"125%"}
               >
                 <Button
                   variant="contained"
+                  margin={0}
                   onClick={() => {
                     submit();
                   }}
@@ -454,7 +411,6 @@ export default function EditProfile() {
                   color="error"
                   onClick={handleClickOpen}
                   margin={0}
-                  display={{ xs: "none" }}
                 >
                   Delete Account
                 </Button>
