@@ -103,7 +103,7 @@ export default function EditProfile() {
         username: uname,
         email: email,
         age: age,
-        gender: gender
+        gender: gender,
       },
       { merge: true }
     );
@@ -173,10 +173,18 @@ export default function EditProfile() {
   const submit = () => {
     handleUpload();
 
-    modifyData(first ? first : userInfo.firstName, last ? last : userInfo.lastName, uname ? uname : userInfo.username, email ? email : userInfo.email, oldpass ? oldpass : userInfo.password, newpass ? newpass : "", age ? age : userInfo.age, gender ? gender : userInfo.gender);
-    document.getElementById('profilepic').src = url;
-  }
-
+    modifyData(
+      first ? first : userInfo.firstName,
+      last ? last : userInfo.lastName,
+      uname ? uname : userInfo.username,
+      email ? email : userInfo.email,
+      oldpass ? oldpass : userInfo.password,
+      newpass ? newpass : "",
+      age ? age : userInfo.age,
+      gender ? gender : userInfo.gender
+    );
+    document.getElementById("profilepic").src = url;
+  };
 
   const handleDelete = () => {
     const imageRef = ref(storage, auth.currentUser.uid + ".jpg");
@@ -215,7 +223,7 @@ export default function EditProfile() {
   const [a, setA] = React.useState("abcd");
 
   const [gender, setGender] = React.useState("");
-  const [g, setG] = React.useState("abcd")
+  const [g, setG] = React.useState("abcd");
 
   const [modal, setModal] = useState(false);
   const toggleModal = () => {
@@ -304,82 +312,13 @@ export default function EditProfile() {
 
         {/* Text Fields */}
         <Box width={"60%"}>
-
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={2}
-          width="70%"
-        >
-          <TextField
-            label="First Name"
-            defaultValue="First"
-            value={f ? userInfo.firstName : first}
-            onChange={(event) => {
-              setF("");
-              setFirst(event.target.value);
-            }}
-          />
-          <TextField
-            label="Last Name"
-            defaultValue="Last"
-            value={l ? userInfo.lastName : last}
-            onChange={(event) => {
-              setL("");
-              setLast(event.target.value);
-            }}
-          />
-          <TextField
-            label="Username"
-            defaultValue="username"
-            value={u ? userInfo.username : uname}
-            onChange={(event) => {
-              setU("");
-              setUname(event.target.value);
-            }}
-          />
-
-          {/* Age field */}
-          <TextField 
-            label="Age"
-            defaultValue="36"
-            value={a ? userInfo.age : age}
-            onChange={(event) => {
-            setA("");
-            setAge(event.target.value);
-          }}/>
-
-          {/* Gender field */}
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Gender"
-              defaultValue={"Male"}
-              style={{ textAlign: "left" }}
-              onChange={(event) => {
-                setG("");
-                setGender(event.target.value);
-              }}
-            >
-              <MenuItem value={"Male"}>Male</MenuItem>
-              <MenuItem value={"Female"}>Female</MenuItem>
-              <MenuItem value={"Other"}>Others</MenuItem>
-            </Select>
-          </FormControl>
-
-          {/* Submit + Delete Buttons */}
-
           <Stack
             direction="column"
             justifyContent="center"
             alignItems="stretch"
             spacing={2}
-            width="80%"
+            width="70%"
           >
-            <Box></Box>
             <TextField
               label="First Name"
               defaultValue="First"
@@ -409,7 +348,15 @@ export default function EditProfile() {
             />
 
             {/* Age field */}
-            <TextField label="Age" defaultValue="36" />
+            <TextField
+              label="Age"
+              defaultValue="36"
+              value={a ? userInfo.age : age}
+              onChange={(event) => {
+                setA("");
+                setAge(event.target.value);
+              }}
+            />
 
             {/* Gender field */}
             <FormControl fullWidth>
@@ -418,81 +365,143 @@ export default function EditProfile() {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Gender"
-                defaultValue={10}
+                defaultValue={"Male"}
                 style={{ textAlign: "left" }}
+                onChange={(event) => {
+                  setG("");
+                  setGender(event.target.value);
+                }}
               >
-                <MenuItem value={10}>Male</MenuItem>
-                <MenuItem value={20}>Female</MenuItem>
-                <MenuItem value={30}>Others</MenuItem>
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
+                <MenuItem value={"Other"}>Others</MenuItem>
               </Select>
             </FormControl>
 
             {/* Submit + Delete Buttons */}
+
             <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
+              direction="column"
+              justifyContent="center"
+              alignItems="stretch"
+              spacing={2}
+              width="80%"
             >
-              <Button
-                variant="contained"
-                onClick={() => {
-                  submit();
+              <Box></Box>
+              <TextField
+                label="First Name"
+                defaultValue="First"
+                value={f ? userInfo.firstName : first}
+                onChange={(event) => {
+                  setF("");
+                  setFirst(event.target.value);
                 }}
+              />
+              <TextField
+                label="Last Name"
+                defaultValue="Last"
+                value={l ? userInfo.lastName : last}
+                onChange={(event) => {
+                  setL("");
+                  setLast(event.target.value);
+                }}
+              />
+              <TextField
+                label="Username"
+                defaultValue="username"
+                value={u ? userInfo.username : uname}
+                onChange={(event) => {
+                  setU("");
+                  setUname(event.target.value);
+                }}
+              />
+
+              {/* Age field */}
+              <TextField label="Age" defaultValue="36" />
+
+              {/* Gender field */}
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Gender"
+                  defaultValue={10}
+                  style={{ textAlign: "left" }}
+                >
+                  <MenuItem value={10}>Male</MenuItem>
+                  <MenuItem value={20}>Female</MenuItem>
+                  <MenuItem value={30}>Others</MenuItem>
+                </Select>
+              </FormControl>
+
+              {/* Submit + Delete Buttons */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
               >
-                Submit
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={handleClickOpen}
-                margin={0}
-                display={{ xs: "none" }}
-              >
-                Delete Account
-              </Button>
-              <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Confirm Account Action</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Are you sure you want to delete you wander account? This
-                    action is permanent and cannot be reverse. If yes, please
-                    reenter your email and password.
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    onChange={(event) => {
-                      setDeleteuser(event.target.value);
-                    }}
-                    label="Enter Email"
-                    fullWidth
-                    variant="standard"
-                  />
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    onChange={(event) => {
-                      setDeletepass(event.target.value);
-                    }}
-                    label="Enter Password"
-                    fullWidth
-                    type="password"
-                    variant="standard"
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button
-                    onClick={(event) => {
-                      deleteUserFromBase(deleteuser, deletepass);
-                    }}
-                  >
-                    Delete Account
-                  </Button>
-                </DialogActions>
-              </Dialog>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    submit();
+                  }}
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleClickOpen}
+                  margin={0}
+                  display={{ xs: "none" }}
+                >
+                  Delete Account
+                </Button>
+                <Dialog open={open} onClose={handleClose}>
+                  <DialogTitle>Confirm Account Action</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Are you sure you want to delete you wander account? This
+                      action is permanent and cannot be reverse. If yes, please
+                      reenter your email and password.
+                    </DialogContentText>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      onChange={(event) => {
+                        setDeleteuser(event.target.value);
+                      }}
+                      label="Enter Email"
+                      fullWidth
+                      variant="standard"
+                    />
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      onChange={(event) => {
+                        setDeletepass(event.target.value);
+                      }}
+                      label="Enter Password"
+                      fullWidth
+                      type="password"
+                      variant="standard"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button
+                      onClick={(event) => {
+                        deleteUserFromBase(deleteuser, deletepass);
+                      }}
+                    >
+                      Delete Account
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Stack>
             </Stack>
           </Stack>
         </Box>

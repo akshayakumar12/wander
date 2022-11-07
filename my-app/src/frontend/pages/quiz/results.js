@@ -78,7 +78,7 @@ function Result() {
       <Stack direction={"row"} justifyContent="center">
         <Button
           variant="contained"
-          sx={{ width: 150, height: 50, margin: 2 }}
+          sx={{ width: 130, height: 35, margin: 2 }}
           onClick={handleTakeQuiz}
         >
           {" "}
