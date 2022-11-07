@@ -121,9 +121,8 @@ export default function Settings() {
             label={`${checked ? "Dark Mode" : "Light Mode"}`}
           ></FormControlLabel>
         </FormGroup>
-        <h3 align="left" style={{ marginBottom: 2 }}>
-          Change Password
-        </h3>
+
+        <h2 align="left">Account Information</h2>
         <TextField
           label="Email Address"
           defaultValue="name@email.com"

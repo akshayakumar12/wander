@@ -19,6 +19,9 @@ import Playlist from "../playlist/playlist";
 export default function PastTrips() {
   const navigate = useNavigate();
   const [userPastTrips, setUserPastTrips] = useState([]);
+  const [userPastTrips3Months, setUserPastTrips3Months] = useState([]);
+  const [userPastTrips6Months, setUserPastTrips6Months] = useState([]);
+  const [userPastTripsAll, setUserPastTripsAll] = useState([]);
   const [noPast, setNoPast] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -27,14 +30,24 @@ export default function PastTrips() {
       const response = db.collection("pastTrips");
       const data = await response.get();
       const temp = [];
+      const temp3months = [];
+      const temp6months = [];
       data.docs.forEach((item) => {
         if (item.data().email === auth.currentUser.email) {
           temp.push(item.data());
+          if (item.data().timestamp.toDate() > new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000)) { 
+            temp3months.push(item.data())
+          }
+          if (item.data().timestamp.toDate() > new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000)) {
+            temp6months.push(item.data())
+          }
         }
       });
 
       // sort temp by time
       temp.sort((a, b) => b.timestamp - a.timestamp);
+      temp3months.sort((a, b) => b.timestamp - a.timestamp);
+      temp6months.sort((a, b) => b.timestamp - a.timestamp);
       console.log(temp);
 
       if (temp.length === 0) {
@@ -42,6 +55,9 @@ export default function PastTrips() {
       }
 
       setUserPastTrips(temp);
+      setUserPastTripsAll(temp);
+      setUserPastTrips3Months(temp3months)
+      setUserPastTrips6Months(temp6months)
       setShow(true);
     } catch (error) {
       console.log(error);
@@ -66,6 +82,9 @@ export default function PastTrips() {
 
       setNoPast(true);
       setUserPastTrips(temp);
+      setUserPastTripsAll(temp);
+      setUserPastTrips3Months(temp);
+      setUserPastTrips6Months(temp);
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +93,28 @@ export default function PastTrips() {
   const [filter, setFilter] = React.useState("");
   const handleChange = (event) => {
     setFilter(event.target.value);
+    console.log(filter + " <-filter")
   };
+  const handleSubmit = (event) => {
+    
+    console.log(filter + " onclick")
+
+    if (filter == 3) { // 3 months
+      setUserPastTrips(userPastTrips3Months)
+    }
+    else if (filter == 6) { // 6 months
+      setUserPastTrips(userPastTrips6Months)
+    }
+    else if (filter == 12) {
+      setUserPastTrips(userPastTripsAll)
+    }
+    else {
+      console.log("INVALID FILTER VALUE")
+    }
+
+  };
+
+
   return show ? (
     <>
       <Stack marginX="20%" marginTop="2%" spacing={2}>
@@ -87,6 +127,7 @@ export default function PastTrips() {
           <h1 align="left">Past Trips</h1>
           <Box sx={{ width: 120 }}>
             <FormControl fullWidth>
+
               <InputLabel id="demo-simple-select-label">Filter</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -97,9 +138,18 @@ export default function PastTrips() {
               >
                 <MenuItem value={3}>3 Months</MenuItem>
                 <MenuItem value={6}>6 Months</MenuItem>
-                <MenuItem value={12}>12 Months</MenuItem>
+                <MenuItem value={12}>All Time</MenuItem>
               </Select>
             </FormControl>
+            <Button 
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              >
+              submit
+            </Button>
           </Box>
         </Stack>
 

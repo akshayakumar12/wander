@@ -1,5 +1,7 @@
-import { addDoc, doc, setDoc, collection } from 'firebase/firestore/lite';
+import { serverTimestamp } from 'firebase/firestore';
+import { addDoc, doc, setDoc, collection} from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
+import firebase from 'firebase/compat/app'
 
 async function createTrip(source, destination, preference) {
     try {
@@ -13,11 +15,12 @@ async function createTrip(source, destination, preference) {
             destination: destination,
             preference: preference,
             latest: "true",
-            playlist: null,
-            timestamp: null
+            playlist: null
+//            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }
         
         await addDoc(collection(firestore, "pastTrips"), data);
+        
 
     } catch (error) {
         console.log(error.message);
