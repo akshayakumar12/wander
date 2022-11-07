@@ -46,7 +46,11 @@ export default function ProfileSetup() {
         {/* Left Stack */}
         <Stack
           //style={{ background: "#F5ECE3" }}
-          sx={{ height: "100vh", width: "100%" }}
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: { sm: "block", xs: "none" },
+          }}
           alignItems="flex-start"
           justifyContent="stretch"
           spacing={4}
@@ -69,11 +73,11 @@ export default function ProfileSetup() {
             style={{
               border: "2px solid #525050",
               boxShadow: "10px 10px 5px #525050",
-              marginLeft: "10%",
+              marginRight: "10%",
             }}
           />
 
-          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "10%" }}>
+          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "20%" }}>
             Create the ultimate playlist for your travels
           </h3>
         </Stack>
@@ -101,7 +105,13 @@ export default function ProfileSetup() {
 
             <Stack marginX="15%" width="100%">
               {/* My Profile Title */}
-              <h1 style={{ textAlign: "left", fontWeight: "normal" }}>
+              <h1
+                style={{
+                  textAlign: { xs: "left", sm: "center" },
+                  fontWeight: "normal",
+                }}
+                align={{ xs: "left", sm: "middle" }}
+              >
                 Profile Setup
               </h1>
 
