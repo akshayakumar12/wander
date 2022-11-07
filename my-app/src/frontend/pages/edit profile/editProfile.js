@@ -389,20 +389,17 @@ export default function EditProfile() {
             >
               <Box></Box>
 
-              {/* Age field */}
-
-              {/* Gender field */}
-
               {/* Submit + Delete Buttons */}
               <Stack
                 direction="row"
                 alignItems="center"
-                justifyContent="space-between"
                 spacing={8}
+                justifyContent="space-between"
                 width={"125%"}
               >
                 <Button
                   variant="contained"
+                  margin={0}
                   onClick={() => {
                     submit();
                   }}
@@ -414,7 +411,6 @@ export default function EditProfile() {
                   color="error"
                   onClick={handleClickOpen}
                   margin={0}
-                  display={{ xs: "none" }}
                 >
                   Delete Account
                 </Button>

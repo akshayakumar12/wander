@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import QuizSend from "../../../backend/pages/quiz/quizSend";
-import { auth, db } from "../../../firebase";
+import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
@@ -79,6 +79,7 @@ function Quiz() {
   const [flag, setFlag] = React.useState(false); // color change? flag = not selected, !flag = selected
   const navigate = useNavigate();
   const [selectedAns, setSelectedAns] = useState();
+  const page = currentQuestion;
 
   /*for (var i = 0; i < questions.length; i++ ) {
         answers.push(null);
@@ -183,7 +184,7 @@ function Quiz() {
         </div>
       ) : (
         <>
-          <h1 style={{ marginTop: 5 }}>Quiz</h1>
+          <h1 style={{ marginTop: 3, fontSize: "50px" }}>Playlist Quiz</h1>
           <Stack direction={"row"} justifyContent="center">
             {" "}
             <Button
@@ -201,7 +202,7 @@ function Quiz() {
             <Box
               width={"50%"}
               style={{ background: "#F2F8F4" }}
-              sx={{ borderRadius: 6 }}
+              sx={{ borderRadius: 6, boxShadow: 1 }}
               padding="1%"
             >
               <div className="question-text">
