@@ -10,9 +10,30 @@ import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import { auth, db } from "../../../firebase";
 
 export default function ExpandedTrip() {
   const navigate = useNavigate();
+
+  const [pastTrip, setPastTrip] = useState("");
+  const getData = async () => {
+    const response = db.collection("pastTrips");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      if (
+        item.data().email == auth.currentUser.email &&
+        item.data().latest == "true"
+      ) {
+        setPastTrip(item.data());
+        console.log();
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const editTrip_click = () => {
     navigate("/tripview");
@@ -55,7 +76,7 @@ export default function ExpandedTrip() {
                       fontWeight: "bold",
                     }}
                   >
-                    Source Location
+                    Source: {pastTrip?.source}
                   </p>
                   <p
                     align="Left"
@@ -66,7 +87,7 @@ export default function ExpandedTrip() {
                       fontWeight: "bold",
                     }}
                   >
-                    Destination
+                    Destination: {pastTrip?.destination}
                   </p>
                 </Stack>
                 <Stack width="10%">
