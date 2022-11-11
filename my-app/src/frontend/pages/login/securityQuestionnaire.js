@@ -2,10 +2,28 @@ import Header from "../header/header";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+
+import { resetPasswordEmail } from './forgetPassword';
+import checkSecurityQuestions from '../../../backend/pages/login/checkSecurityQuestions';
 
 function SecurityQuestionnaire() {
   const navigate = useNavigate();
+
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+
+  async function submit_click() {
+    console.log(resetPasswordEmail);
+    console.log(answer1);
+    console.log(answer2);
+
+    let validSecurityAnswers = await checkSecurityQuestions(resetPasswordEmail, answer1, answer2);
+    if (validSecurityAnswers) {
+      navigate("/newPassword");
+    }
+  }
 
   return (
     <>
@@ -27,11 +45,11 @@ function SecurityQuestionnaire() {
 
           {/* Question 1 */}
           <p style={{ textAlign: "left" }}>What is your favorite sport?</p>
-          <TextField />
+          <TextField onChange={(event) => setAnswer1(event.target.value)} />
 
           {/* Question 2 */}
           <p style={{ textAlign: "left" }}>What is your favorite color?</p>
-          <TextField />
+          <TextField onChange={(event) => setAnswer2(event.target.value)} />
 
           {/* Submit Button */}
           <Stack
@@ -43,7 +61,7 @@ function SecurityQuestionnaire() {
               variant="contained"
               disableElevation
               uppercase={false}
-              onClick={() => navigate("/newPassword")} //add authentication
+              onClick={submit_click} //add authentication
             >
               Submit
             </Button>

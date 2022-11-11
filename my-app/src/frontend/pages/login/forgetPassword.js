@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import checkEmail from '../../../backend/pages/login/forgotPassword';
 
-function ForgotPassword() {
+var resetPasswordEmail;
+
+export default function ForgotPassword() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ function ForgotPassword() {
     let validEmail = await checkEmail(email);
 
     if (validEmail) {
+      resetPasswordEmail = email;
       navigate("/securityQuestionnaire");
     }
   }
@@ -59,7 +62,6 @@ function ForgotPassword() {
               variant="contained"
               disableElevation
               uppercase={false}
-              // onClick = {resetPassword(email)}
               onClick={security_questions_click}
             >
               Reset
@@ -75,4 +77,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export {ForgotPassword, resetPasswordEmail};

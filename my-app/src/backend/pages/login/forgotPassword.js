@@ -1,4 +1,5 @@
 import { auth, firestore, db } from '../../../firebase';
+import ForgotPassword from '../../../frontend/pages/login/forgetPassword';
 
 async function checkEmail(email) {
   if (!(email.includes("@"))) {
