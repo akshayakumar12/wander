@@ -7,11 +7,13 @@ import Login_home from "../../../backend/pages/login/login";
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import Logo from "../wander logo.png";
 import ConLogo from "../con_logo.png";
 import Music from "../music.png";
 import { Container } from "@mui/system";
+import { Theme } from "../theme";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,11 +53,13 @@ function Login() {
         alignItems={"left"}
       >
         <Stack
-          style={{ background: "#F5ECE3" }}
+          //style={{ background: "#F5ECE3" }}
+          //style={{ background: "primary.main" }}
           sx={{
             height: "100vh",
             width: "100%",
             display: { sm: "block", xs: "none" },
+            bgcolor: "primary.main",
           }}
           alignItems="flex-start"
         >
@@ -93,7 +97,12 @@ function Login() {
             <br></br>
             <img src={Logo} alt="Brand Logo" height={125} />
             <h1
-              style={{ fontWeight: "normal", marginLeft: "13%" }}
+              style={{
+                color: "primary.main",
+                fontWeight: "normal",
+                marginLeft: "13%",
+              }}
+              //color="red"
               align="left"
             >
               Sign In
@@ -125,9 +134,7 @@ function Login() {
                 Forgot Password
               </Link>
             </div>
-
             <br></br>
-
             <Button
               variant="contained"
               // attempt log in
