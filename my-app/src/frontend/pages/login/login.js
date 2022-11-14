@@ -13,6 +13,7 @@ import ConLogo from "../con_logo.png";
 import Music from "../music.png";
 import { Container } from "@mui/system";
 import { Theme } from "../theme";
+import "../style.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -125,9 +126,10 @@ function Login() {
             <br></br>
             <div align="right">
               <Link
+                className="subtitle"
                 component="button"
                 variant="body3"
-                color={"#C3C4C5"}
+                color={"#838587"}
                 style={{ marginRight: "13%" }}
                 onClick={forgot_password_click}
               >
@@ -138,8 +140,9 @@ function Login() {
             <Button
               variant="contained"
               // attempt log in
+              id="orangeButton"
               style={{
-                backgroundColor: "#DE6600",
+                //backgroundColor: "#DE6600",
                 textTransform: "none",
                 width: "75%",
               }}
@@ -147,7 +150,13 @@ function Login() {
             >
               Log In
             </Button>
-            <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
+            <h5
+              style={{
+                color: "#838587",
+                marginBottom: "0",
+                fontWeight: "400",
+              }}
+            >
               Don't Have an Account?
             </h5>
             <Link
