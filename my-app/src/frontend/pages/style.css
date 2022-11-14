@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@700&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+.subtitle {
+    color: red;
+    background-color: #DE6600;
+}
+
+#orangeButton {
+    background-color: #DE6600;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+#greenButton {
+    background-color: #007A7A;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
