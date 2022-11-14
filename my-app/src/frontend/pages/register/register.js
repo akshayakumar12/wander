@@ -15,6 +15,7 @@ import { Container } from "@mui/system";
 import Logo from "../wander logo.png";
 import Grid from "@mui/material/Grid";
 import { Link } from "@mui/material";
+import "../style.css";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -182,6 +183,7 @@ function Register() {
 
                 {/* Get Started button */}
                 <Button
+                  id="greenButton"
                   variant="contained"
                   style={{
                     backgroundColor: "#007B7B",
@@ -204,12 +206,19 @@ function Register() {
                 </Button>
 
                 {/* Log in option */}
-                <h5 style={{ color: "#C3C4C5", marginBottom: "0" }}>
+                <h5
+                  style={{
+                    color: "#838587",
+                    marginBottom: "0",
+                    fontWeight: "400",
+                  }}
+                >
                   Already have an account?
                 </h5>
                 <Link
-                  color={"#02387C"}
+                  color={"primary.contrastText"}
                   variant="body3"
+                  style={{ marginTop: "5px" }}
                   fontWeight={"bold"}
                   onClick={login_click}
                 >
