@@ -10,12 +10,13 @@ import Logo from "../wander logo.png";
 import Avatar from "@mui/material/Avatar";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CardTravelIcon from "@mui/icons-material/CardTravel";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
 import {
   Drawer,
   List,
@@ -55,6 +56,11 @@ function Header() {
   function handleClose() {
     setAnchorEl(null);
   }
+
+  const logout_fb = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -147,6 +153,22 @@ function Header() {
                     <SettingsIcon />
                   </ListItemIcon>
                   <ListItemText primary={"Settings"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            <List sx={{ bottom: 0, position: "absolute", align: "center" }}>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/settings");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Logout"} />
                 </ListItemButton>
               </ListItem>
             </List>
