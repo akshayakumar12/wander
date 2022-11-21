@@ -65,7 +65,7 @@ function QuizHistory() {
   return show ? (
     <Container>
       <Stack
-        alignItems={"flex-start"}
+        alignItems={"center"}
         margin={0}
         //style={{ marginLeft: "50px", marginRight: "50px" }}
       >
@@ -98,88 +98,82 @@ function QuizHistory() {
         </>
       ) : (
         <>
-          <Stack
-            justifyContent="center"
-            direction={"column"}
-            spacing={4}
-            alignItems="center"
-          >
-            <div
-              className="card-section"
-              //style={{ padding: 1, width: "100%" }}
+          <div className="card-section">
+            <Grid
+              container
+              //container
+              spacing={{ xs: 2, md: 3 }}
+              //alignItems={{ xs: "center" }}
+              justifyContent={{ xs: "center", sm: "flex-start" }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
             >
-              <Grid
-                container
-                spacing={4}
-                rowSpacing={2}
-                columnSpacing={6}
-                sx={{ marginLeft: "1%" }}
-              >
-                {userPastQuizzes.map((curCard, index) => (
-                  <Grid xs={6} sm={3} key={index} spacing={8}>
-                    <Card
+              {userPastQuizzes.map((curCard, index) => (
+                <Grid xs={3} sm={4} md={4} key={index} spacing={8}>
+                  <Card
+                    sx={{
+                      margin: 4,
+                      boxShadow: 1,
+                      backgroundColor: "#F2F8F4",
+                      borderRadius: 4,
+                      width: "auto",
+                    }}
+                  >
+                    <Box
                       sx={{
-                        margin: 4,
-                        boxShadow: 1,
-                        backgroundColor: "#F2F8F4",
+                        margin: 1,
+                        border: "3px solid black",
                         borderRadius: 4,
                       }}
                     >
-                      <Box
-                        sx={{
-                          margin: 1,
-                          border: "3px solid black",
-                          borderRadius: 4,
-                        }}
+                      <h3
+                        align="center"
+                        margin={0}
+                        style={{ marginX: 0 }}
+                        // style={{ marginBottom: 3, padding: 0 }}
                       >
-                        <h3
-                          align="center"
-                          style={{ marginBottom: 3, padding: 0 }}
-                        >
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(0, 3)
-                              .join(" ")
-                          }
-                        </h3>
-                        <h3 align="center" style={{ marginY: 4, padding: 1 }}>
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(3, 5)
-                              .join(" ")
-                          }
-                        </h3>
-                      </Box>
+                        {
+                          /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                            .toDate()
+                            .toString()
+                            .split(" ")
+                            .slice(0, 3)
+                            .join(" ")
+                        }
+                      </h3>
+                      <h3 align="flex-start">
+                        {
+                          /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                            .toDate()
+                            .toString()
+                            .split(" ")
+                            .slice(3, 5)
+                            .join(" ")
+                        }
+                      </h3>
+                    </Box>
 
-                      <body
-                        style={{
-                          padding: 0,
-                          border: "3px solid black",
-                          borderRadius: 14,
-                          margin: 6,
-                        }}
-                      >
-                        {curCard.quiz_ans
-                          .split(",")
-                          .slice(0, 5)
-                          .map((answer, index) => (
-                            <p>
-                              {questions[index]}: {answer}
-                            </p>
-                          ))}
-                      </body>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
-          </Stack>
+                    <body
+                      style={{
+                        padding: 0,
+                        border: "3px solid black",
+                        borderRadius: 14,
+                        margin: 6,
+                      }}
+                    >
+                      {curCard.quiz_ans
+                        .split(",")
+                        .slice(0, 5)
+                        .map((answer, index) => (
+                          <p>
+                            {questions[index]}: {answer}
+                          </p>
+                        ))}
+                    </body>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </div>
 
           <Button
             sx={{

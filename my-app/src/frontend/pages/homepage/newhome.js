@@ -2,6 +2,7 @@ import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 function NewHome() {
   const navigate = useNavigate();
+  //const navigation = useNavigation();
   return (
     <>
       <Box
@@ -26,7 +27,12 @@ function NewHome() {
             backgroundColor: "#DE6600",
             borderRadius: "16px",
           }}
-          onClick={() => navigate("../newtrip")}
+          onClick={() =>
+            navigate("../playlist", {
+              src: "https://open.spotify.com/embed/playlist/6MFbm7M3XgJUfODFeZNCeU?utm_source=generator",
+              text: "hello",
+            })
+          }
         >
           + New Trip
         </Button>

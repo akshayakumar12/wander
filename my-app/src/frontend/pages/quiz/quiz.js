@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import QuizSend from "../../../backend/pages/quiz/quizSend";
 import { auth } from "../../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
@@ -78,6 +78,7 @@ function Quiz() {
   const [answers, setAnswers] = useState([]); // keeps track of user's answers
   const [flag, setFlag] = React.useState(false); // color change? flag = not selected, !flag = selected
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const [selectedAns, setSelectedAns] = useState();
   const page = currentQuestion;
 
@@ -202,7 +203,7 @@ function Quiz() {
             <Box
               width={"50%"}
               style={{ background: "#F2F8F4" }}
-              sx={{ borderRadius: 6, boxShadow: 1 }}
+              sx={{ borderRadius: 6, boxShadow: 5 }}
               padding="1%"
             >
               <div className="question-text">
@@ -226,7 +227,8 @@ function Quiz() {
                         sx={{
                           width: 200,
                           padding: 1,
-                          margin: { xs: 4, sm: 4 },
+                          marginLeft: { xs: 4, sm: 4 },
+                          marginY: { xs: 1, sm: 2 },
                         }}
                         color={
                           answerOption.answerText === answers[currentQuestion]
