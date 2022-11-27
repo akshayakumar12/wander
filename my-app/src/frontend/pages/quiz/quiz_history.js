@@ -67,6 +67,7 @@ function QuizHistory() {
       <Stack
         alignItems={"flex-start"}
         margin={0}
+        justifyContent="center"
         //style={{ marginLeft: "50px", marginRight: "50px" }}
       >
         <h1>Quiz History</h1>
@@ -110,13 +111,13 @@ function QuizHistory() {
             >
               <Grid
                 container
-                spacing={4}
+                spacing={2}
                 rowSpacing={2}
-                columnSpacing={6}
-                sx={{ marginLeft: "1%" }}
+                columnSpacing={3}
+                sx={{ marginLeft: "1%", alignItems: "center" }}
               >
                 {userPastQuizzes.map((curCard, index) => (
-                  <Grid xs={6} sm={3} key={index} spacing={8}>
+                  <Grid xs={"auto"} key={index} spacing={8}>
                     <Card
                       sx={{
                         margin: 4,

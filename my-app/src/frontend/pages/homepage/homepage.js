@@ -1,16 +1,11 @@
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Card, CardActionArea, CardContent, Button, Box } from "@mui/material";
 import { Stack } from "@mui/system";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { useLocation } from "react-router-dom";
+import "./homepage.css";
 
 function Home() {
   //window.location.reload(false);
@@ -89,6 +84,12 @@ function Home() {
                       {
                         //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
                       }
+
+                      <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
+                        <p align="Left">Midpoint 1: </p>
+                        <p align="Left">Midpoint 2:</p>
+                      </Box>
+
                       <p
                         align="Left"
                         style={{
@@ -98,6 +99,7 @@ function Home() {
                           fontWeight: "bold",
                         }}
                       >
+                        {" "}
                         Destination: {pastTrip?.destination}
                       </p>
                     </CardContent>
