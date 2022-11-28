@@ -1,9 +1,24 @@
+import { useLocation } from "react-router-dom";
+
 function Playlist(props) {
+  const location = useLocation();
+  const link =
+    location.state === null
+      ? "https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
+      : location.state.Playlist;
+  //console.log(location);
   return (
     <div>
       <h2>{props.text}</h2>
       <body>
-        <iframe src={props.src} width="100%" height={700}></iframe>
+        <iframe
+          src={
+            //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
+            link
+          }
+          width="100%"
+          height={700}
+        ></iframe>
       </body>
     </div>
   );
