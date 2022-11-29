@@ -111,7 +111,7 @@ function Login() {
                   color: "primary.main",
                   fontWeight: "400",
                   marginLeft: "13%",
-                  fontSize: "20px",
+                  fontSize: "25px",
                 }}
                 align="left"
               >
