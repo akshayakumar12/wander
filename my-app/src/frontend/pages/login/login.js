@@ -125,7 +125,7 @@ function Login() {
                 sx={{
                   //"& .MuiInputLabel-root": { color: "green" }, //styles the label
                   "& .MuiOutlinedInput-root": {
-                    "& > fieldset": { borderColor: "#DE6600" },
+                    "& > fieldset": { borderColor: "#783800" },
                   },
                   "& .MuiOutlinedInput-root.Mui-focused": {
                     "& > fieldset": {
@@ -145,7 +145,7 @@ function Login() {
                 sx={{
                   //"& .MuiInputLabel-root": { color: "green" }, //styles the label
                   "& .MuiOutlinedInput-root": {
-                    "& > fieldset": { borderColor: "#DE6600" },
+                    "& > fieldset": { borderColor: "#783800" },
                   },
                   "& .MuiOutlinedInput-root.Mui-focused": {
                     "& > fieldset": {
@@ -156,47 +156,6 @@ function Login() {
                 onChange={(event) => setPassword(event.target.value)} // save password from user input
               />
 
-              <FormControl
-                variant="outline"
-                style={{ width: "75%" }}
-                onChange={(event) => setEmail(event.target.value)}
-              >
-                <InputLabel
-                  shrink
-                  fontSize="100px"
-                  borderColor="primary.contrastText"
-                >
-                  Email or Username
-                </InputLabel>
-                <BootstrapUsage
-                  //defaultValue="react-bootstrap"
-                  id="bootstrap-input"
-                />
-              </FormControl>
-              <br></br>
-              <br></br>
-              <FormControl
-                variant="outline"
-                style={{ width: "75%" }}
-                onChange={(event) => setPassword(event.target.value)} // save password from user input
-              >
-                <InputLabel fontSize="100px">Password</InputLabel>
-                <BootstrapUsage
-                  //defaultValue="react-bootstrap"
-                  id="bootstrap-input"
-                />
-              </FormControl>
-              <br></br>
-              <br></br>
-              {/*
-              <TextField
-                label="Password"
-                variant="outlined"
-                type="password"
-                style={{ width: "75%" }}
-                onChange={(event) => setPassword(event.target.value)} // save password from user input
-              />
-              */}
               <br></br>
               <div align="right">
                 <Link
