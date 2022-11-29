@@ -12,7 +12,13 @@ import Logo from "../wander logo.png";
 import ConLogo from "../con_logo.png";
 import Music from "../music.png";
 import { Container } from "@mui/system";
+import { alpha, styled } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { ThemeProvider } from "@mui/material/styles";
 import { Theme } from "../theme";
+import BootstrapUsage from "../theme";
 import "../style.css";
 
 function Login() {
@@ -47,130 +53,199 @@ function Login() {
   };
 
   return (
-    <Container maxWidth="xl" disableGutters="true">
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        justifyContent="flex-start"
-        alignItems={"left"}
-      >
+    <ThemeProvider theme={Theme}>
+      <Container maxWidth="xl" disableGutters="true">
         <Stack
-          //style={{ background: "#F5ECE3" }}
-          //style={{ background: "primary.main" }}
-          sx={{
-            height: "100vh",
-            width: "100%",
-            display: { sm: "block", xs: "none" },
-            bgcolor: "primary.main",
-          }}
-          alignItems="flex-start"
+          direction={{ xs: "column", sm: "row" }}
+          justifyContent="flex-start"
+          alignItems={"left"}
         >
-          <img
-            src={ConLogo}
-            alt="Brand Logo"
-            height={75}
-            width={75}
-            align="left"
-            style={{ marginRight: "85%" }}
-          />
-          <br></br>
-          <br></br>
-
-          <img
-            src={Music}
-            alt="Brand Logo"
-            height={375}
-            width={375}
-            align="center"
-            style={{
-              border: "2px solid #525050",
-              boxShadow: "10px 10px 5px #525050",
-              marginLeft: "10%",
+          <Stack
+            //style={{ background: "#F5ECE3" }}
+            //style={{ background: "primary.main" }}
+            sx={{
+              height: "100vh",
+              width: "100%",
+              display: { sm: "block", xs: "none" },
+              bgcolor: "primary.main",
             }}
-          />
-          <br></br>
-
-          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "10%" }}>
-            Create the ultimate playlist for your travels
-          </h3>
-        </Stack>
-        <Container maxWidth="xl">
-          <Box>
-            <br></br>
-            <img src={Logo} alt="Brand Logo" height={125} />
-            <h1
-              style={{
-                color: "primary.main",
-                fontWeight: "normal",
-                marginLeft: "13%",
-              }}
-              //color="red"
+            alignItems="flex-start"
+          >
+            <img
+              src={ConLogo}
+              alt="Brand Logo"
+              height={75}
+              width={75}
               align="left"
+              style={{ marginRight: "85%" }}
+            />
+            <br></br>
+            <br></br>
+            <img
+              src={Music}
+              alt="Brand Logo"
+              height={375}
+              width={375}
+              align="center"
+              style={{
+                border: "2px solid #525050",
+                boxShadow: "10px 10px 5px #525050",
+                marginLeft: "10%",
+              }}
+            />
+            <br></br>
+
+            <h3
+              align="left"
+              style={{ fontWeight: "normal", marginLeft: "10%" }}
             >
-              Sign In
-            </h1>
-            <TextField
-              label="Email or Username"
-              variant="outlined"
-              style={{ width: "75%" }}
-              onChange={(event) => setEmail(event.target.value)} // save email from user input
-            />
-            <br></br>
-            <br></br>
-            <TextField
-              label="Password"
-              variant="outlined"
-              type="password"
-              style={{ width: "75%" }}
-              onChange={(event) => setPassword(event.target.value)} // save password from user input
-            />
-            <br></br>
-            <div align="right">
-              <Link
-                className="subtitle"
-                component="button"
-                variant="body3"
-                color={"#838587"}
-                style={{ marginRight: "13%" }}
-                onClick={forgot_password_click}
+              Create the ultimate playlist for your travels
+            </h3>
+          </Stack>{" "}
+          <Container maxWidth="xl">
+            <Box>
+              <br></br>
+              <img src={Logo} alt="Brand Logo" height={125} />
+              <h1
+                style={{
+                  color: "primary.main",
+                  fontWeight: "400",
+                  marginLeft: "13%",
+                  fontSize: "20px",
+                }}
+                align="left"
               >
-                Forgot Password
+                Log In
+              </h1>
+
+              <TextField
+                label="Email or Username"
+                variant="outlined"
+                style={{ width: "75%" }}
+                sx={{
+                  //"& .MuiInputLabel-root": { color: "green" }, //styles the label
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "#DE6600" },
+                  },
+                  "& .MuiOutlinedInput-root.Mui-focused": {
+                    "& > fieldset": {
+                      borderColor: "#DE6600",
+                    },
+                  },
+                }}
+                onChange={(event) => setEmail(event.target.value)} // save email from user input
+              />
+              <br></br>
+              <br></br>
+              <TextField
+                label="Password"
+                variant="outlined"
+                type="password"
+                style={{ width: "75%" }}
+                sx={{
+                  //"& .MuiInputLabel-root": { color: "green" }, //styles the label
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "#DE6600" },
+                  },
+                  "& .MuiOutlinedInput-root.Mui-focused": {
+                    "& > fieldset": {
+                      borderColor: "#DE6600",
+                    },
+                  },
+                }}
+                onChange={(event) => setPassword(event.target.value)} // save password from user input
+              />
+
+              <FormControl
+                variant="outline"
+                style={{ width: "75%" }}
+                onChange={(event) => setEmail(event.target.value)}
+              >
+                <InputLabel
+                  shrink
+                  fontSize="100px"
+                  borderColor="primary.contrastText"
+                >
+                  Email or Username
+                </InputLabel>
+                <BootstrapUsage
+                  //defaultValue="react-bootstrap"
+                  id="bootstrap-input"
+                />
+              </FormControl>
+              <br></br>
+              <br></br>
+              <FormControl
+                variant="outline"
+                style={{ width: "75%" }}
+                onChange={(event) => setPassword(event.target.value)} // save password from user input
+              >
+                <InputLabel fontSize="100px">Password</InputLabel>
+                <BootstrapUsage
+                  //defaultValue="react-bootstrap"
+                  id="bootstrap-input"
+                />
+              </FormControl>
+              <br></br>
+              <br></br>
+              {/*
+              <TextField
+                label="Password"
+                variant="outlined"
+                type="password"
+                style={{ width: "75%" }}
+                onChange={(event) => setPassword(event.target.value)} // save password from user input
+              />
+              */}
+              <br></br>
+              <div align="right">
+                <Link
+                  className="subtitle"
+                  component="button"
+                  variant="body3"
+                  color={"#838587"}
+                  style={{ marginRight: "13%" }}
+                  onClick={forgot_password_click}
+                >
+                  Forgot Password
+                </Link>
+              </div>
+              <br></br>
+              <Button
+                variant="contained"
+                // attempt log in
+                id="orangeButton"
+                style={{
+                  //backgroundColor: "#DE6600",
+                  textTransform: "none",
+                  width: "75%",
+                }}
+                onClick={login_button_click}
+              >
+                Log In
+              </Button>
+              <h5
+                style={{
+                  color: "#838587",
+                  marginBottom: "0",
+                  fontWeight: "400",
+                }}
+              >
+                Don't Have an Account?
+              </h5>
+              <Link
+                onClick={register_click}
+                color={"#02387C"}
+                variant="body3"
+                fontWeight={"bold"}
+              >
+                Sign Up
               </Link>
-            </div>
-            <br></br>
-            <Button
-              variant="contained"
-              // attempt log in
-              id="orangeButton"
-              style={{
-                //backgroundColor: "#DE6600",
-                textTransform: "none",
-                width: "75%",
-              }}
-              onClick={login_button_click}
-            >
-              Log In
-            </Button>
-            <h5
-              style={{
-                color: "#838587",
-                marginBottom: "0",
-                fontWeight: "400",
-              }}
-            >
-              Don't Have an Account?
-            </h5>
-            <Link
-              onClick={register_click}
-              color={"#02387C"}
-              variant="body3"
-              fontWeight={"bold"}
-            >
-              Sign Up
-            </Link>
-          </Box>
-        </Container>
-      </Stack>
-    </Container>
+            </Box>
+          </Container>
+        </Stack>
+      </Container>
+    </ThemeProvider>
   );
 }
 
