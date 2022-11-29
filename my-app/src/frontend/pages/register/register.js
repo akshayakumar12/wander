@@ -106,10 +106,25 @@ function Register() {
 
             <Stack marginX="15%" width="100%">
               {/* My Profile Title */}
-              <h1 style={{ textAlign: "left", fontWeight: "normal" }}>
+              <h1
+                style={{
+                  textAlign: "left",
+                  fontWeight: "400",
+                  fontSize: "25px",
+                }}
+              >
                 Register
               </h1>
 
+              <h1
+                style={{
+                  textAlign: "left",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                }}
+              >
+                Account Information
+              </h1>
               {/* Components Stack */}
               <Stack
                 direction="column"
@@ -121,6 +136,17 @@ function Register() {
                 {/* Email field */}
                 <TextField
                   label="Email Address"
+                  sx={{
+                    //"& .MuiInputLabel-root": { color: "green" }, //styles the label
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "#007A7A" },
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#007A7A",
+                      },
+                    },
+                  }}
                   onChange={(event) => setEmail(event.target.value)} // save email from user input
                 />
 
@@ -128,18 +154,49 @@ function Register() {
                 <TextField
                   label="Password"
                   type="password"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "#007A7A" },
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#007A7A",
+                      },
+                    },
+                  }}
                   onChange={(event) => setPassword(event.target.value)} // save password from user input
                 />
 
+                <h1
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "400",
+                    fontSize: "16px",
+                  }}
+                >
+                  Security Questions
+                </h1>
                 {/* Questionaire 1: What is your favorite sport? */}
-                <FormControl fullWidth>
+                <FormControl
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "#007A7A" },
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#007A7A",
+                      },
+                    },
+                  }}
+                >
                   <InputLabel id="demo-simple-select-label">
                     What is your favorite sport
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="sport"
+                    label="What is your favorite sport"
                     onClick={(event) => setSecurity1(event.target.innerText)}
                   >
                     <MenuItem value={10}>Tennis</MenuItem>
@@ -157,14 +214,25 @@ function Register() {
                 </FormControl>
 
                 {/* Questionaire 2: What is your favorite color? */}
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    What is your favorite color?
+                <FormControl
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "#007A7A" },
+                    },
+                    "& .MuiOutlinedInput-root.Mui-focused": {
+                      "& > fieldset": {
+                        borderColor: "#007A7A",
+                      },
+                    },
+                  }}
+                >
+                  <InputLabel id="demo-simple-select-label" label="label">
+                    What is your favorite color
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="color"
+                    label="What is your favorite color"
                     onClick={(event) => setSecurity2(event.target.innerText)}
                   >
                     <MenuItem value={10}>Red</MenuItem>
