@@ -33,7 +33,7 @@ export default function PastTrips() {
       const temp3months = [];
       const temp6months = [];
       data.docs.forEach((item) => {
-        if (item.data().email === auth.currentUser.email) {
+        if (item.data().email === auth.currentUser.email && item.data().latest === "false") {
           temp.push(item.data());
           if (item.data().timestamp.toDate() > new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000)) { 
             temp3months.push(item.data())
@@ -114,6 +114,40 @@ export default function PastTrips() {
 
   };
 
+  const restoreTrip = async (cur_time, cur_email) => {
+    console.log("Restore Trip");
+    console.log(cur_time + "+" + cur_email);
+    
+    // set past current trip to false
+    db.collection("pastTrips").where("email", "==", cur_email).get().then((qSnap) => {
+      if (qSnap.empty) {
+          // latest
+      } else {
+          // previous trips exist
+          qSnap.docs.forEach((d) => {
+              db.collection("pastTrips").doc(d.id).update({latest: "false"})
+          }) 
+      }
+    })
+
+    // set current trip to true
+    db.collection("pastTrips").where("timestamp", "==", cur_time).get().then((qSnap) => {
+      console.log("found trip to restore");
+      if (qSnap.empty) {
+        // latest
+    } else {
+        // previous trips exist
+        qSnap.docs.forEach((d) => {
+            db.collection("pastTrips").doc(d.id).update({latest: "true"}).then(
+              navigate("../home")
+            )
+        }) 
+    }
+    })
+
+    //navigate("../home");
+
+  };
 
   return show ? (
     <>
@@ -269,7 +303,13 @@ export default function PastTrips() {
                         <CardActionArea
                           width="100%"
                           height="100%"
-                          onClick={() => navigate("../playlist")}
+                          onClick={
+                            () => navigate("../playlist", {
+                            state: {
+                                Playlist: currentTrip.playlist
+                              }
+                            })
+                          }
                           sx={{ paddingBottom: "2%" }}
                         >
                           <CardContent width="100%" height="1000px">
@@ -298,8 +338,25 @@ export default function PastTrips() {
                           </CardContent>
                         </CardActionArea>
                       </Card>
+
                     </Stack>
+                    
+                    {/* Restore Button*/}
+                    <Button variant="contained"
+                    sx={{
+                      //bottom: 0,
+                      left: "4%",
+                      position: "absolute",
+                      bottom: "1%",
+                    }}
+                    onClick={() => {
+                      restoreTrip(currentTrip.timestamp, currentTrip.email);
+                    }}
+                    >
+                      Restore Trip
+                    </Button>
                     {currentTrip.timestamp.toDate().toString()}
+
                   </CardContent>
                 </CardActionArea>
               </Card>

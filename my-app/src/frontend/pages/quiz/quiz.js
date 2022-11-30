@@ -132,7 +132,7 @@ function Quiz() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Send answers array as a string to database
     let ansString = "";
     for (let i = 0; i < answers.length; i++) {
@@ -140,7 +140,11 @@ function Quiz() {
     }
 
     QuizSend(auth.currentUser.email, ansString);
-    navigate("/results");
+    navigate("/results", {
+      state: {
+        Result: ansString,
+      },
+    });
   };
 
   return (
@@ -206,7 +210,7 @@ function Quiz() {
               padding="1%"
             >
               <div className="question-text">
-                <h2 style={{ fontWeight: "100" }}>
+                <h2 style={{ fontWeight: "500", color: "#449446" }}>
                   {questions[currentQuestion].questionText}
                 </h2>
               </div>
@@ -227,11 +231,12 @@ function Quiz() {
                           width: 200,
                           padding: 1,
                           margin: { xs: 4, sm: 4 },
+                          //borderWidth: "2px",
                         }}
                         color={
                           answerOption.answerText === answers[currentQuestion]
                             ? "success"
-                            : "primary"
+                            : "black"
                         }
                         onClick={() => {
                           handleAnsClick(answerOption.answerText);

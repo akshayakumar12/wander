@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardContent, Button, Box } from "@mui/material";
 import { Stack } from "@mui/system";
+//import PlaylistPage from "../playlist/playlistPage";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -31,12 +32,13 @@ function Home() {
     getData();
   }, [location]);
 
+  //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
-    <Stack alignItems={"center"}>
+    <Stack alignItems={"flex-start"} marginX="15%">
       <Card
         sx={{
           marginTop: "5%",
-          width: "60%",
+          width: "100%",
           height: "80%",
           bgcolor: "#F5F7FA",
           borderRadius: "16px",
@@ -117,12 +119,18 @@ function Home() {
                   }}
                 >
                   <CardActionArea
-                    onClick={() => navigate("../playlist")}
+                    onClick={() =>
+                      navigate("../playlist", {
+                        state: {
+                          Playlist: pastTrip?.playlist
+                        },
+                      })
+                    }
                     sx={{ paddingBottom: "2%" }}
                   >
                     <Playlist
                       text={"Playlist for your current trip"}
-                      src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
+                      src={pastTrip?.playlist}
                     ></Playlist>
                   </CardActionArea>
                 </Card>
@@ -136,11 +144,19 @@ function Home() {
                   minHeight: 290,
                   boxShadow: "3",
                   borderRadius: "16px",
+                  padding: 1,
                 }}
               >
                 <h3 align="left" style={{ marginLeft: "5%", fontSize: "20px" }}>
                   Map
                 </h3>
+                {
+                  <iframe
+                    src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
+                    width="400"
+                    height="300"
+                  ></iframe>
+                }
               </Card>
             </Stack>
           </Stack>
@@ -150,9 +166,10 @@ function Home() {
       <Button
         variant="contained"
         justifyContent="flex-start"
+        id="greenButton"
         sx={{
-          marginTop: "1%",
-          bgcolor: "#007A1B",
+          marginTop: "2%",
+          //bgcolor: "#007A1B",
           textTransform: "none",
           fontSize: "20px",
         }}
