@@ -31,6 +31,7 @@ function Home() {
     getData();
   }, [location]);
 
+  //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
     <Stack alignItems={"center"}>
       <Card
@@ -122,7 +123,7 @@ function Home() {
                   >
                     <Playlist
                       text={"Playlist for your current trip"}
-                      src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
+                      src={pastTrip?.playlist}
                     ></Playlist>
                   </CardActionArea>
                 </Card>
