@@ -25,12 +25,33 @@ export const Theme = createTheme({
       styleOverrides: {
         root: {
           "&.Mui-focused": {
-            // increase the specificity for the pseudo class
             color: "#666666",
           },
         },
       },
     },
+    /*
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused": {
+            "& notchedOutline": {
+              borderColor: "green",
+            },
+          },
+
+          //"& > fieldset": { borderColor: "red" },
+
+        },
+        notchedOutline: {
+          //borderColor: "red",
+          "&.Mui-focused": {
+            color: "green",
+          },
+        },
+      },
+    },
+    */
   },
 });
 
