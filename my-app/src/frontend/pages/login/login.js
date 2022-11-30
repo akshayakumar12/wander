@@ -21,6 +21,7 @@ import { Theme } from "../theme";
 import BootstrapUsage from "../theme";
 import "../style.css";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -95,6 +96,7 @@ function Login() {
             <br></br>
             <br></br>
 
+            {/*
             <img
               src={Music}
               alt="Brand Logo"
@@ -105,6 +107,17 @@ function Login() {
                 border: "2px solid #525050",
                 boxShadow: "10px 10px 5px #525050",
                 marginLeft: "10%",
+              }}
+            />
+            */}
+            <img
+              src={SpotifyListenPhoto}
+              height={375}
+              weight={375}
+              style={{
+                marginLeft: "10%",
+                boxShadow: "4px 4px 4px #cfbea9",
+                borderRadius: "0px 0px 100px 0px",
               }}
             />
             <br></br>
@@ -129,7 +142,7 @@ function Login() {
               <h3 style={{ fontWeight: "400", textAlign: "left" }}>
                 Create the ultimate playlist for your travels
               </h3>
-              <Box sx={{ color: "#007A7A", textAlign: "left" }}>
+              <Box sx={{ color: "#DE6600", textAlign: "left" }}>
                 <HorizontalRuleIcon
                   style={{ marginLeft: "-7" }}
                   sx={{ fontSize: 50, align: "left" }}
