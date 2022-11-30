@@ -9,9 +9,15 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import Quiz, { resultAns } from "./quiz";
 import Create from "./create_playlist";
 import Loading from "./loading";
+import { useLocation } from "react-router-dom";
 
-function Result() {
+function Result(props) {
   const navigate = useNavigate();
+  
+  const location = useLocation();
+  const currentResults = location.state.Result;
+
+  console.log("CURRENT RESULTS: " + currentResults);
 
   const [showResults, setShowResults] = useState(false);
   const [quizData, setQuizData] = useState("");
@@ -54,7 +60,7 @@ function Result() {
           direction="column"
           marginLeft="2%"
         >
-          {quizData?.quiz_ans
+          {currentResults
             .split(",")
             .slice(0, 5)
             .map((answerOption, index) => (

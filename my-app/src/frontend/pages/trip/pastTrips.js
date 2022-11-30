@@ -138,12 +138,14 @@ export default function PastTrips() {
     } else {
         // previous trips exist
         qSnap.docs.forEach((d) => {
-            db.collection("pastTrips").doc(d.id).update({latest: "true"})
+            db.collection("pastTrips").doc(d.id).update({latest: "true"}).then(
+              navigate("../home")
+            )
         }) 
     }
     })
 
-    navigate("../home");
+    //navigate("../home");
 
   };
 
@@ -301,7 +303,13 @@ export default function PastTrips() {
                         <CardActionArea
                           width="100%"
                           height="100%"
-                          onClick={() => navigate("../playlist")}
+                          onClick={
+                            () => navigate("../playlist", {
+                            state: {
+                                Playlist: currentTrip.playlist
+                              }
+                            })
+                          }
                           sx={{ paddingBottom: "2%" }}
                         >
                           <CardContent width="100%" height="1000px">

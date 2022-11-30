@@ -7,8 +7,6 @@ import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
-import { makeStyles, useStyles } from "@mui/styled-engine";
-
 function Quiz() {
   // Questions of the quiz
   // Find a way to make this more robust later :')
@@ -134,7 +132,7 @@ function Quiz() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Send answers array as a string to database
     let ansString = "";
     for (let i = 0; i < answers.length; i++) {
@@ -142,7 +140,11 @@ function Quiz() {
     }
 
     QuizSend(auth.currentUser.email, ansString);
-    navigate("/results");
+    navigate("/results", {
+      state: {
+        Result: ansString,
+      },
+    });
   };
 
   return (

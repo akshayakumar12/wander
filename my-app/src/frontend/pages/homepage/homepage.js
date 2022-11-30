@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardContent, Button, Box } from "@mui/material";
 import { Stack } from "@mui/system";
+//import PlaylistPage from "../playlist/playlistPage";
 import Playlist from "../playlist/playlist";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -118,7 +119,13 @@ function Home() {
                   }}
                 >
                   <CardActionArea
-                    onClick={() => navigate("../playlist")}
+                    onClick={() =>
+                      navigate("../playlist", {
+                        state: {
+                          Playlist: pastTrip?.playlist
+                        },
+                      })
+                    }
                     sx={{ paddingBottom: "2%" }}
                   >
                     <Playlist
@@ -137,11 +144,19 @@ function Home() {
                   minHeight: 290,
                   boxShadow: "3",
                   borderRadius: "16px",
+                  padding: 1,
                 }}
               >
                 <h3 align="left" style={{ marginLeft: "5%", fontSize: "20px" }}>
                   Map
                 </h3>
+                {
+                  <iframe
+                    src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
+                    width="400"
+                    height="300"
+                  ></iframe>
+                }
               </Card>
             </Stack>
           </Stack>

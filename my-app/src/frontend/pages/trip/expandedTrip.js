@@ -115,7 +115,9 @@ export default function ExpandedTrip() {
             onClick={() => navigate("../playlist")}
             sx={{ paddingBottom: "2%" }}
           >
-            <Playlist src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"></Playlist>
+            <Playlist 
+              src={pastTrip?.playlist}>
+            </Playlist>
           </CardActionArea>
         </Card>
       </Stack>
