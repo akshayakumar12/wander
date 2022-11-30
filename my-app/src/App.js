@@ -41,8 +41,8 @@ function App() {
       <Header></Header>
     );
   return (
-    <div className="App">
-      <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={Theme}>
+      <div className="App">
         {hideHeader}
         <Routes>
           {/* login and register*/}
@@ -80,8 +80,8 @@ function App() {
           <Route path="/pastTrips" element={<PastTrips />} />
           <Route path="/newtrip" element={<NewTrip></NewTrip>} />
         </Routes>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

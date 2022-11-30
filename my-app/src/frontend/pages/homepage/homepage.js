@@ -33,11 +33,11 @@ function Home() {
 
   //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
-    <Stack alignItems={"center"}>
+    <Stack alignItems={"flex-start"} marginX="15%">
       <Card
         sx={{
           marginTop: "5%",
-          width: "60%",
+          width: "100%",
           height: "80%",
           bgcolor: "#F5F7FA",
           borderRadius: "16px",
@@ -151,9 +151,10 @@ function Home() {
       <Button
         variant="contained"
         justifyContent="flex-start"
+        id="greenButton"
         sx={{
-          marginTop: "1%",
-          bgcolor: "#007A1B",
+          marginTop: "2%",
+          //bgcolor: "#007A1B",
           textTransform: "none",
           fontSize: "20px",
         }}
