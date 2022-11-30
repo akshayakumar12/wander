@@ -25,6 +25,8 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
+import { Theme } from "../theme";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 
 function Header() {
   const navigate = useNavigate();
@@ -63,138 +65,149 @@ function Header() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: "#f6eae2" }}>
-        <Toolbar>
-          {/* Three Bar Menu Icon */}
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={() => setDrawerOpen(true)}
-          >
-            <MenuIcon sx={{ color: "#023a7e" }} size="large" />
-          </IconButton>
-          {/* Dropdown Menu */}
-          <Drawer
-            anchor="left"
-            open={drawerOpen}
-            onClose={() => setDrawerOpen(false)}
-            PaperProps={{
-              sx: {
-                width: 240,
-                flexShrink: 0,
-                color: "#02407F",
-                backgroundColor: "#FAF5F1",
-                "& .MuiDrawer-paper": {
+    <ThemeProvider theme={Theme}>
+      <Box>
+        <AppBar position="static" style={{ background: "#f6eae2" }}>
+          <Toolbar>
+            {/* Three Bar Menu Icon */}
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={() => setDrawerOpen(true)}
+            >
+              <MenuIcon sx={{ color: "primary.contrastText" }} size="large" />
+            </IconButton>
+            {/* Dropdown Menu */}
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+              PaperProps={{
+                sx: {
                   width: 240,
-                  boxSizing: "border-box",
+                  flexShrink: 0,
+                  color: "primary.contrastText",
+                  backgroundColor: "primary.main",
+                  fontFamily: "Rubik",
+                  "& .MuiDrawer-paper": {
+                    width: 240,
+                    boxSizing: "border-box",
+                  },
                 },
-              },
-            }}
-          >
-            <List>
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/home");
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    {" "}
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Home"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/profile");
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    {" "}
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Profile"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/pastTrips");
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    {" "}
-                    <CardTravelIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Past Trips"} />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/settings");
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    {" "}
-                    <SettingsIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Settings"} />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List sx={{ bottom: 0, position: "absolute", align: "center" }}>
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    navigate("/settings");
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    {" "}
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={"Logout"} />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Drawer>
+              }}
+            >
+              <List>
+                <ListItem disablePadding id="text">
+                  <ListItemButton
+                    onClick={() => {
+                      navigate("/home");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      {" "}
+                      <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Home"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      navigate("/profile");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      {" "}
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Profile"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      navigate("/pastTrips");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      {" "}
+                      <CardTravelIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Past Trips"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      navigate("/settings");
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      {" "}
+                      <SettingsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Settings"} />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+              {/* Logout List */}
+              <List
+                sx={{
+                  width: "100%",
+                  bottom: 0,
+                  position: "absolute",
+                  align: "center",
+                }}
+              >
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      logout_fb();
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      {" "}
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Logout"} />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Drawer>
 
-          {/* Logo */}
-          <img
-            src={Logo}
-            alt="Brand Logo"
-            height={75}
-            onClick={() => {
-              navigate("/home");
-            }}
-          />
+            {/* Logo */}
+            <img
+              src={Logo}
+              alt="Brand Logo"
+              height={75}
+              onClick={() => {
+                navigate("/home");
+              }}
+            />
 
-          {/* Profile Picture */}
-          <Avatar
-            src={userInfo?.profilePicture}
-            sx={{ marginLeft: "auto" }}
-            onClick={() => {
-              navigate("/profile");
-            }}
-          />
-        </Toolbar>
-      </AppBar>
-    </Box>
+            {/* Profile Picture */}
+            <Avatar
+              src={userInfo?.profilePicture}
+              sx={{ marginLeft: "auto" }}
+              onClick={() => {
+                navigate("/profile");
+              }}
+            />
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </ThemeProvider>
   );
 }
 export default Header;
