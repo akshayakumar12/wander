@@ -10,9 +10,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
+import Box from "@mui/material/Box";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import "../../../backend/pages/trip/createNewTrip";
 import createTrip from "../../../backend/pages/trip/createNewTrip";
-import Box from "@mui/material/Box";
 import "./trip.css";
 
 function NewTrip() {
@@ -30,9 +31,20 @@ function NewTrip() {
   const handleSelectSource = async (value) => {
     setSource(value);
   };
+
   const handleSelectDestination = async (value) => {
     setDestination(value);
   };
+
+  const [addDisable, setAddDisable] = useState(false);
+
+  let numStops = 0;
+
+  function checkNumStops() {
+    if (numStops == 2) {
+      setAddDisable(true);
+    }
+  }
 
   return (
     <>
@@ -73,7 +85,7 @@ function NewTrip() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
-                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                            ? { backgroundColor: "#d5e4f4", cursor: "pointer" }
                             : { backgroundColor: "#ffffff", cursor: "pointer" };
 
                           return (
@@ -89,6 +101,18 @@ function NewTrip() {
                   )}
                 </PlacesAutocomplete>
               </div>
+
+              <Button 
+                variant = "text"
+                startIcon = {<AddCircleOutlineIcon />}
+                disabled = {addDisable}
+                style = {{
+                  color: "#003e80",
+                  marginLeft: "0px",
+                }}
+              > 
+                Add Stop 
+              </Button>
 
               <h3 align="left">Destination</h3>
               <div>
@@ -116,7 +140,7 @@ function NewTrip() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
-                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
+                            ? { backgroundColor: "#d5e4f4", cursor: "pointer" }
                             : { backgroundColor: "#ffffff", cursor: "pointer" };
 
                           return (
@@ -136,6 +160,7 @@ function NewTrip() {
 
             <FormControl name="preference">
               <FormLabel>
+                <br></br>
                 <h3 align="left" style={{ margin: 0, color: "black" }}>
                   Travel Preference
                 </h3>
@@ -166,7 +191,6 @@ function NewTrip() {
               style={{
                 backgroundColor: "#DE6600",
                 textTransform: "none",
-
                 marginTop: "1%",
               }}
               onClick={() => createNewTrip(source, destination, preference)}

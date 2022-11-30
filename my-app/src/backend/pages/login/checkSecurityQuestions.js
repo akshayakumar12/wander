@@ -1,20 +1,26 @@
-import { auth, firestore, db } from '../../../firebase';
+import { db } from '../../../firebase';
 
-async function checkSecurityQuestions(email, answer1, answer2) {
+var returnval = "";
+
+function checkSecurityQuestions(email, answer1, answer2) {
     db.collection("users").where("email", "==", email)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 var data = doc.data();
                 var correctAnswer1 = data.securityQuestion1.toUpperCase();
-                if (answer1.toUpperCase() != correctAnswer1) {
-                    alert("Your favorite sport is incorrect.");
-                    return false;
-                }
                 var correctAnswer2 = data.securityQuestion2.toUpperCase();
-                if (answer2.toUpperCase() != correctAnswer2) {
+
+                if (answer1.toUpperCase() != correctAnswer1) {
+                    returnval = "false";
+                    alert("Your favorite sport is incorrect.");
+                } else if (answer2.toUpperCase() != correctAnswer2) {
+                    returnval = "false";
                     alert("Your favorite color is incorrect.");
-                    return false;
+                } else if (answer1.toUpperCase() == correctAnswer1) {
+                    if (answer2.toUpperCase() == correctAnswer2) {
+                        returnval = "true";
+                    }
                 }
             });
         })
@@ -22,8 +28,8 @@ async function checkSecurityQuestions(email, answer1, answer2) {
             console.log("Error getting user: ", error);
         });
 
-    return true;
-    
+    return returnval;
+
 }
 
 export default checkSecurityQuestions;

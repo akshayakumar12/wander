@@ -76,7 +76,7 @@ export default function ExpandedTrip() {
                       fontWeight: "bold",
                     }}
                   >
-                    Source: {pastTrip?.source}
+                    {pastTrip?.source}
                   </p>
                   <p
                     align="Left"
@@ -87,7 +87,7 @@ export default function ExpandedTrip() {
                       fontWeight: "bold",
                     }}
                   >
-                    Destination: {pastTrip?.destination}
+                    {pastTrip?.destination}
                   </p>
                 </Stack>
                 <Stack width="10%">

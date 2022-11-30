@@ -81,7 +81,7 @@ function Home() {
                           fontWeight: "bold",
                         }}
                       >
-                        Source: {pastTrip?.source}
+                        {pastTrip?.source}
                       </p>
                       {
                         //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
@@ -102,7 +102,7 @@ function Home() {
                         }}
                       >
                         {" "}
-                        Destination: {pastTrip?.destination}
+                        {pastTrip?.destination}
                       </p>
                     </CardContent>
                   </CardActionArea>

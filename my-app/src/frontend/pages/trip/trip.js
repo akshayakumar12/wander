@@ -97,7 +97,7 @@ function TripView() {
                   }) => (
                     <div>
                       <input
-                        {...getInputProps({ placeholder: "Enter New Source" })}
+                        {...getInputProps({ placeholder: pastTrip.source })}
                       />
                       <div>
                         {loading ? <div> Loading... </div> : null}
@@ -139,7 +139,7 @@ function TripView() {
                     <div>
                       <input
                         class="autocomplete-field"
-                        {...getInputProps({ placeholder: "Enter Destination" })}
+                        {...getInputProps({ placeholder: pastTrip.destination })}
                       />
                       <div>
                         {loading ? <div> Loading... </div> : null}

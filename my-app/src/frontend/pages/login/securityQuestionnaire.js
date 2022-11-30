@@ -15,12 +15,9 @@ function SecurityQuestionnaire() {
   const [answer2, setAnswer2] = useState("");
 
   async function submit_click() {
-    console.log(resetPasswordEmail);
-    console.log(answer1);
-    console.log(answer2);
+    let validSQ = await checkSecurityQuestions(resetPasswordEmail, answer1, answer2);
 
-    let validSecurityAnswers = await checkSecurityQuestions(resetPasswordEmail, answer1, answer2);
-    if (validSecurityAnswers) {
+    if (validSQ === "true") {
       navigate("/newPassword");
     }
   }
