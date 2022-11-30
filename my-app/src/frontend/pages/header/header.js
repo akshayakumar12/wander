@@ -27,6 +27,7 @@ import {
 } from "@mui/material";
 import { Theme } from "../theme";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { fontWeight } from "@mui/system";
 
 function Header() {
   const navigate = useNavigate();
@@ -178,9 +179,12 @@ function Header() {
                   >
                     <ListItemIcon>
                       {" "}
-                      <LogoutIcon />
+                      <LogoutIcon sx={{ color: "#DE6600" }} />
                     </ListItemIcon>
-                    <ListItemText primary={"Logout"} />
+                    <ListItemText
+                      primary={<Box fontWeight="500">Logout</Box>}
+                      sx={{ color: "#DE6600", fontWeight: "bold" }}
+                    />
                   </ListItemButton>
                 </ListItem>
               </List>
