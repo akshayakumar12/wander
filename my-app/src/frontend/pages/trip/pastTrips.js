@@ -138,12 +138,14 @@ export default function PastTrips() {
     } else {
         // previous trips exist
         qSnap.docs.forEach((d) => {
-            db.collection("pastTrips").doc(d.id).update({latest: "true"})
+            db.collection("pastTrips").doc(d.id).update({latest: "true"}).then(
+              navigate("../home")
+            )
         }) 
     }
     })
 
-    navigate("../home");
+    //navigate("../home");
 
   };
 
