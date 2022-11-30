@@ -19,6 +19,7 @@ import "../style.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Theme } from "../theme";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -70,18 +71,17 @@ function Register() {
               style={{ marginRight: "85%" }}
             />
 
-            <img
-              src={Music}
-              alt="Brand Logo"
-              height={375}
-              width={375}
-              align="center"
-              style={{
-                border: "2px solid #525050",
-                boxShadow: "10px 10px 5px #525050",
-                marginRight: "10%",
-              }}
-            />
+            <Box sx={{ textAlign: "left" }} style={{ marginLeft: "15%" }}>
+              <img
+                src={SpotifyListenPhoto}
+                height={375}
+                weight={375}
+                style={{
+                  boxShadow: "4px 4px 4px #cfbea9",
+                  borderRadius: "0px 0px 100px 0px",
+                }}
+              />
+            </Box>
 
             <Stack paddingY="5%" paddingX="15%" spacing={1}>
               <Box
