@@ -20,6 +20,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Theme } from "../theme";
 import BootstrapUsage from "../theme";
 import "../style.css";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -107,13 +108,34 @@ function Login() {
               }}
             />
             <br></br>
-
-            <h3
-              align="left"
-              style={{ fontWeight: "normal", marginLeft: "10%" }}
-            >
-              Create the ultimate playlist for your travels
-            </h3>
+            <Stack paddingY="5%" paddingX="10%" spacing={1}>
+              <Box
+                margin={0}
+                sx={{
+                  color: "primary.contrastText",
+                }}
+              >
+                <h2
+                  className="lexend"
+                  style={{
+                    textAlign: "left",
+                    fontWeight: "500",
+                    margin: "0",
+                  }}
+                >
+                  Playlist Creation
+                </h2>
+              </Box>
+              <h3 style={{ fontWeight: "400", textAlign: "left" }}>
+                Create the ultimate playlist for your travels
+              </h3>
+              <Box sx={{ color: "#007A7A", textAlign: "left" }}>
+                <HorizontalRuleIcon
+                  style={{ marginLeft: "-7" }}
+                  sx={{ fontSize: 50, align: "left" }}
+                />
+              </Box>
+            </Stack>
           </Stack>{" "}
           <Container maxWidth="xl">
             <Box>
@@ -138,7 +160,9 @@ function Login() {
                 sx={{
                   //"& .MuiInputLabel-root": { color: "green" }, //styles the label
                   "& .MuiOutlinedInput-root": {
-                    "& > fieldset": { borderColor: "#783800" },
+                    "& > fieldset": {
+                      borderColor: "#783800",
+                    },
                   },
                   "& .MuiOutlinedInput-root.Mui-focused": {
                     "& > fieldset": {
