@@ -7,6 +7,8 @@ import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
+import { makeStyles, useStyles } from "@mui/styled-engine";
+
 function Quiz() {
   // Questions of the quiz
   // Find a way to make this more robust later :')
@@ -206,7 +208,7 @@ function Quiz() {
               padding="1%"
             >
               <div className="question-text">
-                <h2 style={{ fontWeight: "100" }}>
+                <h2 style={{ fontWeight: "500", color: "#449446" }}>
                   {questions[currentQuestion].questionText}
                 </h2>
               </div>
@@ -227,11 +229,12 @@ function Quiz() {
                           width: 200,
                           padding: 1,
                           margin: { xs: 4, sm: 4 },
+                          //borderWidth: "2px",
                         }}
                         color={
                           answerOption.answerText === answers[currentQuestion]
                             ? "success"
-                            : "primary"
+                            : "black"
                         }
                         onClick={() => {
                           handleAnsClick(answerOption.answerText);

@@ -2,6 +2,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import "./style.css";
+import Box from "@mui/material/Box";
+import { auth, firestore, db } from "../../firebase";
 
 export const Theme = createTheme({
   palette: {
@@ -14,7 +16,10 @@ export const Theme = createTheme({
       main: "#DE6600",
     },
     success: {
-      main: "#4caf50",
+      main: "#439446",
+    },
+    black: {
+      main: "#3d3d3d",
     },
   },
   typography: {
@@ -55,39 +60,25 @@ export const Theme = createTheme({
   },
 });
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(2),
-    padding: "3",
-  },
-  "& .MuiInputBase-input": {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor:
-      theme.palette.mode === "light" ? "primary.contrastText" : "#2b2b2b",
-    border: "1px solid #c5c5c4",
-    fontSize: 16,
-    width: "100%",
-    padding: "10px 12px",
-    transition: theme.transitions.create(["border-color", "background-color"]),
-    fontFamily: ["Rubik"].join(","),
-    "&:focus": {
-      /*
-      boxShadow: `${alpha(
-        theme.palette.primary.contrastText,
-        0.25
-      )} 0 0 0 0.2rem`,
-      */
-      borderColor: "#DE6600",
-      borderWidth: 2,
-    },
-  },
-}));
+/*
+export default async function TestPrint() {
+  try {
+    const userDocRef = db.collection("Settings").doc("hello@gmail.com");
+    const doc = await userDocRef.get();
+    if (!doc.exists) {
+      console.log("No such document exista!");
+    } else {
+      console.log("Document data:", doc.data());
+    }
+  } catch (error) {
+    alert(error.code);
 
-export default function BootstrapUsage() {
+  console.log("test");
   return (
-    <ThemeProvider theme={Theme}>
-      <BootstrapInput />
-    </ThemeProvider>
+    <Box>
+      <h1>test print</h1>
+    </Box>
   );
 }
+
+  }*/
