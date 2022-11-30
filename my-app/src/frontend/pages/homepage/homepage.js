@@ -122,8 +122,7 @@ function Home() {
                     onClick={() =>
                       navigate("../playlist", {
                         state: {
-                          Playlist:
-                            "https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator",
+                          Playlist: pastTrip?.playlist
                         },
                       })
                     }

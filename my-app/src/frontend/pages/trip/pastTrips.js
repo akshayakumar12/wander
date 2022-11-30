@@ -301,7 +301,13 @@ export default function PastTrips() {
                         <CardActionArea
                           width="100%"
                           height="100%"
-                          onClick={() => navigate("../playlist")}
+                          onClick={
+                            () => navigate("../playlist", {
+                            state: {
+                                Playlist: currentTrip.playlist
+                              }
+                            })
+                          }
                           sx={{ paddingBottom: "2%" }}
                         >
                           <CardContent width="100%" height="1000px">
