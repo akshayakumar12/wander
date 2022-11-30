@@ -22,6 +22,7 @@ import BootstrapUsage from "../theme";
 import "../style.css";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
+import TestPrint from "../theme";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -57,6 +58,10 @@ function Login() {
   return (
     <ThemeProvider theme={Theme}>
       <Container maxWidth="xl" disableGutters="true">
+        {/*<h1> test</h1>
+        <TestPrint />
+        <h1> test</h1>
+  */}
         <Stack
           direction={{ xs: "column", sm: "row" }}
           justifyContent="flex-start"
