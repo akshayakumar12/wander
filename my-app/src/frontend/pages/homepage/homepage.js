@@ -31,6 +31,7 @@ function Home() {
     getData();
   }, [location]);
 
+  //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
     <Stack alignItems={"flex-start"} marginX="15%">
       <Card
@@ -121,8 +122,8 @@ function Home() {
                     sx={{ paddingBottom: "2%" }}
                   >
                     <Playlist
-                      text={"Playlist"}
-                      src="https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
+                      text={"Playlist for your current trip"}
+                      src={pastTrip?.playlist}
                     ></Playlist>
                   </CardActionArea>
                 </Card>
