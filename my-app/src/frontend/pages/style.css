@@ -1,13 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@700&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
 
 
-* {
+* #text{
     font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+}
+
+h1 h2 h3 {
+    font-family: 'Rubik', sans-serif;
+}
+
+p {
+    font-weight: 400;
 }
 
 .subtitle {
     color: red;
     background-color: #DE6600;
+}
+
+.lexend {
+    font-family: 'Lexend', sans-serif;
 }
 
 #orangeButton {
