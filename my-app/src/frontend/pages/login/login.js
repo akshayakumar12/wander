@@ -66,7 +66,7 @@ function Login() {
             sx={{
               height: "100vh",
               width: "100%",
-              display: { sm: "block", xs: "none" },
+              display: { sm: "flex", xs: "none" },
               bgcolor: "primary.main",
             }}
             alignItems="flex-start"
@@ -77,16 +77,29 @@ function Login() {
               height={75}
               width={75}
               align="left"
-              style={{ marginRight: "85%" }}
+              style={{
+                //marginRight: "85%",
+                top: 0,
+                left: "0%",
+                position: "fixed",
+                justifyContent: "flex-end",
+                marginLeft: { sm: 75, xs: 10 },
+                flex: 1,
+              }}
             />
             <br></br>
             <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
             <img
               src={Music}
               alt="Brand Logo"
               height={375}
               width={375}
-              align="center"
+              //align="center"
               style={{
                 border: "2px solid #525050",
                 boxShadow: "10px 10px 5px #525050",
