@@ -5,10 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
 import { ColorModeContext } from "./color-context";
+import { getDesignTokens } from "./frontend/pages/theme";
 
 const MyThemeContext = React.createContext({});
 
@@ -27,6 +32,7 @@ export default function MyThemeProvider(props) {
       return !themeMode;
     });
   };
+  /*
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -37,6 +43,21 @@ export default function MyThemeProvider(props) {
       }),
     [mode]
   );
+  */
+  /*
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+  */
+
+  let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
+  theme = responsiveFontSizes(theme);
 
   return (
     <ColorModeContext.Provider value={toggleMode}>
