@@ -57,6 +57,7 @@ export default function ExpandedTrip() {
 
   useEffect(() => {
     getData();
+    calculateRoute();
   }, []);
 
   if (!isLoaded) {
@@ -164,9 +165,12 @@ export default function ExpandedTrip() {
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
-        <Button variant="contained" onClick={calculateRoute}>
-          show trip
-        </Button>
+      <Button
+          variant="contained" 
+          onClick={calculateRoute}
+        >
+          SHOW
+      </Button>
         <Card
           sx={{
             marginTop: "5%",
