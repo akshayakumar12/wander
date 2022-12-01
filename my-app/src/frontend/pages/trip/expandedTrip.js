@@ -74,6 +74,7 @@ export default function ExpandedTrip() {
                       fontSize: "20px",
                       marginBottom: 20,
                       fontWeight: "bold",
+                      // fontWeight: "bold",
                     }}
                   >
                     Source: {pastTrip?.source}
@@ -111,6 +112,7 @@ export default function ExpandedTrip() {
                         <li
                           style={{
                             fontSize: "2.5em",
+                            marginBottom: 10,
                           }}
                         >
                           <div
@@ -128,7 +130,7 @@ export default function ExpandedTrip() {
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginTop: 25,
+                      marginTop: 20,
                       margin: 0,
                       fontWeight: "bold",
                     }}
