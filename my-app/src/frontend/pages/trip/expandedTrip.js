@@ -35,7 +35,10 @@ export default function ExpandedTrip() {
   const [destLatLong, setDestLatLong] = useState([]);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
+    googleMapsApiKey:
+      "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
+    libraries: ["places"],
+    //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
   });
 
   const getData = async () => {
@@ -74,14 +77,22 @@ export default function ExpandedTrip() {
     var result = "";
     geocoder.geocode( {'address': pastTrip?.source}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-          srcLatLong[0] = results[0].geometry.location.Pa;
-          srcLatLong[1] = results[0].geometry.location.Qa;
+          srcLatLong[0] = results[0].geometry.location.lat();
+          srcLatLong[1] = results[0].geometry.location.lng();
       } else {
           result = "Unable to find address: " + status;
       }
      });
-
-     console.log(srcLatLong)*/
+     console.log("SRC: " + srcLatLong)
+     geocoder.geocode( {'address': pastTrip?.destination}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+          destLatLong[0] = results[0].geometry.location.lat();
+          destLatLong[1] = results[0].geometry.location.lng();
+      } else {
+          result = "Unable to find address: " + status;
+      }
+     });
+     console.log("DEST: " + destLatLong)*/
 
     // Get latitude & longitude from address.
     /*Geocode.fromAddress("Eiffel Tower").then(
@@ -95,10 +106,15 @@ export default function ExpandedTrip() {
     );*/
 
     // eslint-disable-next-line no-undef
+    //SRC .LatLng(33.809387657824075, -117.92103112167133),
+    //DEST .LatLng(33.81131499107584, -117.91480756787035),
+    // .LatLng(srcLatLong[0], srcLatLong[1]),
+    // .LatLng(destLatLong[0], destLatLong[1]),
+    // new google.maps.LatLng(destLatLong[0], destLatLong[1]),
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
-      origin: new google.maps.LatLng(46.56300788, 15.62779705),
-      destination: new google.maps.LatLng(46.55953332, 15.62616729),
+      origin: pastTrip?.source,
+      destination: pastTrip?.destination,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
@@ -173,15 +189,63 @@ export default function ExpandedTrip() {
                       fontSize: "20px",
                       marginBottom: 20,
                       fontWeight: "bold",
+                      // fontWeight: "bold",
                     }}
                   >
                     Source: {pastTrip?.source}
                   </p>
+                  <Box
+                    zIndex={0}
+                    sx={{ borderLeft: 1 }}
+                    //position="absolute"
+                  >
+                    <Box margin={0}>
+                      <ul
+                        style={{
+                          margin: 0,
+                          paddingLeft: 20,
+                          //padding: 0,
+                          listStyle: "circle",
+                          //fontSize: "3.5em",
+                        }}
+                      >
+                        <li
+                          style={{
+                            fontSize: "2.5em",
+                            width: "100",
+                            textAlign: "center",
+                            marginBottom: 10,
+                          }}
+                        >
+                          <div
+                            align="left"
+                            style={{ fontSize: 25, align: "left" }}
+                          >
+                            Midpoint 1:
+                          </div>
+                        </li>
+                        <li
+                          style={{
+                            fontSize: "2.5em",
+                            marginBottom: 10,
+                          }}
+                        >
+                          <div
+                            align="left"
+                            style={{ fontSize: 25, align: "left" }}
+                          >
+                            Midpoint 2:
+                          </div>
+                        </li>
+                      </ul>
+                    </Box>
+                  </Box>
+
                   <p
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginTop: 30,
+                      marginTop: 20,
                       margin: 0,
                       fontWeight: "bold",
                     }}
@@ -211,7 +275,13 @@ export default function ExpandedTrip() {
           disableTouchRipple="true"
         >
           <CardActionArea
-            onClick={() => navigate("../playlist")}
+            onClick={() =>
+              navigate("../playlist", {
+                state: {
+                  Playlist: pastTrip?.playlist,
+                },
+              })
+            }
             sx={{ paddingBottom: "2%" }}
           >
             <Playlist src={pastTrip?.playlist}></Playlist>
