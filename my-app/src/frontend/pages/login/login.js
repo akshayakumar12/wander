@@ -74,7 +74,7 @@ function Login() {
             height: "100vh",
             width: "100%",
             display: { sm: "flex", xs: "none" },
-            bgcolor: "primary.main",
+            bgcolor: "#F5ECE3",
           }}
           alignItems="flex-start"
         >
@@ -130,7 +130,7 @@ function Login() {
             <Box
               margin={0}
               sx={{
-                color: "primary.contrastText",
+                color: "#02407F",
               }}
             >
               <h2
@@ -139,12 +139,15 @@ function Login() {
                   textAlign: "left",
                   fontWeight: "500",
                   margin: "0",
+                  color: "#02407F",
                 }}
               >
                 Playlist Creation
               </h2>
             </Box>
-            <h3 style={{ fontWeight: "400", textAlign: "left" }}>
+            <h3
+              style={{ fontWeight: "400", textAlign: "left", color: "black" }}
+            >
               Create the ultimate playlist for your travels
             </h3>
             <Box sx={{ color: "#DE6600", textAlign: "left" }}>

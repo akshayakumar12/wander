@@ -11,7 +11,12 @@ export default function Loading() {
         transform: "translate(-50%, -50%)",
       }}
     >
-      <ReactLoading type="bubbles" color="#003f80" height={300} width={150} />
+      <ReactLoading
+        type="bubbles"
+        sx={{ color: "primary.contrastText" }}
+        height={300}
+        width={150}
+      />
     </div>
   );
 }

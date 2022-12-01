@@ -25,9 +25,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
-import { Theme } from "../theme";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-import { fontWeight } from "@mui/system";
+import WhiteLogo from "../../assets/White Logo.png";
 
 function Header() {
   const navigate = useNavigate();
@@ -65,10 +63,18 @@ function Header() {
     navigate("/");
   };
 
+  const [logo, setLogo] = useState(null);
+
+  useEffect(() => {
+    console.log("localStorage: " + localStorage.getItem("theme"));
+    const mode = localStorage.getItem("theme");
+    mode == "true" ? setLogo(WhiteLogo) : setLogo(Logo);
+  });
+
   return (
     //<ThemeProvider theme={Theme}>
     <Box>
-      <AppBar position="static" style={{ background: "#f6eae2" }}>
+      <AppBar position="static" sx={{ background: "primary.main" }}>
         <Toolbar>
           {/* Three Bar Menu Icon */}
           <IconButton
@@ -94,7 +100,7 @@ function Header() {
                 width: 240,
                 flexShrink: 0,
                 color: "primary.contrastText",
-                backgroundColor: "primary.main",
+                backgroundColor: "sidebarColor.main",
                 fontFamily: "Rubik",
                 "& .MuiDrawer-paper": {
                   width: 240,
@@ -191,8 +197,10 @@ function Header() {
           </Drawer>
 
           {/* Logo */}
+
           <img
-            src={Logo}
+            //src={WhiteLogo}
+            src={logo}
             alt="Brand Logo"
             height={75}
             onClick={() => {

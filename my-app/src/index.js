@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 import { ColorModeContext } from "./color-context";
 import { getDesignTokens } from "./frontend/pages/theme";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const MyThemeContext = React.createContext({});
 
@@ -32,28 +33,6 @@ export default function MyThemeProvider(props) {
       return !themeMode;
     });
   };
-  /*
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          //mode,
-          mode: mode ? "dark" : "light",
-        },
-      }),
-    [mode]
-  );
-  */
-  /*
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
-  );
-  */
 
   let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
@@ -75,6 +54,7 @@ root.render(
   //  <React.StrictMode>
   <BrowserRouter>
     <MyThemeProvider>
+      <CssBaseline />
       <App />
     </MyThemeProvider>
   </BrowserRouter>

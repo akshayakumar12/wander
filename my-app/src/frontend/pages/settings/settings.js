@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 
 import { Button, FormControlLabel, FormGroup, Switch } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   signInWithEmailAndPassword,
   updateEmail,
@@ -12,15 +12,10 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../../firebase";
 import ToggleSend from "../../../backend/settings/toggle";
-import TestPrint from "../theme";
 import { ColorModeContext } from "../../../color-context";
 
 export default function Settings() {
   const colorMode = React.useContext(ColorModeContext);
-  function colorModePls() {
-    //colorMode.toggleColorMode;
-    return <></>;
-  }
 
   //const [user, setUser] = useState("");
 
@@ -36,6 +31,14 @@ export default function Settings() {
     ToggleSend(auth.currentUser.email, !explicit, checked);
   };
 
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("type: " + typeof value);
+    console.log("value: " + value);
+    value == "true" ? setChecked(true) : setChecked(false);
+  });
+
   const toggleChecked = () => {
     setChecked((prev) => !prev);
     localStorage.setItem("theme", !checked);
@@ -44,7 +47,7 @@ export default function Settings() {
     console.log("check");
     console.log(colorMode.toggleColorMode);
     console.log(auth.currentUser.email.checked);
-    //window.location.reload();
+    window.location.reload();
   };
 
   const [oldpass, setOldpass] = React.useState("");
