@@ -54,7 +54,12 @@ function ForgotPassword() {
             </Button>
             <Stack direction="row" alignItems="center" spacing={1}>
               <p>Not a member?</p>
-              <Button onClick={register_click}>Sign up now</Button>
+              <Button
+                sx={{ color: "primary.contrastText" }}
+                onClick={register_click}
+              >
+                Sign up now
+              </Button>
             </Stack>
           </Stack>
         </Stack>

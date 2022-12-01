@@ -38,6 +38,9 @@ function App() {
     location.pathname === "/" ||
     location.pathname === "/register" ||
     location.pathname === "/login" ||
+    location.pathname === "/forgotPassword" ||
+    location.pathname === "/securityQuestionnaire" ||
+    location.pathname === "/newPassword" ||
     location.pathname === "/profileSetup" ? null : (
       <Header></Header>
     );
