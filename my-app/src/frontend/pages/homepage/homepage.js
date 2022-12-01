@@ -206,9 +206,6 @@ function Home() {
                           Map
                         </h3>
                         {/* Google Maps*/}
-                        <Button onCLick={calculateRoute()}>
-                          Show
-                        </Button>
                         <GoogleMap
                           //center={center}
                           zoom={15}
@@ -222,6 +219,12 @@ function Home() {
                           ></DirectionsRenderer>
                         </GoogleMap>
                       </Card>
+                      <Button 
+                        onCLick={calculateRoute}
+                        variant="contained"
+                      >
+                          Show
+                        </Button>
                     </Stack>
                   </Stack>
                 </CardContent>
