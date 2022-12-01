@@ -3,15 +3,19 @@ import { addDoc, doc, setDoc, collection} from 'firebase/firestore/lite';
 import { auth, firestore, db } from '../../../firebase';
 import firebase from 'firebase/compat/app'
 
-async function createTrip(source, destination, preference) {
+async function createTrip(source, destination, preference, midpoint1, midpoint2) {
     try {
         const user = auth.currentUser;
 
         checkIfLatest(user.email);
 
+        alert(midpoint1);
+
         const data = {
             email: user.email,
             source: source,
+            midpoint1: midpoint1,
+            midpoint2: midpoint2,
             destination: destination,
             preference: preference,
             latest: "true",

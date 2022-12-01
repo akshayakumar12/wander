@@ -92,15 +92,15 @@ function Home() {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Source: {pastTrip?.source}
+                                {pastTrip?.source}
                               </p>
                               {
                                 //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
                               }
 
                               <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
-                                <p align="Left">Midpoint 1: </p>
-                                <p align="Left">Midpoint 2:</p>
+                                <p align="Left"> {pastTrip?.midpoint1} </p>
+                                <p align="Left"> {pastTrip?.midpoint2} </p>
                               </Box>
 
                               <p
@@ -113,7 +113,7 @@ function Home() {
                                 }}
                               >
                                 {" "}
-                                Destination: {pastTrip?.destination}
+                                {pastTrip?.destination}
                               </p>
                             </CardContent>
                           </CardActionArea>

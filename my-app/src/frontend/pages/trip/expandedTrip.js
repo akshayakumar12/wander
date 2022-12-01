@@ -194,13 +194,14 @@ export default function ExpandedTrip() {
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginBottom: 20,
+                      marginBottom: 10,
                       fontWeight: "bold",
                       // fontWeight: "bold",
                     }}
                   >
-                    Source: {pastTrip?.source}
+                    {pastTrip?.source}
                   </p>
+
                   <Box
                     zIndex={0}
                     sx={{ borderLeft: 1 }}
@@ -226,9 +227,9 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                            style={{ fontSize: 15, align: "left" }}
                           >
-                            Midpoint 1:
+                            {pastTrip?.midpoint1}
                           </div>
                         </li>
                         <li
@@ -239,30 +240,34 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                            style={{ fontSize: 15, align: "left"}}
                           >
-                            Midpoint 2:
+                            {pastTrip?.midpoint2}
                           </div>
                         </li>
                       </ul>
                     </Box>
-                  </Box>
+                    </Box>
 
                   <p
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginTop: 20,
+                      marginTop: 15,
                       margin: 0,
                       fontWeight: "bold",
                     }}
                   >
-                    Destination: {pastTrip?.destination}
+                    {pastTrip?.destination}
                   </p>
                 </Stack>
                 <Stack width="10%">
                   <Button variant="contained" onClick={editTrip_click}>
                     Edit
+                  </Button>
+                  <p></p>
+                  <Button variant="contained" >
+                    Export
                   </Button>
                 </Stack>
               </Stack>

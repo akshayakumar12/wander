@@ -4,17 +4,24 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+
+import { resetPasswordEmail } from './forgetPassword';
+import resetPassword from '../../../backend/pages/login/checkSecurityQuestions';
 
 function NewPassword() {
   const navigate = useNavigate();
 
-  const login_click= () => {
-    navigate("/");
-  };
+  async function login_click() {
+    let validResetPassword = await resetPassword(resetPasswordEmail, newPassword, confirmPassword);
+    if (validResetPassword) {
+      navigate("/");
+    }
+  }
 
-  const register_click = () => {
-    navigate("/register");
-  };
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
 
   return (
     <Box>
@@ -38,7 +45,22 @@ function NewPassword() {
             {" "}
             Enter your new password. 
           </p>
-          <TextField label="New Password" type="password"/>
+          <TextField 
+            label="New Password" 
+            type="password" 
+            onChange={(event) => setNewPassword(event.target.value)} 
+          />
+
+          <p style={{ textAlign: "left" }}>
+            {" "}
+            Confirm password. 
+          </p>
+          <TextField 
+            label="Confirm Password" 
+            type="password" 
+            onChange={(event) => setConfirmPassword(event.target.value)} 
+          /> 
+
           <Stack
             direction="row"
             alignItems="center"
