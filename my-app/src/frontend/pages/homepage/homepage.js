@@ -47,7 +47,6 @@ function Home() {
               marginTop: "5%",
               width: "100%",
               height: "80%",
-              //bgcolor: "#F5F7FA",
               bgcolor: "cardBg.main",
               borderRadius: "16px",
               boxShadow: 3,
@@ -138,8 +137,16 @@ function Home() {
                             }
                             sx={{ paddingBottom: "2%" }}
                           >
+                            <p
+                              style={{
+                                fontSize: "17px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Playlist for your current trip
+                            </p>
                             <Playlist
-                              text={"Playlist for your current trip"}
+                              //text={"Playlist for your current trip"}
                               src={pastTrip?.playlist}
                             ></Playlist>
                           </CardActionArea>
