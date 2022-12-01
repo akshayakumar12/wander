@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardActionArea,
@@ -20,28 +19,27 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
-} from '@react-google-maps/api'
+} from "@react-google-maps/api";
 import Geocode from "react-geocode";
 
 export default function ExpandedTrip() {
   const navigate = useNavigate();
-  const google = window.google
+  const google = window.google;
   const [pastTrip, setPastTrip] = useState("");
-  const center = { lat: 48.8584, lng: 2.2945 }
-  const [map, setMap] = useState(/** @type google.maps.Map*/ (null))
-  const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
-  const [srcLatLong, setSrcLatLong] = useState([])
-  const [destLatLong, setDestLatLong] = useState([])
-  
+  const center = { lat: 48.8584, lng: 2.2945 };
+  const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  const [srcLatLong, setSrcLatLong] = useState([]);
+  const [destLatLong, setDestLatLong] = useState([]);
 
-
-  const {isLoaded} = useJsApiLoader({
-    googleMapsApiKey: "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
-    libraries: ['places'],
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey:
+      "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
+    libraries: ["places"],
     //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
-  })
+  });
 
   const getData = async () => {
     const response = db.collection("pastTrips");
@@ -62,18 +60,17 @@ export default function ExpandedTrip() {
   }, []);
 
   if (!isLoaded) {
-    return (<Loading></Loading>);
+    return <Loading></Loading>;
   }
 
   const editTrip_click = () => {
     navigate("/tripview");
   };
 
-
   async function calculateRoute() {
-    console.log(pastTrip?.source)
-    if (pastTrip?.source === '' || pastTrip?.destination === '') {
-      return
+    console.log(pastTrip?.source);
+    if (pastTrip?.source === "" || pastTrip?.destination === "") {
+      return;
     }
 
     /*var geocoder = new google.maps.Geocoder();
@@ -97,7 +94,7 @@ export default function ExpandedTrip() {
      });
      console.log("DEST: " + destLatLong)*/
 
-     // Get latitude & longitude from address.
+    // Get latitude & longitude from address.
     /*Geocode.fromAddress("Eiffel Tower").then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
@@ -114,16 +111,16 @@ export default function ExpandedTrip() {
     // .LatLng(srcLatLong[0], srcLatLong[1]),
     // .LatLng(destLatLong[0], destLatLong[1]),
     // new google.maps.LatLng(destLatLong[0], destLatLong[1]),
-    const directionsService = new google.maps.DirectionsService()
+    const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: pastTrip?.source,
       destination: pastTrip?.destination,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
-    })
-    setDirectionsResponse(results)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
   }
 
   /*function getLatLong(address) {
@@ -150,28 +147,24 @@ export default function ExpandedTrip() {
         //color="gray"
         //sx={{ backgroundColor: "gray" }}
       >
-
-      {/* Google Maps API */}
-      <GoogleMap 
-        //center={center}
-        zoom={15}
-        mapContainerStyle={{width: '100%', height: '100%'}}
-        options={{mapTypeControl: false}}
-        onLoad={(map) => setMap(map)}
-      >
-        <Marker position={center}></Marker>
-        <DirectionsRenderer directions={directionsResponse}></DirectionsRenderer>
-
-      </GoogleMap>
-
+        {/* Google Maps API */}
+        <GoogleMap
+          //center={center}
+          zoom={15}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
+          options={{ mapTypeControl: false }}
+          onLoad={(map) => setMap(map)}
+        >
+          <Marker position={center}></Marker>
+          <DirectionsRenderer
+            directions={directionsResponse}
+          ></DirectionsRenderer>
+        </GoogleMap>
       </Box>
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
-        <Button
-          variant="contained" 
-          onClick={calculateRoute}
-        >
+        <Button variant="contained" onClick={calculateRoute}>
           show trip
         </Button>
         <Card
@@ -179,7 +172,7 @@ export default function ExpandedTrip() {
             marginTop: "5%",
             width: "60%",
             height: "80%",
-            bgcolor: "#F5F7FA",
+            bgcolor: "cardBg.main",
             borderRadius: "16px",
             boxShadow: 3,
             alignContent: "center",
@@ -274,7 +267,7 @@ export default function ExpandedTrip() {
             marginTop: "5%",
             width: "60%",
             height: "80%",
-            bgcolor: "#F5F7FA",
+            bgcolor: "cardBg.main",
             borderRadius: "16px",
             boxShadow: 3,
             alignContent: "center",
@@ -282,19 +275,19 @@ export default function ExpandedTrip() {
           disableTouchRipple="true"
         >
           <CardActionArea
-            onClick={
-              () => navigate("../playlist", {
-              state: {
-                  Playlist: pastTrip?.playlist
-                }
-              })}
+            onClick={() =>
+              navigate("../playlist", {
+                state: {
+                  Playlist: pastTrip?.playlist,
+                },
+              })
+            }
             sx={{ paddingBottom: "2%" }}
           >
             <Playlist src={pastTrip?.playlist}></Playlist>
           </CardActionArea>
         </Card>
       </Stack>
-
     </>
   );
 }

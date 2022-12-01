@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
 import "../../../backend/pages/trip/createNewTrip";
 import createTrip from "../../../backend/pages/trip/createNewTrip";
@@ -26,6 +26,18 @@ function NewTrip() {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [preference, setPreference] = useState("");
+  const [suggestBgColor, setSuggestBgColor] = useState("");
+  const [suggestBgColorPoint, setSuggestBgColorPoint] = useState("");
+
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("bgcolor: " + value);
+    value == "true" ? setSuggestBgColor("#272727") : setSuggestBgColor("white");
+    value == "true"
+      ? setSuggestBgColorPoint("#5e5e5e")
+      : setSuggestBgColorPoint("#F5ECE3");
+  });
 
   const handleSelectSource = async (value) => {
     setSource(value);
@@ -73,8 +85,18 @@ function NewTrip() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
+                            ? {
+                                backgroundColor: suggestBgColorPoint,
+                                cursor: "pointer",
+                              }
+                            : {
+                                backgroundColor: suggestBgColor,
+                                cursor: "pointer",
+                              };
+                          /*
                             ? { backgroundColor: "#74a8db", cursor: "pointer" }
                             : { backgroundColor: "#ffffff", cursor: "pointer" };
+                            */
 
                           return (
                             <div
@@ -116,8 +138,16 @@ function NewTrip() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
-                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                            : { backgroundColor: "#ffffff", cursor: "pointer" };
+                            ? {
+                                backgroundColor: suggestBgColorPoint,
+                                cursor: "pointer",
+                              }
+                            : {
+                                backgroundColor: suggestBgColor,
+                                cursor: "pointer",
+                              };
+                          //? { backgroundColor: "#74a8db", cursor: "pointer" }
+                          //: { backgroundColor: "#ffffff", cursor: "pointer" };
 
                           return (
                             <div
@@ -136,7 +166,7 @@ function NewTrip() {
 
             <FormControl name="preference">
               <FormLabel>
-                <h3 align="left" style={{ margin: 0, color: "black" }}>
+                <h3 align="left" style={{ margin: 0 }}>
                   Travel Preference
                 </h3>
               </FormLabel>
