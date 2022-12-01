@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardActionArea,
@@ -37,7 +38,8 @@ export default function ExpandedTrip() {
 
 
   const {isLoaded} = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
+    googleMapsApiKey: "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true"
+    //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
   })
 
   const getData = async () => {
@@ -77,14 +79,22 @@ export default function ExpandedTrip() {
     var result = "";
     geocoder.geocode( {'address': pastTrip?.source}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-          srcLatLong[0] = results[0].geometry.location.Pa;
-          srcLatLong[1] = results[0].geometry.location.Qa;
+          srcLatLong[0] = results[0].geometry.location.lng();
+          srcLatLong[1] = results[0].geometry.location.lat();
       } else {
           result = "Unable to find address: " + status;
       }
      });
-
-     console.log(srcLatLong)*/
+     console.log("SRC" + srcLatLong)
+     geocoder.geocode( {'address': pastTrip?.destination}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+          destLatLong[0] = results[0].geometry.location.lng();
+          destLatLong[1] = results[0].geometry.location.lat();
+      } else {
+          result = "Unable to find address: " + status;
+      }
+     });
+     console.log("DEST" + destLatLong)*/
 
      // Get latitude & longitude from address.
     /*Geocode.fromAddress("Eiffel Tower").then(
@@ -100,8 +110,8 @@ export default function ExpandedTrip() {
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService()
     const results = await directionsService.route({
-      origin: new google.maps.LatLng(46.56300788, 15.62779705),
-      destination: new google.maps.LatLng(46.55953332, 15.62616729),
+      origin: new google.maps.LatLng(33.809387657824075, -117.92103112167133), //LatLng(srcLatLong[0], srcLatLong[1]),//(46.56300788, 15.62779705),
+      destination: new google.maps.LatLng(33.81131499107584, -117.91480756787035),//LatLng(destLatLong[0], destLatLong[1]),//(46.55953332, 15.62616729),
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     })
