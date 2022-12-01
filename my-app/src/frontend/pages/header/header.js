@@ -77,6 +77,8 @@ function Header() {
           {/* Dropdown Menu */}
           <Drawer
             anchor="left"
+            //variant="permanent"
+            //noWrap
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             PaperProps={{

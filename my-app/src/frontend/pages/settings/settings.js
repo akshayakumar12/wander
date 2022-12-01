@@ -21,6 +21,8 @@ export default function Settings() {
   const [email, setEmail] = React.useState("");
   const [e, setE] = React.useState("abcd");
 
+  const [option, setOption] = useState("");
+
   const [explicit, setExplicit] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
   const explicitChecked = () => {
@@ -28,9 +30,25 @@ export default function Settings() {
     ToggleSend(auth.currentUser.email, !explicit, checked);
   };
 
+  const getOp = async () => {
+    const set = await db
+      .collection("Settings")
+      .doc(auth.currentUser.email)
+      .get()
+      .then((thing) => {
+        setOption(thing.data());
+        // console.log(thing.data().appearance);
+      })
+      .catch((e) => console.log(e));
+    // set.map((item) => {
+    //   setOption(item.data);
+    // });
+  };
+
   const toggleChecked = () => {
     setChecked((prev) => !prev);
     ToggleSend(auth.currentUser.email, explicit, !checked);
+    getOp();
   };
 
   const [oldpass, setOldpass] = React.useState("");
@@ -78,6 +96,7 @@ export default function Settings() {
       updateEmail(auth.currentUser, email);
     }
   };
+
   return (
     <Box>
       {/* My Profile Title */}
