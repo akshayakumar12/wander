@@ -9,10 +9,33 @@ import { useLocation } from "react-router-dom";
 import Loading from "../quiz/loading";
 import "./homepage.css";
 
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+
 function Home() {
   //window.location.reload(false);
   const navigate = useNavigate();
   let location = useLocation();
+
+  const google = window.google;
+  const center = { lat: 48.8584, lng: 2.2945 };
+  const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  const [srcLatLong, setSrcLatLong] = useState([]);
+  const [destLatLong, setDestLatLong] = useState([]);
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey:
+      "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
+    libraries: ["places"],
+    //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
+  });
 
   const [show, setShow] = useState(false);
   const [pastTrip, setPastTrip] = useState("");
@@ -35,29 +58,46 @@ function Home() {
 
   useEffect(() => {
     getData();
+    calculateRoute();
   }, [location]);
+
+  async function calculateRoute() {
+    console.log(pastTrip?.source);
+    if (pastTrip?.source === "" || pastTrip?.destination === "") {
+      return;
+    }
+
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: pastTrip?.source,
+      destination: pastTrip?.destination,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
 
   //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
     <Stack alignItems={"flex-start"} marginX="15%">
       {show ? (
         <>
-        <Card
-          sx={{
-            marginTop: "5%",
-            width: "100%",
-            height: "80%",
-            bgcolor: "#F5F7FA",
-            borderRadius: "16px",
-            boxShadow: 3,
-            alignContent: "center",
-          }}
-          disableTouchRipple="true"
-        >
-
-
+          <Card
+            sx={{
+              marginTop: "5%",
+              width: "100%",
+              height: "80%",
+              bgcolor: "cardBg.main",
+              borderRadius: "16px",
+              boxShadow: 3,
+              alignContent: "center",
+            }}
+            disableTouchRipple="true"
+          >
             <>
-            {curTripExists ? (
+              {curTripExists ? (
                 <CardContent sx={{ marginX: "1%" }}>
                   {" "}
                   <h2
@@ -94,9 +134,9 @@ function Home() {
                               >
                                 {pastTrip?.source}
                               </p>
-                              {
-                                //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
-                              }
+
+                              
+
 
                               <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
                                 <p align="Left"> {pastTrip?.midpoint1} </p>
@@ -133,17 +173,24 @@ function Home() {
                             onClick={() =>
                               navigate("../playlist", {
                                 state: {
-                                  Playlist: pastTrip?.playlist
+                                  Playlist: pastTrip?.playlist,
                                 },
                               })
                             }
                             sx={{ paddingBottom: "2%" }}
                           >
+                            <p
+                              style={{
+                                fontSize: "17px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Playlist for your current trip
+                            </p>
                             <Playlist
-                              text={"Playlist for your current trip"}
+                              //text={"Playlist for your current trip"}
                               src={pastTrip?.playlist}
                             ></Playlist>
-
                           </CardActionArea>
                         </Card>
                       </Stack>
@@ -159,48 +206,62 @@ function Home() {
                           padding: 1,
                         }}
                       >
-                        <h3 align="left" style={{ marginLeft: "5%", fontSize: "20px" }}>
+                        <h3
+                          align="left"
+                          style={{ marginLeft: "5%", fontSize: "20px" }}
+                        >
                           Map
                         </h3>
-                        {
-                          <iframe
-                            src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
-                            width="400"
-                            height="300"
-                          ></iframe>
-                        }
+                        {/* Google Maps*/}
+                        <GoogleMap
+                          //center={center}
+                          zoom={15}
+                          mapContainerStyle={{ width: "100%", height: "100%" }}
+                          options={{ mapTypeControl: false }}
+                          onLoad={(map) => setMap(map)}
+                        >
+                          <Marker position={center}></Marker>
+                          <DirectionsRenderer
+                            directions={directionsResponse}
+                          ></DirectionsRenderer>
+                        </GoogleMap>
                       </Card>
+                      <Button 
+                        onCLick={calculateRoute}
+                        variant="contained"
+                      >
+                          Show
+                        </Button>
                     </Stack>
                   </Stack>
                 </CardContent>
-            ) : (
-              /* NO CURRENT TRIPS */
-              <>
-                <h1>You have no current trips</h1>
-              </>
-            )}
+              ) : (
+                /* NO CURRENT TRIPS */
+                <>
+                  <h1>You have no current trips</h1>
+                </>
+              )}
             </>
+          </Card>
 
-        </Card>
-
-        <Button
-          variant="contained"
-          justifyContent="flex-start"
-          id="greenButton"
-          sx={{
-            marginTop: "2%",
-            //bgcolor: "#007A1B",
-            textTransform: "none",
-            fontSize: "20px",
-          }}
-          onClick={() => navigate("/newtrip")}
-          size="large"
-        >
-          Create New Trip
-        </Button>
+          <Button
+            variant="contained"
+            justifyContent="flex-start"
+            id="greenButton"
+            sx={{
+              marginTop: "2%",
+              //bgcolor: "#007A1B",
+              textTransform: "none",
+              fontSize: "20px",
+            }}
+            onClick={() => navigate("/newtrip")}
+            size="large"
+          >
+            Create New Trip
+          </Button>
         </>
       ) : (
-      <Loading></Loading>
+        <Loading></Loading>
       )}
     </Stack>
   );

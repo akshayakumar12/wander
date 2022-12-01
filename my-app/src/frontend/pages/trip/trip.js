@@ -81,7 +81,20 @@ function TripView() {
     getData();
   }, []);
 
-  function editTheTrip(source, destination, preference, midpoint1, midpoint2) {
+  const [suggestBgColor, setSuggestBgColor] = useState("");
+  const [suggestBgColorPoint, setSuggestBgColorPoint] = useState("");
+
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("bgcolor: " + value);
+    value == "true" ? setSuggestBgColor("#272727") : setSuggestBgColor("white");
+    value == "true"
+      ? setSuggestBgColorPoint("#5e5e5e")
+      : setSuggestBgColorPoint("#F5ECE3");
+  });
+
+  function editTheTrip(source, destination, preference) {
     editTrip(
       pastTrip.source,
       pastTrip.destination,
@@ -140,8 +153,14 @@ function TripView() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
-                            ? { backgroundColor: "#74a8db", cursor: "pointer" }
-                            : { backgroundColor: "#ffffff", cursor: "pointer" };
+                            ? {
+                                backgroundColor: suggestBgColorPoint,
+                                cursor: "pointer",
+                              }
+                            : {
+                                backgroundColor: suggestBgColor,
+                                cursor: "pointer",
+                              };
 
                           return (
                             <div
@@ -265,8 +284,18 @@ function TripView() {
                             ? "suggestion-item--active"
                             : "suggestion-item";
                           const style = suggestion.active
+                            ? {
+                                backgroundColor: suggestBgColorPoint,
+                                cursor: "pointer",
+                              }
+                            : {
+                                backgroundColor: suggestBgColor,
+                                cursor: "pointer",
+                              };
+                          /*
                             ? { backgroundColor: "#74a8db", cursor: "pointer" }
                             : { backgroundColor: "#ffffff", cursor: "pointer" };
+                          */
 
                           return (
                             <div
@@ -285,7 +314,7 @@ function TripView() {
 
             <FormControl>
               <FormLabel>
-                <h3 style={{ margin: 0, color: "black" }}>Travel Preference</h3>
+                <h3 style={{ margin: 0 }}>Travel Preference</h3>
               </FormLabel>
               <RadioGroup
                 onChange={(event) => setNewPreference(event.target.value)}

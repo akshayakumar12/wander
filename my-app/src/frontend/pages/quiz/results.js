@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom";
 
 function Result(props) {
   const navigate = useNavigate();
-  
+
   const location = useLocation();
   const currentResults = location.state.Result;
 
@@ -49,6 +49,15 @@ function Result(props) {
     navigate("/quiz");
   };
 
+  const [bgColor, setBgColor] = useState("");
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("type: " + typeof value);
+    console.log("value: " + value);
+    value == "true" ? setBgColor("#272727") : setBgColor("#F2F8F4");
+  });
+
   return showResults ? (
     <>
       <div>
@@ -66,7 +75,7 @@ function Result(props) {
             .map((answerOption, index) => (
               <Box
                 width={"30%"}
-                style={{ background: "#F2F8F4" }}
+                style={{ background: bgColor }}
                 sx={{
                   borderRadius: 4,
                   boxShadow: "1px 1px 1px silver",
@@ -81,17 +90,25 @@ function Result(props) {
         </Stack>
       </div>
       <br></br>
-      <Stack direction={"row"} justifyContent="center">
-        <Button
-          variant="contained"
-          sx={{ width: 130, height: 35, margin: 2 }}
-          onClick={handleTakeQuiz}
-        >
-          {" "}
-          {"Take Quiz"}
-        </Button>
+      <Stack
+        direction={{ sm: "row", xs: "column" }}
+        justifyContent="center"
+        alignItems={"center"}
+      >
+        <Stack justifyContent={"center"}>
+          <Button
+            variant="contained"
+            sx={{ width: 130, height: 35, margin: 2 }}
+            onClick={handleTakeQuiz}
+          >
+            {" "}
+            {"Take Quiz"}
+          </Button>
+        </Stack>
 
-        <Create />
+        <Stack justifyContent={"center"}>
+          <Create />
+        </Stack>
       </Stack>
     </>
   ) : (

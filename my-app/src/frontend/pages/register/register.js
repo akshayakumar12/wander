@@ -48,7 +48,7 @@ function Register() {
         justifyContent="flex-start"
         alignItems={"left"}
         //style={{ background: "#F5ECE3" }}
-        sx={{ bgcolor: "primary.main" }}
+        sx={{ bgcolor: "#F5ECE3" }}
       >
         {/* Left Stack */}
         <Stack
@@ -96,12 +96,15 @@ function Register() {
                   textAlign: "left",
                   fontWeight: "500",
                   margin: "0",
+                  color: "#02407F",
                 }}
               >
                 Playlist Creation
               </h2>
             </Box>
-            <h3 style={{ fontWeight: "400", textAlign: "left" }}>
+            <h3
+              style={{ fontWeight: "400", textAlign: "left", color: "black" }}
+            >
               Create the ultimate playlist for your travels
             </h3>
             <Box sx={{ color: "#007A7A", textAlign: "left" }}>
@@ -141,6 +144,7 @@ function Register() {
                   textAlign: "left",
                   fontWeight: "400",
                   fontSize: "25px",
+                  color: "black",
                 }}
               >
                 Register
@@ -151,6 +155,7 @@ function Register() {
                   textAlign: "left",
                   fontWeight: "400",
                   fontSize: "16px",
+                  color: "black",
                 }}
               >
                 Account Information
@@ -185,12 +190,16 @@ function Register() {
                   label="Password"
                   type="password"
                   sx={{
+                    "& .MuiInputBase-input": {
+                      color: "black",
+                    },
                     "& .MuiOutlinedInput-root": {
                       "& > fieldset": { borderColor: "#007A7A" },
                     },
                     "& .MuiOutlinedInput-root.Mui-focused": {
                       "& > fieldset": {
                         borderColor: "#007A7A",
+                        color: "black",
                       },
                     },
                   }}
