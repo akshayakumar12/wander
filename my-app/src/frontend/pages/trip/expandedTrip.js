@@ -165,12 +165,9 @@ export default function ExpandedTrip() {
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
-      <Button
-          variant="contained" 
-          onClick={calculateRoute}
-        >
+        <Button variant="contained" onClick={calculateRoute}>
           SHOW
-      </Button>
+        </Button>
         <Card
           sx={{
             marginTop: "5%",
@@ -207,7 +204,7 @@ export default function ExpandedTrip() {
                       <ul
                         style={{
                           margin: 0,
-                          paddingLeft: 20,
+                          paddingLeft: 17,
                           //padding: 0,
                           listStyle: "circle",
                           //fontSize: "3.5em",
@@ -223,9 +220,9 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                            style={{ fontSize: 20, align: "left" }}
                           >
-                            Midpoint 1:
+                            <p>Midpoint 1:</p>
                           </div>
                         </li>
                         <li
@@ -236,9 +233,9 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                            style={{ fontSize: 20, align: "left" }}
                           >
-                            Midpoint 2:
+                            <p>Midpoint 2:</p>
                           </div>
                         </li>
                       </ul>
@@ -250,7 +247,7 @@ export default function ExpandedTrip() {
                     style={{
                       fontSize: "20px",
                       marginTop: 20,
-                      margin: 0,
+                      marginBottom: 0,
                       fontWeight: "bold",
                     }}
                   >
