@@ -87,7 +87,7 @@ export default function ExpandedTrip() {
                       <ul
                         style={{
                           margin: 0,
-                          paddingLeft: 25,
+                          paddingLeft: 20,
                           //padding: 0,
                           listStyle: "circle",
                           //fontSize: "3.5em",
@@ -95,21 +95,30 @@ export default function ExpandedTrip() {
                       >
                         <li
                           style={{
-                            fontSize: "3.5em",
+                            fontSize: "2.5em",
+                            width: "100",
+                            textAlign: "center",
+                            marginBottom: 10,
                           }}
                         >
-                          <p align="Left" style={{ fontSize: 20, padding: 0 }}>
-                            Midpoint 1:{" "}
-                          </p>
+                          <div
+                            align="left"
+                            style={{ fontSize: 25, align: "left" }}
+                          >
+                            Midpoint 1:
+                          </div>
                         </li>
                         <li
                           style={{
-                            fontSize: "3.5em",
+                            fontSize: "2.5em",
                           }}
                         >
-                          <p align="Left" style={{ fontSize: 20 }}>
+                          <div
+                            align="left"
+                            style={{ fontSize: 25, align: "left" }}
+                          >
                             Midpoint 2:
-                          </p>
+                          </div>
                         </li>
                       </ul>
                     </Box>
@@ -119,7 +128,7 @@ export default function ExpandedTrip() {
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginTop: 30,
+                      marginTop: 25,
                       margin: 0,
                       fontWeight: "bold",
                     }}
