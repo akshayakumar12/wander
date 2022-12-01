@@ -66,152 +66,152 @@ function Header() {
   };
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Box>
-        <AppBar position="static" style={{ background: "#f6eae2" }}>
-          <Toolbar>
-            {/* Three Bar Menu Icon */}
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={() => setDrawerOpen(true)}
-            >
-              <MenuIcon sx={{ color: "primary.contrastText" }} size="large" />
-            </IconButton>
-            {/* Dropdown Menu */}
-            <Drawer
-              anchor="left"
-              open={drawerOpen}
-              onClose={() => setDrawerOpen(false)}
-              PaperProps={{
-                sx: {
+    //<ThemeProvider theme={Theme}>
+    <Box>
+      <AppBar position="static" style={{ background: "#f6eae2" }}>
+        <Toolbar>
+          {/* Three Bar Menu Icon */}
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={() => setDrawerOpen(true)}
+          >
+            <MenuIcon sx={{ color: "primary.contrastText" }} size="large" />
+          </IconButton>
+          {/* Dropdown Menu */}
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            PaperProps={{
+              sx: {
+                width: 240,
+                flexShrink: 0,
+                color: "primary.contrastText",
+                backgroundColor: "primary.main",
+                fontFamily: "Rubik",
+                "& .MuiDrawer-paper": {
                   width: 240,
-                  flexShrink: 0,
-                  color: "primary.contrastText",
-                  backgroundColor: "primary.main",
-                  fontFamily: "Rubik",
-                  "& .MuiDrawer-paper": {
-                    width: 240,
-                    boxSizing: "border-box",
-                  },
+                  boxSizing: "border-box",
                 },
+              },
+            }}
+          >
+            <List>
+              <ListItem disablePadding id="text">
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/home");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Home"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/profile");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Profile"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/pastTrips");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <CardTravelIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Past Trips"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate("/settings");
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <SettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Settings"} />
+                </ListItemButton>
+              </ListItem>
+            </List>
+            {/* Logout List */}
+            <List
+              sx={{
+                width: "100%",
+                bottom: 0,
+                position: "absolute",
+                align: "center",
               }}
             >
-              <List>
-                <ListItem disablePadding id="text">
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/home");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <ListItemIcon>
-                      {" "}
-                      <HomeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Home"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/profile");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <ListItemIcon>
-                      {" "}
-                      <AccountCircleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Profile"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/pastTrips");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <ListItemIcon>
-                      {" "}
-                      <CardTravelIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Past Trips"} />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate("/settings");
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <ListItemIcon>
-                      {" "}
-                      <SettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={"Settings"} />
-                  </ListItemButton>
-                </ListItem>
-              </List>
-              {/* Logout List */}
-              <List
-                sx={{
-                  width: "100%",
-                  bottom: 0,
-                  position: "absolute",
-                  align: "center",
-                }}
-              >
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => {
-                      logout_fb();
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    <ListItemIcon>
-                      {" "}
-                      <LogoutIcon sx={{ color: "#DE6600" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={<Box fontWeight="500">Logout</Box>}
-                      sx={{ color: "#DE6600", fontWeight: "bold" }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </List>
-            </Drawer>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    logout_fb();
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <ListItemIcon>
+                    {" "}
+                    <LogoutIcon sx={{ color: "#DE6600" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={<Box fontWeight="500">Logout</Box>}
+                    sx={{ color: "#DE6600", fontWeight: "bold" }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
 
-            {/* Logo */}
-            <img
-              src={Logo}
-              alt="Brand Logo"
-              height={75}
-              onClick={() => {
-                navigate("/home");
-              }}
-            />
+          {/* Logo */}
+          <img
+            src={Logo}
+            alt="Brand Logo"
+            height={75}
+            onClick={() => {
+              navigate("/home");
+            }}
+          />
 
-            {/* Profile Picture */}
-            <Avatar
-              src={userInfo?.profilePicture}
-              sx={{ marginLeft: "auto" }}
-              onClick={() => {
-                navigate("/profile");
-              }}
-            />
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </ThemeProvider>
+          {/* Profile Picture */}
+          <Avatar
+            src={userInfo?.profilePicture}
+            sx={{ marginLeft: "auto" }}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          />
+        </Toolbar>
+      </AppBar>
+    </Box>
+    //</ThemeProvider>
   );
 }
 export default Header;

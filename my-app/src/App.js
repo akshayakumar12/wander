@@ -41,47 +41,47 @@ function App() {
       <Header></Header>
     );
   return (
-    <ThemeProvider theme={Theme}>
-      <div className="App">
-        {hideHeader}
-        <Routes>
-          {/* login and register*/}
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profileSetup" element={<ProfileSetup />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route
-            path="/securityQuestionnaire"
-            element={<SecurityQuestionnaire />}
-          />
-          <Route path="/newPassword" element={<NewPassword />} />
+    //<ThemeProvider theme={Theme}>
+    <div className="App">
+      {hideHeader}
+      <Routes>
+        {/* login and register*/}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profileSetup" element={<ProfileSetup />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route
+          path="/securityQuestionnaire"
+          element={<SecurityQuestionnaire />}
+        />
+        <Route path="/newPassword" element={<NewPassword />} />
 
-          {/*Profile */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/settings" element={<Settings />} />
+        {/*Profile */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/settings" element={<Settings />} />
 
-          {/*Home */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/newhome" element={<NewHome></NewHome>} />
+        {/*Home */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/newhome" element={<NewHome></NewHome>} />
 
-          {/*Quiz*/}
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/quizhistory" element={<QuizHistory />} />
-          <Route path="/confirmation" element={<Confirm></Confirm>} />
-          <Route path="/playlist" element={<PlaylistPage />} />
+        {/*Quiz*/}
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/quizhistory" element={<QuizHistory />} />
+        <Route path="/confirmation" element={<Confirm></Confirm>} />
+        <Route path="/playlist" element={<PlaylistPage />} />
 
-          {/*Trip */}
-          <Route path="/tripview" element={<TripView />} />
-          <Route path="/expandedTrip" element={<ExpandedTrip />} />
-          <Route path="/pastTrips" element={<PastTrips />} />
-          <Route path="/newtrip" element={<NewTrip></NewTrip>} />
-        </Routes>
-      </div>
-    </ThemeProvider>
+        {/*Trip */}
+        <Route path="/tripview" element={<TripView />} />
+        <Route path="/expandedTrip" element={<ExpandedTrip />} />
+        <Route path="/pastTrips" element={<PastTrips />} />
+        <Route path="/newtrip" element={<NewTrip></NewTrip>} />
+      </Routes>
+    </div>
+    //</ThemeProvider>
   );
 }
 
