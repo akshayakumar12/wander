@@ -190,11 +190,10 @@ function Home() {
                     </Stack>
                     <br></br>
                     <Stack>
+                      {/* invisible button 💀 DO NOT REMOVE*/}
                        <Button 
                         onCLick={calculateRoute()}
-                        variant="contained"
                       >
-                          Show
                         </Button>
                       <Card
                         sx={{

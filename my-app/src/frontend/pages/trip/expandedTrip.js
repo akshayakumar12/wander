@@ -165,12 +165,21 @@ export default function ExpandedTrip() {
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
+
+      {/* invisible button 💀 DO NOT REMOVE*/}
+      <Button 
+          onClick={calculateRoute()}
+          sx={{width: "60%",}}
+        >
+      </Button>
       <Button
           variant="contained" 
           onClick={calculateRoute}
+          sx={{width: "60%",}}
         >
-          SHOW
+          RECENTER
       </Button>
+
         <Card
           sx={{
             marginTop: "5%",
