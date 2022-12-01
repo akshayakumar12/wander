@@ -100,10 +100,10 @@ function QuizHistory() {
       ) : (
         <>
           <Stack
-            justifyContent="center"
+            justifyContent="flex-start"
             direction={"column"}
             spacing={4}
-            alignItems="center"
+            alignItems="flex-start"
           >
             <div
               className="card-section"
@@ -111,6 +111,7 @@ function QuizHistory() {
             >
               <Grid
                 container
+                direction={"row"}
                 spacing={2}
                 rowSpacing={2}
                 columnSpacing={3}
@@ -120,61 +121,71 @@ function QuizHistory() {
                   <Grid xs={"auto"} key={index} spacing={8}>
                     <Card
                       sx={{
-                        margin: 4,
+                        margin: 2,
                         boxShadow: 1,
-                        backgroundColor: "#F2F8F4",
+                        backgroundColor: "#F5F8FA",
                         borderRadius: 4,
                       }}
                     >
-                      <Box
-                        sx={{
-                          margin: 1,
-                          border: "3px solid black",
-                          borderRadius: 4,
-                        }}
-                      >
-                        <h3
-                          align="center"
-                          style={{ marginBottom: 3, padding: 0 }}
-                        >
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(0, 3)
-                              .join(" ")
-                          }
-                        </h3>
-                        <h3 align="center" style={{ marginY: 4, padding: 1 }}>
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(3, 5)
-                              .join(" ")
-                          }
-                        </h3>
-                      </Box>
-
-                      <body
-                        style={{
-                          padding: 0,
-                          border: "3px solid black",
-                          borderRadius: 14,
-                          margin: 6,
-                        }}
-                      >
-                        {curCard.quiz_ans
-                          .split(",")
-                          .slice(0, 5)
-                          .map((answer, index) => (
-                            <p>
-                              {questions[index]}: {answer}
-                            </p>
-                          ))}
-                      </body>
+                      <Stack direction={"row"}>
+                        <Stack justifyContent={"center"}>
+                          <Box
+                            sx={{
+                              margin: 1,
+                              paddingRight: 1,
+                              //border: "3px solid black",
+                              //borderRadius: 4,
+                              borderRight: 2,
+                            }}
+                          >
+                            <h3
+                              align="center"
+                              style={{ marginBottom: 3, padding: 0 }}
+                            >
+                              {
+                                /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                                  .toDate()
+                                  .toString()
+                                  .split(" ")
+                                  .slice(0, 3)
+                                  .join(" ")
+                              }
+                            </h3>
+                            <h3
+                              align="center"
+                              style={{ marginY: 4, padding: 1 }}
+                            >
+                              {
+                                /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                                  .toDate()
+                                  .toString()
+                                  .split(" ")
+                                  .slice(3, 5)
+                                  .join(" ")
+                              }
+                            </h3>
+                          </Box>
+                        </Stack>
+                        <Stack>
+                          <body
+                            style={{
+                              padding: 0,
+                              //border: "3px solid black",
+                              borderRadius: 14,
+                              margin: 6,
+                            }}
+                          >
+                            {curCard.quiz_ans
+                              .split(",")
+                              .slice(0, 5)
+                              .map((answer, index) => (
+                                <p align="left">
+                                  {questions[index]}: {answer}
+                                </p>
+                              ))}
+                          </body>
+                        </Stack>
+                      </Stack>
                     </Card>
                   </Grid>
                 ))}
