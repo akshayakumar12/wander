@@ -24,6 +24,12 @@ export const getDesignTokens = (mode) => ({
           sidebarColor: {
             main: "#272727",
           },
+          success: {
+            main: "#439446",
+          },
+          black: {
+            main: "#3d3d3d",
+          },
         }
       : {
           // palette values for light mode
