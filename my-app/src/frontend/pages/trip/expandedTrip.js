@@ -266,7 +266,12 @@ export default function ExpandedTrip() {
           disableTouchRipple="true"
         >
           <CardActionArea
-            onClick={() => navigate("../playlist")}
+            onClick={
+              () => navigate("../playlist", {
+              state: {
+                  Playlist: pastTrip?.playlist
+                }
+              })}
             sx={{ paddingBottom: "2%" }}
           >
             <Playlist src={pastTrip?.playlist}></Playlist>
