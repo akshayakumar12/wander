@@ -453,12 +453,14 @@ function Profile() {
             //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
             //                    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
           }
+          {/*
           <Button variant="contained" onClick={handleClick2}>
             Connect to Spotify
           </Button>
           <Button variant="contained" onClick={handleDisconnect}>
             Disconnect from Spotify
           </Button>
+          */}
           <Button variant="contained" onClick={spotifyData_click}>
             Your Spotify Data
           </Button>
@@ -468,6 +470,7 @@ function Profile() {
         </Stack>
       </Stack>
 
+      {/*}
       {userInfo.real_access_token ? (
         <>
           {" "}
@@ -482,6 +485,7 @@ function Profile() {
       ) : (
         <></>
       )}
+      */}
 
       <Stack
         direction="row"

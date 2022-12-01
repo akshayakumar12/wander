@@ -22,7 +22,7 @@ import Tracks from "./tracks";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const TOKEN = "https://accounts.spotify.com/api/token";
-const REDIRECT_URI = "http://localhost:3000/profile";
+const REDIRECT_URI = "http://localhost:3000/spotifyData";
 const real_access_token = "";
 const real_refresh_token = "";
 const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
