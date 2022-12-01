@@ -12,8 +12,16 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../../firebase";
 import ToggleSend from "../../../backend/settings/toggle";
+import TestPrint from "../theme";
+import { ColorModeContext } from "../../../color-context";
 
 export default function Settings() {
+  const colorMode = React.useContext(ColorModeContext);
+  function colorModePls() {
+    //colorMode.toggleColorMode;
+    return <></>;
+  }
+
   //const [user, setUser] = useState("");
 
   const [userInfo, setUserInfo] = useState("");
@@ -30,7 +38,13 @@ export default function Settings() {
 
   const toggleChecked = () => {
     setChecked((prev) => !prev);
+    localStorage.setItem("theme", !checked);
     ToggleSend(auth.currentUser.email, explicit, !checked);
+    //colorMode.toggleColorMode();
+    console.log("check");
+    console.log(colorMode.toggleColorMode);
+    console.log(auth.currentUser.email.checked);
+    //window.location.reload();
   };
 
   const [oldpass, setOldpass] = React.useState("");
