@@ -21,6 +21,9 @@ export const getDesignTokens = (mode) => ({
           cardBg: {
             main: "#5C5C5C",
           },
+          sidebarColor: {
+            main: "#272727",
+          },
         }
       : {
           // palette values for light mode
@@ -39,6 +42,9 @@ export const getDesignTokens = (mode) => ({
           },
           cardBg: {
             main: "#f0f4f9",
+          },
+          sidebarColor: {
+            main: "#F5ECE3",
           },
         }),
   },
