@@ -4,7 +4,23 @@ import InputBase from "@mui/material/InputBase";
 import "./style.css";
 import Box from "@mui/material/Box";
 import { auth, firestore, db } from "../../firebase";
+import { useEffect, useState } from "react";
 
+/*
+const initialState = !!JSON.parse(localStorage.getItem('theme'))
+
+function MyThemeProvider(props) {
+  const [mode, setMode] = useState(initialState);
+
+  // you pass another function where you persist the value to localStorage
+  // given your code you may just create a toggle function where you don't need to pass a value. but you can change it to receive an argument
+  const toggleMode = () => {
+    setMode(themeMode => {
+      localStorage.setItem('theme', !themeMode)
+      return !themeMode
+    })
+  }
+  */
 export const Theme = createTheme({
   palette: {
     mode: "light",
@@ -60,25 +76,24 @@ export const Theme = createTheme({
   },
 });
 
-/*
-export default async function TestPrint() {
-  try {
-    const userDocRef = db.collection("Settings").doc("hello@gmail.com");
-    const doc = await userDocRef.get();
-    if (!doc.exists) {
-      console.log("No such document exista!");
-    } else {
-      console.log("Document data:", doc.data());
-    }
-  } catch (error) {
-    alert(error.code);
+export default function TestPrint() {
+  //console.log("test");
+  const [option, setOption] = useState("");
+  const getOp = async () => {
+    const set = await db
+      .collection("Settings")
+      .doc(auth.currentUser.email)
+      .get()
+      .then((thing) => {
+        setOption(thing.data());
+        console.log(thing.data().appearance);
+      })
+      .catch((e) => console.log(e));
+  };
 
-  console.log("test");
-  return (
-    <Box>
-      <h1>test print</h1>
-    </Box>
-  );
+  useEffect(() => {
+    getOp();
+  }, []);
+
+  //return <h1>test print</h1>;
 }
-
-  }*/
