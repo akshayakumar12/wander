@@ -178,12 +178,18 @@ export default function ExpandedTrip() {
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginBottom: 20,
+                      marginBottom: 10,
                       fontWeight: "bold",
                     }}
                   >
                     {pastTrip?.source}
                   </p>
+
+                  <Box sx={{ borderLeft: 1, marginBottom: 1 }} paddingLeft={1}>
+                    <p align="Left" style = {{fontSize: "15px"}}> {pastTrip?.midpoint1} </p>
+                    <p align="Left" style = {{fontSize: "15px"}}> {pastTrip?.midpoint2} </p>
+                  </Box>
+
                   <p
                     align="Left"
                     style={{
