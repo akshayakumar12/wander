@@ -5,3 +5,9 @@ input {
     box-sizing: border-box;
     border-radius: 5px;
 }
+
+.autocomplete-dropdown-container {
+    position: "absolute";
+    width: 200%;
+    text-align: left;
+}

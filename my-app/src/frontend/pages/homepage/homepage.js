@@ -113,7 +113,7 @@ function Home() {
                                 }}
                               >
                                 {" "}
-                                Destination: {pastTrip?.destination}
+                                {pastTrip?.destination}
                               </p>
                             </CardContent>
                           </CardActionArea>
