@@ -78,6 +78,43 @@ export default function ExpandedTrip() {
                   >
                     Source: {pastTrip?.source}
                   </p>
+                  <Box
+                    zIndex={0}
+                    sx={{ borderLeft: 1 }}
+                    //position="absolute"
+                  >
+                    <Box margin={0}>
+                      <ul
+                        style={{
+                          margin: 0,
+                          paddingLeft: 25,
+                          //padding: 0,
+                          listStyle: "circle",
+                          //fontSize: "3.5em",
+                        }}
+                      >
+                        <li
+                          style={{
+                            fontSize: "3.5em",
+                          }}
+                        >
+                          <p align="Left" style={{ fontSize: 20, padding: 0 }}>
+                            Midpoint 1:{" "}
+                          </p>
+                        </li>
+                        <li
+                          style={{
+                            fontSize: "3.5em",
+                          }}
+                        >
+                          <p align="Left" style={{ fontSize: 20 }}>
+                            Midpoint 2:
+                          </p>
+                        </li>
+                      </ul>
+                    </Box>
+                  </Box>
+
                   <p
                     align="Left"
                     style={{
@@ -115,9 +152,7 @@ export default function ExpandedTrip() {
             onClick={() => navigate("../playlist")}
             sx={{ paddingBottom: "2%" }}
           >
-            <Playlist 
-              src={pastTrip?.playlist}>
-            </Playlist>
+            <Playlist src={pastTrip?.playlist}></Playlist>
           </CardActionArea>
         </Card>
       </Stack>
