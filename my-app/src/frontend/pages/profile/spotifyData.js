@@ -22,7 +22,7 @@ import Tracks from "./tracks";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const TOKEN = "https://accounts.spotify.com/api/token";
-const REDIRECT_URI = "http://localhost:3000/profile";
+const REDIRECT_URI = "http://localhost:3000/settings";
 const real_access_token = "";
 const real_refresh_token = "";
 const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
@@ -157,43 +157,6 @@ const callAuthApi = (body) => {
   };
 };
 
-/*
-const callApi = (method, url, body) => {
-  let xhr = new XMLHttpRequest();
-  xhr.open(method, url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-  xhr.send(body);
-  xhr.onload = () => {
-    if (xhr.status == 200) {
-      var data = JSON.parse(xhr.responseText);
-      console.log(data);
-    }
-  }
-}
-*/
-
-/*
-const handleAuthResp = () => {
-  console.log("Handling Response");
-  if (this.status == 200) {
-    console.log("Status 200!!")
-    var data = JSON.parse(this.responseText);
-    if (data.access_token != undefined) {
-      real_access_token = data.access_token;
-      console.log("modifying data");
-      modifyData2(real_access_token);
-    }
-    if (data.refresh_token != undefined) {
-      real_refresh_token = data.refresh_token;
-      console.log("modifying data")
-      modifyData3(real_refresh_token);
-    }
-
-//    onPageLoad();
-  }
-}
-*/
 const getCode = () => {
   console.log("Getting Code");
   let code = null;
@@ -205,9 +168,9 @@ const getCode = () => {
   return code;
 };
 
-function Profile() {
+function SpotifyData() {
   const CLIENT_ID = "cd4b2dc4fd9a40d08077c8e883502bc9";
-  const REDIRECT_URI = "http://localhost:3000/profile";
+  const REDIRECT_URI = "http://localhost:3000/spotifyData";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
   const SCOPES = [
@@ -220,45 +183,6 @@ function Profile() {
   // client_secret = 5e69ca6de47f4d9589d9d05441a28cfe
 
   const SCOPES_URL = SCOPES.join("%20");
-
-  //const spotify = new SpotifyWebApi();
-  /*
-  const [spotifyToken, setSpotifyToken] = useState("");
-
-  useEffect(() => {
-    const _spotifyToken = getTokenFromUrl().access_token;
-    window.location.hash = "";
-
-    if (_spotifyToken) {
-      setSpotifyToken(_spotifyToken);
-      spotify.setAccessToken(_spotifyToken);
-      window.localStorage.setItem("spotifyToken", _spotifyToken);
-    }
-  });
-
-  const logout = () => {
-    setSpotifyToken("");
-    window.localStorage.removeItem("spotifyToken");
-    Profile();
-  };
-  */
-  const settings_click = () => {
-    navigate("/settings");
-  };
-
-  const edit_profile_click = () => {
-    if (auth.currentUser) {
-      navigate("/editProfile");
-    }
-  };
-
-  const pastQuizPref_click = () => {
-    navigate("/quizhistory");
-  };
-
-  const spotifyData_click = () => {
-    navigate("/spotifyData");
-  };
 
   const navigate = useNavigate();
   const logout_fb = async () => {
@@ -303,16 +227,7 @@ function Profile() {
     console.log("Getting Data 264");
     getData();
   }, []);
-  /*
-  useEffect(() => {
-    console.log("Logging UserInfo");
-    console.log(userInfo);
-    if (!userInfo) {
-      console.log("I should only print once!")
-      onPageLoad();
-    }
-  }, [])
-*/
+
   useEffect(() => {
     if (window.location.hash) {
       const { access_token, expires_in, token_type } = getSpotifyParams(
@@ -332,13 +247,6 @@ function Profile() {
   const [token, setToken] = useState("");
   useEffect(() => {});
 
-  /*
-  const setAuthToken = async () => {
-    var userRef = db.collections("users").doc(auth.currentUser.email)
-    if (userRef.)
-  }
-  */
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -351,153 +259,43 @@ function Profile() {
   return (
     <Box>
       <Stack spacing={2}>
-        {/* My Profile Title */}
+        {/* Title */}
         <Stack
           alignItems={"flex-start"}
           style={{ marginLeft: "50px", marginRight: "50px" }}
         >
-          <h1>My Profile</h1>
+          <h1>Your Spotify Data</h1>
         </Stack>
-
-        {/* Profile Box */}
         <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ backgroundColor: "cardBg.main" }}
-          style={{
-            //backgroundColor: "primary.contrastText",
-            padding: "30px",
-            marginLeft: "50px",
-            marginRight: "50px",
-            borderRadius: "16px",
-          }}
+          alignItems={"center"}
+          style={{ marginLeft: "50px", marginRight: "50px" }}
+          spacing={2}
         >
-          {/* Profile Picture*/}
-          <Box>
-            <Avatar
-              src={userInfo?.profilePicture}
-              sx={{ width: 150, height: 150 }}
-            />
-          </Box>
-
-          {/* User Information */}
-          <Stack direction="column" spacing={1}>
-            <h2>
-              {userInfo?.firstName} {userInfo?.lastName}
-            </h2>
-            <p>@{userInfo?.username}</p>
-            <p>{user.email}</p>
-          </Stack>
-
-          {/* Edit Profile and Settings Box */}
-
-          <Stack
-            direction="row"
-            alignItems="center"
-            sx={{ position: "relative", bottom: 70, left: 15 }}
-          >
-            <Button
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <MoreHorizIcon
-                sx={{
-                  color: "primary.contrastText",
-                }}
-              ></MoreHorizIcon>
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={edit_profile_click}>
-                <CreateIcon></CreateIcon> Edit Profile
-              </MenuItem>
-              <MenuItem onClick={settings_click}>
-                <SettingsIcon></SettingsIcon>Settings
-              </MenuItem>
-            </Menu>
-          </Stack>
-        </Stack>
-
-        {/* Spotify Buttons */}
-
-        <Stack spacing={2} justifyContent="center" direction="row">
-          {/*
-          {!spotifyToken ? (
-            <Button
-              variant="contained"
-              href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join(
-                "%20"
-              )}&response_type=${RESPONSE_TYPE}&show_dialog=true`}
-              mt="4"
-            >
-              Connect to Spotify
-            </Button>
-          ) : (
-            <Button variant="contained" onClick={logout} color="error">
-              Disconnect from Spotify
-            </Button>
-          )}
-          */}
-          {
-            //    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=token&show_dialog=true`}>Click me</Button>
-            //                    <Button variant="contained" href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`}>No, Click ME!</Button>
-          }
           <Button variant="contained" onClick={handleClick2}>
             Connect to Spotify
           </Button>
           <Button variant="contained" onClick={handleDisconnect}>
             Disconnect from Spotify
           </Button>
-          <Button variant="contained" onClick={spotifyData_click}>
-            Your Spotify Data
-          </Button>
-          <Button variant="contained" onClick={pastQuizPref_click}>
-            Past Quiz Preferences
-          </Button>
         </Stack>
-      </Stack>
 
-      {userInfo.real_access_token ? (
-        <>
-          {" "}
-          <h2>Your Top Artists</h2>
-          <Stack spacing={2} justifyContent="center" direction="row">
-            <Test />{" "}
-          </Stack>
-          <Stack spacing={2} justifyContent="center" direction="row">
-            <Tracks />{" "}
-          </Stack>
-        </>
-      ) : (
-        <></>
-      )}
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        sx={{ position: "absolute", bottom: 40, left: "50%" }}
-      >
-        <LogoutIcon sx={{ color: "#DE6600" }} />
-        <Button onClick={logout_fb} sx={{ color: "#DE6600" }}>
-          Logout
-        </Button>
+        {userInfo.real_access_token ? (
+          <>
+            {" "}
+            <h2>Your Top Artists</h2>
+            <Stack spacing={2} justifyContent="center" direction="row">
+              <Test />{" "}
+            </Stack>
+            <Stack spacing={2} justifyContent="center" direction="row">
+              <Tracks />{" "}
+            </Stack>
+          </>
+        ) : (
+          <></>
+        )}
       </Stack>
-      {
-        //  <Test />
-      }
     </Box>
   );
 }
 
-export default Profile;
+export default SpotifyData;

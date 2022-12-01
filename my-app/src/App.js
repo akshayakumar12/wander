@@ -27,6 +27,7 @@ import Confirm from "./frontend/pages/quiz/quizConf";
 import Loading from "./frontend/pages/quiz/loading";
 import ExpandedTrip from "./frontend/pages/trip/expandedTrip";
 import PastTrips from "./frontend/pages/trip/pastTrips";
+import SpotifyData from "./frontend/pages/profile/spotifyData";
 
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { Theme } from "./frontend/pages/theme";
@@ -61,6 +62,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/spotifyData" element={<SpotifyData />} />
 
         {/*Home */}
         <Route path="/home" element={<Home />} />
