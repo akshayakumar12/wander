@@ -14,6 +14,7 @@ function Home() {
   let location = useLocation();
 
   const [pastTrip, setPastTrip] = useState("");
+  const [curTripExists, setCurTripExists] = useState(false);
 
   const getData = async () => {
     const response = db.collection("pastTrips");
@@ -24,6 +25,7 @@ function Home() {
         item.data().latest == "true"
       ) {
         setPastTrip(item.data());
+        setCurTripExists(true);
       }
     });
   };
@@ -47,6 +49,8 @@ function Home() {
         }}
         disableTouchRipple="true"
       >
+
+    {curTripExists ? (
         <CardContent sx={{ marginX: "1%" }}>
           {" "}
           <h2
@@ -132,6 +136,7 @@ function Home() {
                       text={"Playlist for your current trip"}
                       src={pastTrip?.playlist}
                     ></Playlist>
+
                   </CardActionArea>
                 </Card>
               </Stack>
@@ -161,6 +166,13 @@ function Home() {
             </Stack>
           </Stack>
         </CardContent>
+
+    ) : (
+      /* NO CURRENT TRIPS */
+      <>
+        <h1>You have no current trips</h1>
+      </>
+    )}
       </Card>
 
       <Button
