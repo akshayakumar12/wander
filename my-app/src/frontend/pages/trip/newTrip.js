@@ -49,17 +49,29 @@ function NewTrip() {
     const list = [...midpointsList];
     list.splice(index, 1);
     setMidpointsList(list);
+
+    console.log("INDEX: " + index);
+
+    if (index === 0) {
+      setMidpoint1(midpoint2);
+      setMidpoint2("");
+    } else {
+      setMidpoint2("");
+    }
   };
 
-  const handleMidpointChange = (e, index) => {
-    console.log(e.target);
-    const {name, value} = e.target;
-    const list = [...midpointsList];
-    list[index][name] = value;
-    setMidpointsList(list);
+  const [midpoint1, setMidpoint1] = useState("");
+  const [midpoint2, setMidpoint2] = useState("");
+
+  const handleSelectMidpoint1 = async (value) => {
+    setMidpoint1(value);
   };
 
-  console.log(midpointsList);
+  const handleSelectMidpoint2 = async (value) => {
+    setMidpoint2(value);
+  };
+
+  console.log("Midpoint1: " + midpoint1 + "\nMidpoint2: " + midpoint2);
 
   return (
     <>
@@ -82,9 +94,9 @@ function NewTrip() {
                       <br></br>
                       <Box width = {"25%"}>
                         <PlacesAutocomplete
-                          value={singleMidpoint.midpoint}
-                          onChange={(e) => handleMidpointChange(e, index)}
-                          // onSelect={handleSelectSource}
+                          value = {index === 0? midpoint1 : midpoint2}
+                          onChange={index === 0? setMidpoint1 : setMidpoint2}
+                          onSelect={index === 0? handleSelectMidpoint1 : handleSelectMidpoint2}
                           >
                           {({
                             getInputProps,
@@ -96,8 +108,8 @@ function NewTrip() {
                               <input
                                 {...getInputProps({ placeholder: "Enter Midpoint" })}
                                 />
-                              <div>
-                              {loading ? <div> Loading... </div> : null}
+                              <div className = "autocomplete-dropdown-container">
+                              {loading ? <div width = {"100%"}> Loading... </div> : null}
                               {suggestions.map((suggestion) => {
                                   const className = suggestion.active
                                   ? "suggestion-item--active"
@@ -147,12 +159,9 @@ function NewTrip() {
 
                         </div>
                       )}
-
                     </div>
-                  ))}
-                  
+                  ))}   
                 </div>
-                
               </div>
             </form>
 
