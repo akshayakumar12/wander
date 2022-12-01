@@ -42,6 +42,7 @@ function Playlist(props) {
       variant="contained"
       onClick={() => {
         SendMail();
+        alert("Please press send on the generated email to send yourself the playlist.")
       }}
     >
     Send playlist to yourself
