@@ -22,8 +22,8 @@ import "./trip.css";
 function NewTrip() {
   const navigate = useNavigate();
 
-  function createNewTrip(source, destination, preference) {
-    createTrip(source, destination, preference);
+  function createNewTrip(source, destination, preference, midpoint1, midpoint2) {
+    createTrip(source, destination, preference, midpoint1, midpoint2);
     navigate("../quiz");
   }
 
@@ -49,8 +49,6 @@ function NewTrip() {
     const list = [...midpointsList];
     list.splice(index, 1);
     setMidpointsList(list);
-
-    console.log("INDEX: " + index);
 
     if (index === 0) {
       setMidpoint1(midpoint2);
@@ -85,85 +83,6 @@ function NewTrip() {
             >
               Create Trip
             </h1>
-
-            <form align = "left">
-              <div>
-                <div>
-                  {midpointsList.map((singleMidpoint, index) => (   
-                    <div key = {index}>
-                      <br></br>
-                      <Box width = {"25%"}>
-                        <PlacesAutocomplete
-                          value = {index === 0? midpoint1 : midpoint2}
-                          onChange={index === 0? setMidpoint1 : setMidpoint2}
-                          onSelect={index === 0? handleSelectMidpoint1 : handleSelectMidpoint2}
-                          >
-                          {({
-                            getInputProps,
-                            suggestions,
-                            getSuggestionItemProps,
-                            loading,
-                          }) => (
-                            <div>
-                              <input
-                                {...getInputProps({ placeholder: "Enter Midpoint" })}
-                                />
-                              <div className = "autocomplete-dropdown-container">
-                              {loading ? <div width = {"100%"}> Loading... </div> : null}
-                              {suggestions.map((suggestion) => {
-                                  const className = suggestion.active
-                                  ? "suggestion-item--active"
-                                  : "suggestion-item";
-                                  const style = suggestion.active
-                                  ? { backgroundColor: "#d5e4f4", cursor: "pointer" }
-                                  : { backgroundColor: "#ffffff", cursor: "pointer" };
-
-                                  return (
-                                    <div
-                                    {...getSuggestionItemProps(suggestion, { style })}
-                                    >
-                                      {suggestion.description}
-                                      </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          )}
-                        </PlacesAutocomplete>
-                      </Box>
-                      
-                      
-                      {midpointsList.length > 1 && (
-                        <IconButton
-                          onClick={() => handleMidpointRemove(index)}
-                        >
-                          <RemoveCircleOutlineIcon 
-                            sx = {{color: "#e3242b", padding: 1}}
-                            fontSize = "small"
-                          />
-                        </IconButton>
-                      )}
-
-                      {midpointsList.length - 1 === index && midpointsList.length < 2 && (
-                        <div> 
-                          <Button 
-                            variant = "text"
-                            startIcon = {<AddCircleOutlineIcon />}
-                            style = {{
-                              color: "#003e80",
-                            }}
-                            onClick = {() => handleMidpointAdd()}
-                          > 
-                              Add Stop 
-                          </Button> 
-
-                        </div>
-                      )}
-                    </div>
-                  ))}   
-                </div>
-              </div>
-            </form>
 
             <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
               Starting Location
@@ -208,6 +127,90 @@ function NewTrip() {
                   )}
                 </PlacesAutocomplete>
               </div>
+
+              <form align = "left">
+              <div>
+                <div>
+                  {midpointsList.map((singleMidpoint, index) => (   
+                    <div key = {index}>
+                      {midpointsList.length > 0 && (
+                      <Box>
+                        <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
+                          Midpoint
+                        </h3>
+                        
+                        <PlacesAutocomplete
+                          value = {index === 0? midpoint1 : midpoint2}
+                          onChange={index === 0? setMidpoint1 : setMidpoint2}
+                          onSelect={index === 0? handleSelectMidpoint1 : handleSelectMidpoint2}
+                          >
+                          {({
+                            getInputProps,
+                            suggestions,
+                            getSuggestionItemProps,
+                            loading,
+                          }) => (
+                            <div>
+                              <input
+                                {...getInputProps({ placeholder: "Enter Midpoint" })}
+                                />
+                              <div className = "autocomplete-dropdown-container">
+                              {loading ? <div width = {"100%"}> Loading... </div> : null}
+                              {suggestions.map((suggestion) => {
+                                  const className = suggestion.active
+                                  ? "suggestion-item--active"
+                                  : "suggestion-item";
+                                  const style = suggestion.active
+                                  ? { backgroundColor: "#d5e4f4", cursor: "pointer" }
+                                  : { backgroundColor: "#ffffff", cursor: "pointer" };
+
+                                  return (
+                                    <div
+                                    {...getSuggestionItemProps(suggestion, { style })}
+                                    >
+                                      {suggestion.description}
+                                      </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </PlacesAutocomplete>
+
+                        {midpointsList.length > 1 && (
+                          <IconButton
+                            onClick={() => handleMidpointRemove(index)}
+                          >
+                            <RemoveCircleOutlineIcon 
+                              sx = {{color: "#e3242b", padding: 1}}
+                              fontSize = "small"
+                            />
+                          </IconButton>
+                        )}
+                      </Box>
+                      )}
+                    
+
+                      {midpointsList.length - 1 === index  && midpointsList.length < 2 && (
+                        <div> 
+                          <Button 
+                            variant = "text"
+                            startIcon = {<AddCircleOutlineIcon />}
+                            style = {{
+                              color: "#003e80",
+                            }}
+                            onClick = {() => handleMidpointAdd()}
+                          > 
+                              Add Stop 
+                          </Button> 
+
+                        </div>
+                      )}
+                    </div>
+                  ))}   
+                </div>
+              </div>
+            </form>
 
               <h3 align="left">Destination</h3>
               <div>
@@ -289,7 +292,7 @@ function NewTrip() {
                 textTransform: "none",
                 marginTop: "1%",
               }}
-              onClick={() => createNewTrip(source, destination, preference)}
+              onClick={() => createNewTrip(source, destination, preference, midpoint1, midpoint2)}
             >
               Create Trip
             </Button>
