@@ -360,8 +360,9 @@ function Profile() {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
+          sx={{ backgroundColor: "cardBg.main" }}
           style={{
-            backgroundColor: "#f0f4f9",
+            //backgroundColor: "primary.contrastText",
             padding: "30px",
             marginLeft: "50px",
             marginRight: "50px",

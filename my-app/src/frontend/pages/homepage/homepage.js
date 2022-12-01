@@ -42,22 +42,21 @@ function Home() {
     <Stack alignItems={"flex-start"} marginX="15%">
       {show ? (
         <>
-        <Card
-          sx={{
-            marginTop: "5%",
-            width: "100%",
-            height: "80%",
-            bgcolor: "#F5F7FA",
-            borderRadius: "16px",
-            boxShadow: 3,
-            alignContent: "center",
-          }}
-          disableTouchRipple="true"
-        >
-
-
+          <Card
+            sx={{
+              marginTop: "5%",
+              width: "100%",
+              height: "80%",
+              //bgcolor: "#F5F7FA",
+              bgcolor: "cardBg.main",
+              borderRadius: "16px",
+              boxShadow: 3,
+              alignContent: "center",
+            }}
+            disableTouchRipple="true"
+          >
             <>
-            {curTripExists ? (
+              {curTripExists ? (
                 <CardContent sx={{ marginX: "1%" }}>
                   {" "}
                   <h2
@@ -133,7 +132,7 @@ function Home() {
                             onClick={() =>
                               navigate("../playlist", {
                                 state: {
-                                  Playlist: pastTrip?.playlist
+                                  Playlist: pastTrip?.playlist,
                                 },
                               })
                             }
@@ -143,7 +142,6 @@ function Home() {
                               text={"Playlist for your current trip"}
                               src={pastTrip?.playlist}
                             ></Playlist>
-
                           </CardActionArea>
                         </Card>
                       </Stack>
@@ -159,7 +157,10 @@ function Home() {
                           padding: 1,
                         }}
                       >
-                        <h3 align="left" style={{ marginLeft: "5%", fontSize: "20px" }}>
+                        <h3
+                          align="left"
+                          style={{ marginLeft: "5%", fontSize: "20px" }}
+                        >
                           Map
                         </h3>
                         {
@@ -173,34 +174,33 @@ function Home() {
                     </Stack>
                   </Stack>
                 </CardContent>
-            ) : (
-              /* NO CURRENT TRIPS */
-              <>
-                <h1>You have no current trips</h1>
-              </>
-            )}
+              ) : (
+                /* NO CURRENT TRIPS */
+                <>
+                  <h1>You have no current trips</h1>
+                </>
+              )}
             </>
+          </Card>
 
-        </Card>
-
-        <Button
-          variant="contained"
-          justifyContent="flex-start"
-          id="greenButton"
-          sx={{
-            marginTop: "2%",
-            //bgcolor: "#007A1B",
-            textTransform: "none",
-            fontSize: "20px",
-          }}
-          onClick={() => navigate("/newtrip")}
-          size="large"
-        >
-          Create New Trip
-        </Button>
+          <Button
+            variant="contained"
+            justifyContent="flex-start"
+            id="greenButton"
+            sx={{
+              marginTop: "2%",
+              //bgcolor: "#007A1B",
+              textTransform: "none",
+              fontSize: "20px",
+            }}
+            onClick={() => navigate("/newtrip")}
+            size="large"
+          >
+            Create New Trip
+          </Button>
         </>
       ) : (
-      <Loading></Loading>
+        <Loading></Loading>
       )}
     </Stack>
   );

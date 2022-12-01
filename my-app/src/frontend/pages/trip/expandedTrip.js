@@ -19,26 +19,24 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
-} from '@react-google-maps/api'
+} from "@react-google-maps/api";
 import Geocode from "react-geocode";
 
 export default function ExpandedTrip() {
   const navigate = useNavigate();
-  const google = window.google
+  const google = window.google;
   const [pastTrip, setPastTrip] = useState("");
-  const center = { lat: 48.8584, lng: 2.2945 }
-  const [map, setMap] = useState(/** @type google.maps.Map*/ (null))
-  const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
-  const [srcLatLong, setSrcLatLong] = useState([])
-  const [destLatLong, setDestLatLong] = useState([])
-  
+  const center = { lat: 48.8584, lng: 2.2945 };
+  const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  const [srcLatLong, setSrcLatLong] = useState([]);
+  const [destLatLong, setDestLatLong] = useState([]);
 
-
-  const {isLoaded} = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
-  })
+  });
 
   const getData = async () => {
     const response = db.collection("pastTrips");
@@ -59,18 +57,17 @@ export default function ExpandedTrip() {
   }, []);
 
   if (!isLoaded) {
-    return (<Loading></Loading>);
+    return <Loading></Loading>;
   }
 
   const editTrip_click = () => {
     navigate("/tripview");
   };
 
-
   async function calculateRoute() {
-    console.log(pastTrip?.source)
-    if (pastTrip?.source === '' || pastTrip?.destination === '') {
-      return
+    console.log(pastTrip?.source);
+    if (pastTrip?.source === "" || pastTrip?.destination === "") {
+      return;
     }
 
     /*var geocoder = new google.maps.Geocoder();
@@ -86,7 +83,7 @@ export default function ExpandedTrip() {
 
      console.log(srcLatLong)*/
 
-     // Get latitude & longitude from address.
+    // Get latitude & longitude from address.
     /*Geocode.fromAddress("Eiffel Tower").then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
@@ -98,16 +95,16 @@ export default function ExpandedTrip() {
     );*/
 
     // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService()
+    const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: new google.maps.LatLng(46.56300788, 15.62779705),
       destination: new google.maps.LatLng(46.55953332, 15.62616729),
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
-    })
-    setDirectionsResponse(results)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
   }
 
   /*function getLatLong(address) {
@@ -134,28 +131,24 @@ export default function ExpandedTrip() {
         //color="gray"
         //sx={{ backgroundColor: "gray" }}
       >
-
-      {/* Google Maps API */}
-      <GoogleMap 
-        //center={center}
-        zoom={15}
-        mapContainerStyle={{width: '100%', height: '100%'}}
-        options={{mapTypeControl: false}}
-        onLoad={(map) => setMap(map)}
-      >
-        <Marker position={center}></Marker>
-        <DirectionsRenderer directions={directionsResponse}></DirectionsRenderer>
-
-      </GoogleMap>
-
+        {/* Google Maps API */}
+        <GoogleMap
+          //center={center}
+          zoom={15}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
+          options={{ mapTypeControl: false }}
+          onLoad={(map) => setMap(map)}
+        >
+          <Marker position={center}></Marker>
+          <DirectionsRenderer
+            directions={directionsResponse}
+          ></DirectionsRenderer>
+        </GoogleMap>
       </Box>
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
-        <Button
-          variant="contained" 
-          onClick={calculateRoute}
-        >
+        <Button variant="contained" onClick={calculateRoute}>
           show trip
         </Button>
         <Card
@@ -163,7 +156,7 @@ export default function ExpandedTrip() {
             marginTop: "5%",
             width: "60%",
             height: "80%",
-            bgcolor: "#F5F7FA",
+            bgcolor: "cardBg.main",
             borderRadius: "16px",
             boxShadow: 3,
             alignContent: "center",
@@ -210,7 +203,7 @@ export default function ExpandedTrip() {
             marginTop: "5%",
             width: "60%",
             height: "80%",
-            bgcolor: "#F5F7FA",
+            bgcolor: "cardBg.main",
             borderRadius: "16px",
             boxShadow: 3,
             alignContent: "center",
@@ -221,13 +214,10 @@ export default function ExpandedTrip() {
             onClick={() => navigate("../playlist")}
             sx={{ paddingBottom: "2%" }}
           >
-            <Playlist 
-              src={pastTrip?.playlist}>
-            </Playlist>
+            <Playlist src={pastTrip?.playlist}></Playlist>
           </CardActionArea>
         </Card>
       </Stack>
-
     </>
   );
 }
