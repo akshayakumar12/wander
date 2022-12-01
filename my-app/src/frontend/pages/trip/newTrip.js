@@ -187,9 +187,10 @@ function NewTrip() {
                             />
                           </IconButton>
                         )}
+
                       </Box>
                       )}
-                    
+
 
                       {midpointsList.length - 1 === index  && midpointsList.length < 2 && (
                         <div> 
