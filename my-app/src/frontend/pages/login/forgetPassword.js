@@ -4,13 +4,24 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import checkEmail from '../../../backend/pages/login/forgotPassword';
 
-function ForgotPassword() {
+var resetPasswordEmail;
+
+export default function ForgotPassword() {
   const navigate = useNavigate();
 
-  const security_questions_click = () => {
-    navigate("/securityQuestionnaire");
-  };
+  const [email, setEmail] = useState("");
+
+  async function security_questions_click() {
+    let validEmail = await checkEmail(email);
+
+    if (validEmail) {
+      resetPasswordEmail = email;
+      navigate("/securityQuestionnaire");
+    }
+  }
 
   const register_click = () => {
     navigate("/register");
@@ -38,7 +49,10 @@ function ForgotPassword() {
             {" "}
             Enter your email address to reset your password.
           </p>
-          <TextField label="Email Address" />
+          <TextField 
+            onChange={(event) => setEmail(event.target.value)}
+            label="Email Address" 
+          />
           <Stack
             direction="row"
             alignItems="center"
@@ -68,4 +82,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export {ForgotPassword, resetPasswordEmail};

@@ -20,6 +20,8 @@ import CreateIcon from "@mui/icons-material/Create";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tracks from "./tracks";
 import LogoutIcon from "@mui/icons-material/Logout";
+import loginchime from "../../assets/loginchime.mp3";
+
 
 const TOKEN = "https://accounts.spotify.com/api/token";
 const REDIRECT_URI = "http://localhost:3000/spotifyData";
@@ -42,8 +44,16 @@ const SCOPES = [
 
 const SCOPES_URL = SCOPES.join("%20");
 
+const sound = () => {
+  var audio = new Audio(loginchime);
+  audio.play();
+}
+
 const handleClick2 = () => {
-  window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`;
+  sound();
+  window.setTimeout(function() {
+    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES_URL}&response_type=code&show_dialog=true`;
+  }, 1500);
 };
 
 const handleDisconnect = () => {
