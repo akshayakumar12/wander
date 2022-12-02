@@ -3,9 +3,11 @@ import Button from "@mui/material/Button";
 import { auth, db } from "../../../firebase";
 import SpotifyGetPlaylists2 from "../quiz/create_playlist2";
 import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Playlist(props) {
   const location = useLocation();
+  const navigate = useNavigate();
   const link =
     location.state === null
       ? props.src //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator" //better way of setting default (maybe have current object)
@@ -70,7 +72,22 @@ function Playlist(props) {
     >
     Send playlist to yourself
   </Button>
+
+  <Button
+      sx={{
+        //bottom: 0,
+        //right: "4%",
+        //position: "absolute",
+        bottom: "1%",
+      }}
+      variant="contained"
+      onClick={() => {navigate('/quiz')}}
+    >
+    Retake Quiz
+  </Button>
+
   <SpotifyGetPlaylists2></SpotifyGetPlaylists2>
+
   </div>
   );
 }
