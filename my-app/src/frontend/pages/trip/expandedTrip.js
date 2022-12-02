@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import Loading from "../quiz/loading";
+import emailjs from "emailjs-com";
 
 import {
   useJsApiLoader,
@@ -54,6 +55,25 @@ export default function ExpandedTrip() {
       }
     });
   };
+
+  function exportItinerary() {
+    const emailParams = {
+        source: pastTrip.source,
+        midpoint1: pastTrip.midpoint1,
+        midpoint2: pastTrip.midpoint2,
+        destination: pastTrip.destination,
+        userEmail: auth.currentUser.email
+    };
+
+    emailjs.send('service_i3qv81i', 'template_a0dg6x9', emailParams, 'jJbDp4b8TR2emTjeB')
+      .then((result) => {
+        console.log(result.text);
+        alert("Your itinerary has been sent to your email!");
+      }, (error) => {
+        console.log(error.text);
+      });
+  
+  }
 
   useEffect(() => {
     getData();
@@ -200,13 +220,14 @@ export default function ExpandedTrip() {
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginBottom: 20,
+                      marginBottom: 10,
                       fontWeight: "bold",
                       // fontWeight: "bold",
                     }}
                   >
-                    Source: {pastTrip?.source}
+                    {pastTrip?.source}
                   </p>
+
                   <Box
                     zIndex={0}
                     sx={{ borderLeft: 1 }}
@@ -232,9 +253,9 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 20, align: "left" }}
+                            style={{ fontSize: 15, align: "left" }}
                           >
-                            <p>Midpoint 1:</p>
+                            {pastTrip?.midpoint1}
                           </div>
                         </li>
                         <li
@@ -245,14 +266,14 @@ export default function ExpandedTrip() {
                         >
                           <div
                             align="left"
-                            style={{ fontSize: 20, align: "left" }}
+                            style={{ fontSize: 15, align: "left"}}
                           >
-                            <p>Midpoint 2:</p>
+                            {pastTrip?.midpoint2}
                           </div>
                         </li>
                       </ul>
                     </Box>
-                  </Box>
+                    </Box>
 
                   <p
                     align="Left"
@@ -263,12 +284,16 @@ export default function ExpandedTrip() {
                       fontWeight: "bold",
                     }}
                   >
-                    Destination: {pastTrip?.destination}
+                    {pastTrip?.destination}
                   </p>
                 </Stack>
                 <Stack width="10%">
                   <Button variant="contained" onClick={editTrip_click}>
                     Edit
+                  </Button>
+                  <p></p>
+                  <Button variant="contained" onClick={exportItinerary}>
+                    Export
                   </Button>
                 </Stack>
               </Stack>

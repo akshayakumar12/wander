@@ -132,15 +132,15 @@ function Home() {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Source: {pastTrip?.source}
+                                {pastTrip?.source}
                               </p>
 
                               
 
 
                               <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
-                                <p align="Left">Midpoint 1: </p>
-                                <p align="Left">Midpoint 2:</p>
+                                <p align="Left"> {pastTrip?.midpoint1} </p>
+                                <p align="Left"> {pastTrip?.midpoint2} </p>
                               </Box>
 
                               <p
@@ -153,7 +153,7 @@ function Home() {
                                 }}
                               >
                                 {" "}
-                                Destination: {pastTrip?.destination}
+                                {pastTrip?.destination}
                               </p>
                             </CardContent>
                           </CardActionArea>
