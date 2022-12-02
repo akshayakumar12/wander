@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Loading from "./loading";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
 function QuizHistory() {
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
@@ -125,9 +126,11 @@ function QuizHistory() {
                         boxShadow: 1,
                         backgroundColor: "#F5F8FA",
                         borderRadius: 4,
+                        padding: 1,
+                        paddingRight: 8,
                       }}
                     >
-                      <Stack direction={"row"}>
+                      <Stack direction={"column"}>
                         <Stack justifyContent={"center"}>
                           <Box
                             sx={{
@@ -135,11 +138,11 @@ function QuizHistory() {
                               paddingRight: 1,
                               //border: "3px solid black",
                               //borderRadius: 4,
-                              borderRight: 2,
+                              // borderRight: 2,
                             }}
                           >
                             <h3
-                              align="center"
+                              align="left"
                               style={{ marginBottom: 3, padding: 0 }}
                             >
                               {
@@ -147,32 +150,34 @@ function QuizHistory() {
                                   .toDate()
                                   .toString()
                                   .split(" ")
-                                  .slice(0, 3)
+                                  .slice(0, 4)
                                   .join(" ")
                               }
                             </h3>
-                            <h3
-                              align="center"
-                              style={{ marginY: 4, padding: 1 }}
-                            >
+                            <h3 align="left" style={{ marginY: 4, padding: 1 }}>
                               {
                                 /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
                                   .toDate()
                                   .toString()
                                   .split(" ")
-                                  .slice(3, 5)
+                                  .slice(4, 5)
                                   .join(" ")
                               }
                             </h3>
                           </Box>
                         </Stack>
+                        <HorizontalRuleIcon
+                          fontSize="large"
+                          style={{ color: "navy" }}
+                        ></HorizontalRuleIcon>
                         <Stack>
                           <body
                             style={{
                               padding: 0,
                               //border: "3px solid black",
-                              borderRadius: 14,
+                              //borderRadius: 14,
                               margin: 6,
+                              backgroundColor: "#F5F8FA",
                             }}
                           >
                             {curCard.quiz_ans
