@@ -69,10 +69,19 @@ function Home() {
       return;
     }
 
+    const midpoints = [];
+    if (pastTrip?.midpoint1 !== "" && pastTrip?.midpoint2 !== "") {
+      midpoints.push({location: pastTrip.midpoint1, stopover: true});
+      midpoints.push({location: pastTrip.midpoint2, stopover: true});
+    } else if (pastTrip?.midpoint1 !== "") {
+      midpoints.push({location: pastTrip.midpoint1, stopover: true});
+    }
+
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: pastTrip?.source,
       destination: pastTrip?.destination,
+      waypoints: midpoints,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
