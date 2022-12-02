@@ -65,6 +65,9 @@ const handleDisconnect = () => {
 };
 
 const modifyData2 = async (tok) => {
+  if (tok == undefined) {
+    return;
+  }
   const currentUser = auth.currentUser;
   if (currentUser) {
     var userRef = db.collection("users").doc(currentUser?.email);
@@ -76,7 +79,7 @@ const modifyData2 = async (tok) => {
   } else {
     //    console.log("Waiting")
     await new Promise((r) => setTimeout(r, 2000));
-    modifyData2();
+    modifyData2(tok);
   }
 };
 
@@ -92,7 +95,7 @@ const modifyData3 = async (tok) => {
   } else {
     //    console.log("Waiting")
     await new Promise((r) => setTimeout(r, 2000));
-    modifyData3();
+    modifyData3(tok);
   }
 };
 
@@ -154,6 +157,7 @@ const callAuthApi = (body) => {
       console.log(data.access_token);
       if (data.access_token != undefined) {
         console.log("modifying data");
+        console.log(data.access_token);
         modifyData2(data.access_token);
       }
       if (data.refresh_token != undefined) {
