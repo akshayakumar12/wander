@@ -189,9 +189,100 @@ const SpotifyGetPlaylists = () => {
       handleGetPlaylists3();
     }
 
+    let timeInMinutes = 0;
+    let rawTime = userInfo.duration;
+    if (rawTime.includes("day")) {
+      timeInMinutes = parseInt(rawTime.substring(0,1))*24*60;
+      timeInMinutes += parseInt(rawTime.substring(6,8))*60;
+    } else if (rawTime.includes("hour")) {
+      timeInMinutes = parseInt(rawTime.substring(0,2))*60;
+      timeInMinutes += parseInt(rawTime.substring(7,9));
+    } else {
+      timeInMinutes = parseInt(rawTime.substring(0,2));
+    }
+
+    console.log("LOGGING TOTAL MINUTES")
+    console.log(timeInMinutes);
+
+    let totalTracks = Math.ceil(timeInMinutes / 3);
+    let genereQuota = Math.ceil(totalTracks*0.5);
+    let moodQuota = Math.ceil(totalTracks*0.3);
+    let artistQuota = Math.ceil(totalTracks*0.2);
+    let partyQuota = Math.ceil(totalTracks*0.2);
+    let occasionQuota = Math.ceil(totalTracks*0.2);
+
     let genere = userInfo2.quiz_ans.split(",")[0];
-    console.log("Logging Genere");
-    console.log(genere);
+    let mood = userInfo2.quiz_ans.split(",")[1];
+    let artist = userInfo2.quiz_ans.split(",")[2];
+    let party = userInfo2.quiz_ans.split(",")[3];
+    let occasion = userInfo2.quiz_ans.split(",")[4];
+
+//    console.log("Logging Genere");
+//    console.log(genere);
+
+    if (mood == "Happy") {
+      mood = "https://api.spotify.com/v1/playlists/" + "0fYt00xYXzgrDukvSEs5Qx"
+    } else if (mood == "Romantic") {
+      mood = "https://api.spotify.com/v1/playlists/" + "7tLigefihGnoZi6FRRIANU"
+    } else if (mood == "Sad") {
+      mood = "https://api.spotify.com/v1/playlists/" + "6nxPNnmSE0d5WlplUsa5L3"
+    } else if (mood == "Angry") {
+      mood = "https://api.spotify.com/v1/playlists/" + "457PRAhJMUXaS8s6Evh6Hd"
+    } else if (mood == "Depressing") {
+      mood = "https://api.spotify.com/v1/playlists/" + "6O1ZnUG2mtmeEqxxPa5OWn"
+    } else if (mood == "Energetic") {
+      mood = "https://api.spotify.com/v1/playlists/" + "37i9dQZF1DWZixSclZdoFE"
+    }
+
+
+    if (artist == "Taylor Swift") {
+      artist = "https://api.spotify.com/v1/playlists/" + "6kh8X00EqGovzCJeYyWVTJ"
+    } else if (artist == "Kanye West") {
+      artist = "https://api.spotify.com/v1/playlists/" + "6gRTouHzpVI3f0kYwoLqOp"
+    } else if (artist == "Lil Nas X") {
+      artist = "https://api.spotify.com/v1/playlists/" + "0Hy7NA1dI7JKptUO3eFu0g"
+    } else if (artist == "Drake") {
+      artist = "https://api.spotify.com/v1/playlists/" + "6m34dZU9UdvhxXmna0la3f"
+    } else if (artist == "Ariana Grande") {
+      artist = "https://api.spotify.com/v1/playlists/" + "22HQX0p10rSJFXjguPwlOO"
+    } else if (artist == "Doja Cat") {
+      artist = "https://api.spotify.com/v1/playlists/" + "3HZxY0lLYx5twHN9jX16Nm"
+    } else if (artist == "Nicki Minaj") {
+      artist = "https://api.spotify.com/v1/playlists/" + "37i9dQZF1DX6M8JqiGAfn5"
+    } else if (artist == "BTS") {
+      artist = "https://api.spotify.com/v1/playlists/" + "5CT4Amy0moL1d9RSQ9TP3f"
+    } else if (artist == "Blackpink") {
+      artist = "https://api.spotify.com/v1/playlists/" + "4HBAjSJ6l7gbrshF2dYUwe"
+    }
+
+    if (party == "Family") {
+      party = "https://api.spotify.com/v1/playlists/" + "37i9dQZF1DWTJ0ewkTmTo2"
+    } else if (party == "Friends") {
+      party = "https://api.spotify.com/v1/playlists/" + "03mOswiqIwvBG1mjKniU2Y"
+    } else if (party == "Classmates") {
+      party = "https://api.spotify.com/v1/playlists/" + "3cmy3ZLtbqULbmgcTeAkHl"
+    } else if (party == "Colleagues") {
+      party = "https://api.spotify.com/v1/playlists/" + "0mXaFQBCsxvFxn8UBV6Zsx"
+    } else if (party == "Lover") {
+      party = "https://api.spotify.com/v1/playlists/" + "345R292ACZwR9Hmi7ZDVo8"
+    } else if (party == "Enemy") {
+      party = "https://api.spotify.com/v1/playlists/" + "37i9dQZF1EQpj7X7UK8OOF"
+    }
+
+    if (occasion == "Vacation") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "1BkKoTWcynj0X97J1rVVfA"
+    } else if (occasion == "Road Trip") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "37i9dQZF1DX9wC1KY45plY"
+    } else if (occasion == "Team Bonding") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "1MB1EkfGa1UbcJ2IOFNQIA"
+    } else if (occasion == "Going home") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "6ZtZhzg2cyxs5Nt91BRR8F"
+    } else if (occasion == "Corporate retreat") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "0MUmiZVqpajTVbwzVUHYxD"
+    } else if (occasion == "Field trip") {
+      occasion = "https://api.spotify.com/v1/playlists/" + "1ZxPqx1O8D58l7xECu8zMm"
+    }
+
     if (genere == "Pop") {
       genere =
         "https://api.spotify.com/v1/playlists/" + "37i9dQZF1DXa2PvUpywmrr";
@@ -219,6 +310,7 @@ const SpotifyGetPlaylists = () => {
     }
 
     console.log(userInfo.real_access_token);
+    
     let xhr = new XMLHttpRequest();
     xhr.open("GET", genere, true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -233,12 +325,24 @@ const SpotifyGetPlaylists = () => {
       if (xhr.status == 200) {
         var data = JSON.parse(xhr.responseText);
         console.log(data);
+        console.log(genereQuota);
+        console.log(data.tracks.items.length);
         trackInfo = data.tracks.items;
-
-        var arr = [];
-        while (arr.length < 10) {
-          var r = Math.floor(Math.random() * 50) + 1;
-          if (arr.indexOf(r) === -1) arr.push(r);
+        
+        let indexVar = 0;
+        if (genereQuota > trackInfo.length) {genereQuota = trackInfo.length}
+        var arr = new Array(genereQuota).fill(-1);
+        while (indexVar < genereQuota) {
+          if (genereQuota == trackInfo.length) {
+            arr[indexVar] = indexVar;
+            indexVar++;
+            continue;
+          }
+          var r = Math.floor(Math.random() * genereQuota);
+          if (arr.indexOf(r) === -1) {
+            arr[indexVar] = r;
+            indexVar++;
+          }
         }
 
         let index = 0;
@@ -246,7 +350,63 @@ const SpotifyGetPlaylists = () => {
         console.log(arr);
 
         trackURIs = "";
-        while (index < 10) {
+        while (index < genereQuota) {
+          trackURIs += trackInfo[arr[index]].track.uri + "%2C";
+          index++;
+        }
+        trackURIs.replace(":", "%3A");
+        console.log("Logging Track URIs");
+        console.log(trackURIs);
+        setPlaylistInfo3(data);
+        console.log("Logging Playlist Info");
+        console.log(playlistInfo3);
+        //handleGetPlaylists5(mood, moodQuota, party, partyQuota, occasion, occasionQuota, artist, artistQuota);
+        handleGetPlaylists6(party, partyQuota, occasion, occasionQuota, artist, artistQuota, mood, moodQuota);
+      }
+    };
+  };
+
+  const handleGetPlaylists5 = (genere, genereQuota, party, partyQuota, occasion, occasionQuota, artist, artistQuota) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", genere, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader(
+      "Authorization",
+      "Bearer " + userInfo.real_access_token
+    );
+    xhr.send(null);
+    xhr.onload = () => {
+      console.log("Logging XHR");
+      console.log(xhr);
+      if (xhr.status == 200) {
+        var data = JSON.parse(xhr.responseText);
+        console.log(data);
+        console.log(genereQuota);
+        console.log(data.tracks.items.length);
+        trackInfo = data.tracks.items;
+        
+        let indexVar = 0;
+        if (genereQuota > trackInfo.length) {genereQuota = trackInfo.length}
+        var arr = new Array(genereQuota).fill(-1);
+        while (indexVar < genereQuota) {
+          if (genereQuota == trackInfo.length) {
+            arr[indexVar] = indexVar;
+            indexVar++;
+            continue;
+          }
+          var r = Math.floor(Math.random() * genereQuota);
+          if (arr.indexOf(r) === -1) {
+            arr[indexVar] = r;
+            indexVar++;
+          }
+        }
+
+        let index = 0;
+        console.log("Logging ARR");
+        console.log(arr);
+
+        //trackURIs = "";
+        while (index < genereQuota) {
           trackURIs += trackInfo[arr[index]].track.uri + "%2C";
           index++;
         }
@@ -257,9 +417,66 @@ const SpotifyGetPlaylists = () => {
         console.log("Logging Playlist Info");
         console.log(playlistInfo3);
         handleGetPlaylists4();
+        //handleGetPlaylists6(party, partyQuota, occasion, occasionQuota, artist, artistQuota);
       }
     };
-  };
+  }
+
+  const handleGetPlaylists6 = (genere, genereQuota, occasion, occasionQuota, artist, artistQuota, mood, moodQuota) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", genere, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader(
+      "Authorization",
+      "Bearer " + userInfo.real_access_token
+    );
+    xhr.send(null);
+    xhr.onload = () => {
+      console.log("Logging XHR");
+      console.log(xhr);
+      if (xhr.status == 200) {
+        var data = JSON.parse(xhr.responseText);
+        console.log(data);
+        console.log(genereQuota);
+        console.log(data.tracks.items.length);
+        trackInfo = data.tracks.items;
+        
+        let indexVar = 0;
+        if (genereQuota > trackInfo.length) {genereQuota = trackInfo.length}
+        var arr = new Array(genereQuota).fill(-1);
+        while (indexVar < genereQuota) {
+          if (genereQuota == trackInfo.length) {
+            arr[indexVar] = indexVar;
+            indexVar++;
+            continue;
+          }
+          var r = Math.floor(Math.random() * genereQuota);
+          if (arr.indexOf(r) === -1) {
+            arr[indexVar] = r;
+            indexVar++;
+          }
+        }
+
+        let index = 0;
+        console.log("Logging ARR");
+        console.log(arr);
+
+        //trackURIs = "";
+        while (index < genereQuota) {
+          trackURIs += trackInfo[arr[index]].track.uri + "%2C";
+          index++;
+        }
+        trackURIs.replace(":", "%3A");
+        console.log("Logging Track URIs");
+        console.log(trackURIs);
+        setPlaylistInfo3(data);
+        console.log("Logging Playlist Info");
+        console.log(playlistInfo3);
+        handleGetPlaylists5(mood, moodQuota, genere, genereQuota, occasion, occasionQuota, artist, artistQuota);
+        //handleGetPlaylists4();
+      }
+    };
+  }
 
   const [playlistInfo4, setPlaylistInfo4] = useState("");
   const handleGetPlaylists4 = () => {
