@@ -23,7 +23,6 @@ import "../style.css";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
 import TestPrint from "../theme";
-import useSound from 'use-sound';
 import loginchime from "../../assets/loginchime.mp3";
 
 function Login() {
