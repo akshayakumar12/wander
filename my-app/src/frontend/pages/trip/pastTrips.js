@@ -33,13 +33,22 @@ export default function PastTrips() {
       const temp3months = [];
       const temp6months = [];
       data.docs.forEach((item) => {
-        if (item.data().email === auth.currentUser.email && item.data().latest === "false") {
+        if (
+          item.data().email === auth.currentUser.email &&
+          item.data().latest === "false"
+        ) {
           temp.push(item.data());
-          if (item.data().timestamp.toDate() > new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000)) { 
-            temp3months.push(item.data())
+          if (
+            item.data().timestamp.toDate() >
+            new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000)
+          ) {
+            temp3months.push(item.data());
           }
-          if (item.data().timestamp.toDate() > new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000)) {
-            temp6months.push(item.data())
+          if (
+            item.data().timestamp.toDate() >
+            new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000)
+          ) {
+            temp6months.push(item.data());
           }
         }
       });
@@ -56,8 +65,8 @@ export default function PastTrips() {
 
       setUserPastTrips(temp);
       setUserPastTripsAll(temp);
-      setUserPastTrips3Months(temp3months)
-      setUserPastTrips6Months(temp6months)
+      setUserPastTrips3Months(temp3months);
+      setUserPastTrips6Months(temp6months);
       setShow(true);
     } catch (error) {
       console.log(error);
@@ -93,60 +102,63 @@ export default function PastTrips() {
   const [filter, setFilter] = React.useState("");
   const handleChange = (event) => {
     setFilter(event.target.value);
-    console.log(filter + " <-filter")
+    console.log(filter + " <-filter");
   };
   const handleSubmit = (event) => {
-    
-    console.log(filter + " onclick")
+    console.log(filter + " onclick");
 
-    if (filter == 3) { // 3 months
-      setUserPastTrips(userPastTrips3Months)
+    if (filter == 3) {
+      // 3 months
+      setUserPastTrips(userPastTrips3Months);
+    } else if (filter == 6) {
+      // 6 months
+      setUserPastTrips(userPastTrips6Months);
+    } else if (filter == 12) {
+      setUserPastTrips(userPastTripsAll);
+    } else {
+      console.log("INVALID FILTER VALUE");
     }
-    else if (filter == 6) { // 6 months
-      setUserPastTrips(userPastTrips6Months)
-    }
-    else if (filter == 12) {
-      setUserPastTrips(userPastTripsAll)
-    }
-    else {
-      console.log("INVALID FILTER VALUE")
-    }
-
   };
 
   const restoreTrip = async (cur_time, cur_email) => {
     console.log("Restore Trip");
     console.log(cur_time + "+" + cur_email);
-    
+
     // set past current trip to false
-    db.collection("pastTrips").where("email", "==", cur_email).get().then((qSnap) => {
-      if (qSnap.empty) {
+    db.collection("pastTrips")
+      .where("email", "==", cur_email)
+      .get()
+      .then((qSnap) => {
+        if (qSnap.empty) {
           // latest
-      } else {
+        } else {
           // previous trips exist
           qSnap.docs.forEach((d) => {
-              db.collection("pastTrips").doc(d.id).update({latest: "false"})
-          }) 
-      }
-    })
+            db.collection("pastTrips").doc(d.id).update({ latest: "false" });
+          });
+        }
+      });
 
     // set current trip to true
-    db.collection("pastTrips").where("timestamp", "==", cur_time).get().then((qSnap) => {
-      console.log("found trip to restore");
-      if (qSnap.empty) {
-        // latest
-    } else {
-        // previous trips exist
-        qSnap.docs.forEach((d) => {
-            db.collection("pastTrips").doc(d.id).update({latest: "true"}).then(
-              navigate("../home")
-            )
-        }) 
-    }
-    })
+    db.collection("pastTrips")
+      .where("timestamp", "==", cur_time)
+      .get()
+      .then((qSnap) => {
+        console.log("found trip to restore");
+        if (qSnap.empty) {
+          // latest
+        } else {
+          // previous trips exist
+          qSnap.docs.forEach((d) => {
+            db.collection("pastTrips")
+              .doc(d.id)
+              .update({ latest: "true" })
+              .then(navigate("../home"));
+          });
+        }
+      });
 
     //navigate("../home");
-
   };
 
   return show ? (
@@ -161,7 +173,6 @@ export default function PastTrips() {
           <h1 align="left">Past Trips</h1>
           <Box sx={{ width: 120 }}>
             <FormControl fullWidth>
-
               <InputLabel id="demo-simple-select-label">Filter</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -175,13 +186,13 @@ export default function PastTrips() {
                 <MenuItem value={12}>All Time</MenuItem>
               </Select>
             </FormControl>
-            <Button 
+            <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               onClick={handleSubmit}
-              >
+            >
               submit
             </Button>
           </Box>
@@ -218,7 +229,7 @@ export default function PastTrips() {
                 sx={{
                   width: "100%",
                   height: "100%",
-                  bgcolor: "#F5F7FA",
+                  bgcolor: "cardBg.main",
                   borderRadius: "16px",
                   boxShadow: 3,
                   alignContent: "center",
@@ -303,11 +314,11 @@ export default function PastTrips() {
                         <CardActionArea
                           width="100%"
                           height="100%"
-                          onClick={
-                            () => navigate("../playlist", {
-                            state: {
-                                Playlist: currentTrip.playlist
-                              }
+                          onClick={() =>
+                            navigate("../playlist", {
+                              state: {
+                                Playlist: currentTrip.playlist,
+                              },
                             })
                           }
                           sx={{ paddingBottom: "2%" }}
@@ -338,25 +349,24 @@ export default function PastTrips() {
                           </CardContent>
                         </CardActionArea>
                       </Card>
-
                     </Stack>
-                    
+
                     {/* Restore Button*/}
-                    <Button variant="contained"
-                    sx={{
-                      //bottom: 0,
-                      left: "4%",
-                      position: "absolute",
-                      bottom: "1%",
-                    }}
-                    onClick={() => {
-                      restoreTrip(currentTrip.timestamp, currentTrip.email);
-                    }}
+                    <Button
+                      variant="contained"
+                      sx={{
+                        //bottom: 0,
+                        left: "4%",
+                        position: "absolute",
+                        bottom: "1%",
+                      }}
+                      onClick={() => {
+                        restoreTrip(currentTrip.timestamp, currentTrip.email);
+                      }}
                     >
                       Restore Trip
                     </Button>
                     {currentTrip.timestamp.toDate().toString()}
-
                   </CardContent>
                 </CardActionArea>
               </Card>

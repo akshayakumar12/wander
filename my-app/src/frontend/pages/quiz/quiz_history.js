@@ -63,6 +63,15 @@ function QuizHistory() {
     });
   }, []);
 
+  const [bgColor, setBgColor] = useState("");
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("type: " + typeof value);
+    console.log("value: " + value);
+    value == "true" ? setBgColor("#272727") : setBgColor("#F5F8FA");
+  });
+
   return show ? (
     <Container>
       <Stack
@@ -124,7 +133,7 @@ function QuizHistory() {
                       sx={{
                         margin: 2,
                         boxShadow: 1,
-                        backgroundColor: "#F5F8FA",
+                        backgroundColor: bgColor,
                         borderRadius: 4,
                         padding: 1,
                         paddingRight: 8,
@@ -168,7 +177,7 @@ function QuizHistory() {
                         </Stack>
                         <HorizontalRuleIcon
                           fontSize="large"
-                          style={{ color: "navy" }}
+                          sx={{ color: "primary.contrastText" }}
                         ></HorizontalRuleIcon>
                         <Stack>
                           <body
@@ -177,7 +186,7 @@ function QuizHistory() {
                               //border: "3px solid black",
                               //borderRadius: 14,
                               margin: 6,
-                              backgroundColor: "#F5F8FA",
+                              backgroundColor: "transparent",
                             }}
                           >
                             {curCard.quiz_ans
@@ -200,7 +209,7 @@ function QuizHistory() {
 
           <Button
             sx={{
-              bottom: 0,
+              bottom: "5%",
               left: "50%",
               position: "fixed",
               justifyContent: "flex-end",
