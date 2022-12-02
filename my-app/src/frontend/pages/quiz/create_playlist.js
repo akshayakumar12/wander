@@ -5,12 +5,19 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import firebase from "firebase/compat/app";
+import playlistgeneration from "../../assets/playlistgeneration.wav";
+
 
 //const ACCESS_TOKEN = "BQB_beh1V_60gRpN2LWPeYWv119TizcGm_vQQ3KGTBQrJyGQPNi6KDQ-GktV0XvBLQKKLVRMAN61F9C80lf61EvLJO6Nx-NjIRAjNvkucAv17_G8HUx0xB-jWeOGXqoMg1c-jpLiFP1fyHuMC3Jzomqs1ZafOHo-9F7tSYFba-eRdeJibSdPKt2v"
 let trackInfo = null;
 let trackURIs = "";
 let showEmbed = false;
 let embedSrc = "";
+
+const sound = () => {
+  var audio = new Audio(playlistgeneration);
+  audio.play();
+}
 
 const modifyData2 = async (tok) => {
   const currentUser = auth.currentUser;
@@ -127,6 +134,7 @@ const SpotifyGetPlaylists = () => {
   const handleGetPlaylists2 = () => {
     showEmbed = false;
     getData();
+    sound();
     if (userInfo == undefined) {
       handleGetPlaylists2();
     }

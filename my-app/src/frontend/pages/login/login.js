@@ -37,7 +37,6 @@ function Login() {
   const navigate = useNavigate();
 
   if (auth.currentUser) {
-    sound();
     navigate("/home");
   }
 
