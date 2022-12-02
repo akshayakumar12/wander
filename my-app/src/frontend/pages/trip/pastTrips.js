@@ -16,6 +16,23 @@ import { onAuthStateChanged } from "firebase/auth";
 import Button from "@mui/material/Button";
 import Playlist from "../playlist/playlist";
 
+
+const sendToPastTrips2 = async (embedLink) => {
+  const response = db.collection('users');
+  const data = await response.get();
+  const temp = []
+  data.docs.forEach((item) =>{
+      if (item.data().email == auth.currentUser.email) {
+          item.ref.update({
+              playlist: embedLink
+          });
+      }
+  })
+  await new Promise(r => setTimeout(r, 1000));
+  //window.location.reload();
+};
+
+
 export default function PastTrips() {
   const navigate = useNavigate();
   const [userPastTrips, setUserPastTrips] = useState([]);
@@ -24,7 +41,8 @@ export default function PastTrips() {
   const [userPastTripsAll, setUserPastTripsAll] = useState([]);
   const [noPast, setNoPast] = useState(false);
   const [show, setShow] = useState(false);
-
+  
+  
   const getUserPastTripData = async () => {
     try {
       const response = db.collection("pastTrips");
@@ -140,23 +158,22 @@ export default function PastTrips() {
       });
 
     // set current trip to true
-    db.collection("pastTrips")
-      .where("timestamp", "==", cur_time)
-      .get()
-      .then((qSnap) => {
-        console.log("found trip to restore");
-        if (qSnap.empty) {
-          // latest
-        } else {
-          // previous trips exist
-          qSnap.docs.forEach((d) => {
-            db.collection("pastTrips")
-              .doc(d.id)
-              .update({ latest: "true" })
-              .then(navigate("../home"));
-          });
-        }
-      });
+
+    db.collection("pastTrips").where("timestamp", "==", cur_time).get().then((qSnap) => {
+      console.log("found trip to restore");
+      if (qSnap.empty) {
+        // latest
+    } else {
+        // previous trips exist
+        qSnap.docs.forEach((d) => {
+            db.collection("pastTrips").doc(d.id).update({latest: "true"}).then(() => {
+                sendToPastTrips2(d.data().playlist);
+                navigate("../home")
+              }
+            )
+        }) 
+    }
+    })
 
     //navigate("../home");
   };
@@ -314,11 +331,13 @@ export default function PastTrips() {
                         <CardActionArea
                           width="100%"
                           height="100%"
-                          onClick={() =>
-                            navigate("../playlist", {
-                              state: {
+
+                          onClick={
+                            () => navigate("../playlist", {
+                            state: {
                                 Playlist: currentTrip.playlist,
-                              },
+                                Past: true
+                              }
                             })
                           }
                           sx={{ paddingBottom: "2%" }}
@@ -343,7 +362,7 @@ export default function PastTrips() {
                                 <LibraryMusicIcon sx={{}} /> Playlist
                               </p>
                               <Stack sx={{ height: "500px" }}>
-                                <Playlist src={currentTrip.playlist}></Playlist>
+                                <Playlist src={currentTrip.playlist} past={true}></Playlist>
                               </Stack>
                             </Stack>
                           </CardContent>

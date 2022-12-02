@@ -38,6 +38,19 @@ const modifyData2 = async (tok) => {
   }
 };
 
+const sendToPastTrips2 = async (embedLink) => {
+    const response = db.collection('users');
+    const data = await response.get();
+    const temp = []
+    data.docs.forEach((item) =>{
+        if (item.data().email == auth.currentUser.email) {
+            item.ref.update({
+                playlist: embedLink
+            });
+        }
+    })
+};
+
 const sendToPastTrips = async (embedLink) => {
   const response = db.collection("pastTrips");
   const data = await response.get();
@@ -227,6 +240,7 @@ const SpotifyGetPlaylists = () => {
           var r = Math.floor(Math.random() * 50) + 1;
           if (arr.indexOf(r) === -1) arr.push(r);
         }
+
         let index = 0;
         console.log("Logging ARR");
         console.log(arr);
@@ -284,6 +298,7 @@ const SpotifyGetPlaylists = () => {
         embedSrc += "?utm_source=generator";
         console.log("Logging Embed Link");
         console.log(embedSrc);
+        sendToPastTrips2(embedSrc);
         //modifyData2(playlistID);
         sendToPastTrips(embedSrc);
       }

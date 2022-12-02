@@ -1,12 +1,16 @@
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import QuizSend from "../../../backend/pages/quiz/quizSend";
-import { auth } from "../../../firebase";
+import { auth, db } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import ArrowCircleLeftOutlinedIcon from "@mui/icons-material/ArrowCircleLeftOutlined";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
+
+let count = 0;
+let count2 = 0;
+
 function Quiz() {
   // Questions of the quiz
   // Find a way to make this more robust later :')
@@ -84,9 +88,39 @@ function Quiz() {
   /*for (var i = 0; i < questions.length; i++ ) {
         answers.push(null);
     }
-    console.log(answers);*/
+    console.log(answers);
+  */
+  const [userInfo, setUserInfo] = useState([]);
+
+    const sendToPastTrips2 = async (embedLink) => {
+      const response = db.collection('quizAnswers');
+      const data = await response.get();
+      const temp = []
+      data.docs.forEach((item) =>{
+          if (item.data().quiz_id == auth.currentUser.email) {
+            if (count === 0) {
+              setUserInfo(item.data().quiz_ans.split(","));
+              count++;
+            }
+          }
+      })
+      await new Promise(r => setTimeout(r, 1000));
+      console.log("LOGGING USER INFO 5")
+      console.log(userInfo);
+      //setAnswers(userInfo);
+  };
+
+  useEffect(() => {
+    sendToPastTrips2();
+    setAnswers(userInfo);
+  }, [userInfo])
 
   const handleAnsClick = (answerOption) => {
+    console.log(userInfo);
+    if (userInfo[currentQuestion] !== "") {
+      answers[currentQuestion] = userInfo[currentQuestion];
+      setFlag(!flag);
+    }
     answers[currentQuestion] = answerOption;
     setFlag(!flag);
 
@@ -97,6 +131,7 @@ function Quiz() {
             answers.push(answerOption) // pop last answer first and put new ans
         }*/
     console.log(answers);
+    return;
   };
 
   const handlePrevButtonClick = (answerOption) => {
