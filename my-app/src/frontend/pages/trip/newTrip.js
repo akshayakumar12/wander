@@ -18,8 +18,66 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import "../../../backend/pages/trip/createNewTrip";
 import createTrip from "../../../backend/pages/trip/createNewTrip";
 import "./trip.css";
+import { auth, db } from "../../../firebase";
+
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 function NewTrip() {
+
+  const [source, setSource] = useState("");
+  const [destination, setDestination] = useState("");
+  const [preference, setPreference] = useState("");
+  const [suggestBgColor, setSuggestBgColor] = useState("");
+  const [suggestBgColorPoint, setSuggestBgColorPoint] = useState("");
+
+
+  // GOOGLE MAPS DURATION OF TRIP STUFF
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey:
+      "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
+    libraries: ["places"],
+    //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
+  });
+
+  const google = window.google;
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("test");
+
+  async function calculateRoute() {
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+    origin: source,
+    destination: destination,
+    // eslint-disable-next-line no-undef
+    travelMode: google.maps.TravelMode.DRIVING,
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+
+    console.log(source + " to " + destination + ": " + results.routes[0].legs[0].duration.text);
+
+    db.collection("users")
+      .where("email", "==", auth.currentUser.email)
+      .get()
+      .then((qSnap) => {
+        if (qSnap.empty) {
+          // latest
+        } else {
+          // previous trips exist
+          qSnap.docs.forEach((d) => {
+            db.collection("users").doc(d.id).update({ duration: results.routes[0].legs[0].duration.text});
+          });
+        }
+      });
+  }
+
   const navigate = useNavigate();
 
   function createNewTrip(source, destination, preference, midpoint1, midpoint2) {
@@ -27,11 +85,7 @@ function NewTrip() {
     navigate("../quiz");
   }
 
-  const [source, setSource] = useState("");
-  const [destination, setDestination] = useState("");
-  const [preference, setPreference] = useState("");
-  const [suggestBgColor, setSuggestBgColor] = useState("");
-  const [suggestBgColorPoint, setSuggestBgColorPoint] = useState("");
+
 
   useEffect(() => {
     console.log(localStorage.getItem("theme"));
@@ -322,7 +376,7 @@ function NewTrip() {
                 textTransform: "none",
                 marginTop: "1%",
               }}
-              onClick={() => createNewTrip(source, destination, preference, midpoint1, midpoint2)}
+              onClick={() => {calculateRoute(); createNewTrip(source, destination, preference, midpoint1, midpoint2, duration);}}
             >
               Create Trip
             </Button>
