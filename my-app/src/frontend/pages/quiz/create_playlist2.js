@@ -40,6 +40,8 @@ const sendToPastTrips2 = async (embedLink) => {
             });
         }
     })
+    await new Promise(r => setTimeout(r, 1000));
+    window.location.reload();
 };
 
 const sendToPastTrips = async (embedLink) => {
@@ -56,7 +58,7 @@ const sendToPastTrips = async (embedLink) => {
     })
 };
 
-const SpotifyGetPlaylists = () => {
+const SpotifyGetPlaylists2 = () => {
     
     const [userInfo, setUserInfo] = useState("");
     const getData = async () => {
@@ -258,6 +260,7 @@ const SpotifyGetPlaylists = () => {
                 sendToPastTrips2(embedSrc);
                 //modifyData2(playlistID);
                 sendToPastTrips(embedSrc);
+                //window.location.reload();
             }
         }
     }
@@ -314,16 +317,9 @@ const SpotifyGetPlaylists = () => {
 
                 <Button variant="contained" onClick={handleGetPlaylists2}>Generate Custom Playlist</Button>
             </Stack>
-            {showEmbed ?
-            <iframe
-                src={embedSrc}
-                width="100%"
-                height={700}
-            ></iframe> : <></>
-            }
-            {showEmbed = false}
+            
         </Box>
     )
 }
 
-export default SpotifyGetPlaylists
+export default SpotifyGetPlaylists2

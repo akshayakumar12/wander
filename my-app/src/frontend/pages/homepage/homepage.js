@@ -141,6 +141,7 @@ function Home() {
                             <Playlist
                               text={"Playlist for your current trip"}
                               src={pastTrip?.playlist}
+                              past={true}
                             ></Playlist>
                           </CardActionArea>
                         </Card>
