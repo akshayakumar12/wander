@@ -197,6 +197,11 @@ function Home() {
                     </Stack>
                     <br></br>
                     <Stack>
+                      {/* invisible button 💀 DO NOT REMOVE*/}
+                       <Button 
+                        onCLick={calculateRoute()}
+                      >
+                        </Button>
                       <Card
                         sx={{
                           width: { sm: 500, xs: 250 },
@@ -226,12 +231,6 @@ function Home() {
                           ></DirectionsRenderer>
                         </GoogleMap>
                       </Card>
-                      <Button 
-                        onCLick={calculateRoute}
-                        variant="contained"
-                      >
-                          Show
-                        </Button>
                     </Stack>
                   </Stack>
                 </CardContent>
