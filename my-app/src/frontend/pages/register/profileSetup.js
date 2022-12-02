@@ -15,6 +15,8 @@ import { Container } from "@mui/system";
 import Logo from "../wander logo.png";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
 
 export default function ProfileSetup() {
   const [firstName, setFirstName] = useState("");
@@ -60,22 +62,49 @@ export default function ProfileSetup() {
             style={{ marginRight: "85%" }}
           />
 
-          <img
-            src={Music}
-            alt="Brand Logo"
-            height={375}
-            width={375}
-            align="center"
-            style={{
-              border: "2px solid #525050",
-              boxShadow: "10px 10px 5px #525050",
-              marginLeft: "10%",
-            }}
-          />
+          <Box sx={{ textAlign: "left" }} style={{ marginLeft: "15%" }}>
+            <img
+              src={SpotifyListenPhoto}
+              height={375}
+              weight={375}
+              style={{
+                boxShadow: "4px 4px 4px #cfbea9",
+                borderRadius: "0px 0px 100px 0px",
+              }}
+            />
+          </Box>
 
-          <h3 align="left" style={{ fontWeight: "normal", marginLeft: "10%" }}>
-            Create the ultimate playlist for your travels
-          </h3>
+          <Stack paddingY="5%" paddingX="15%" spacing={1}>
+            <Box
+              margin={0}
+              sx={{
+                color: "primary.contrastText",
+              }}
+            >
+              <h2
+                className="lexend"
+                style={{
+                  textAlign: "left",
+                  fontWeight: "500",
+                  margin: "0",
+                  color: "#02407F",
+                }}
+              >
+                Playlist Creation
+              </h2>
+            </Box>
+            <h3
+              style={{ fontWeight: "400", textAlign: "left", color: "black" }}
+            >
+              Create the ultimate playlist for your travels
+            </h3>
+            <Box sx={{ color: "#007A7A", textAlign: "left" }}>
+              <HorizontalRuleIcon
+                style={{ marginLeft: "-7" }}
+                sx={{ fontSize: 50, align: "left" }}
+              />
+            </Box>
+          </Stack>
         </Stack>
 
         {/* Right Components Stack */}
@@ -166,6 +195,7 @@ export default function ProfileSetup() {
                 {/* Get Started button */}
                 <Button
                   variant="contained"
+                  id="greenButton"
                   style={{
                     backgroundColor: "#007B7B",
                     textTransform: "none",
@@ -191,6 +221,7 @@ export default function ProfileSetup() {
                     textTransform: "none",
                   }}
                   onClick={back_click}
+                  id="greenButton"
                 >
                   Back
                 </Button>

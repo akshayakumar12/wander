@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import Loading from "../quiz/loading";
+import emailjs from "emailjs-com";
 
 import {
   useJsApiLoader,
@@ -50,10 +51,57 @@ export default function ExpandedTrip() {
         item.data().latest == "true"
       ) {
         setPastTrip(item.data());
-        console.log();
+        // console.log(pastTrip.midpoint1, "hello");
       }
     });
   };
+
+  const check1 = () => {
+    console.log(pastTrip.midpoint1);
+    if (pastTrip.midpoint1 !== "") {
+      console.log("hello");
+      return true;
+    }
+    return false;
+  };
+  const varCheck = check1();
+
+  const check2 = () => {
+    console.log(pastTrip.midpoint2);
+    if (pastTrip.midpoint2 !== "") {
+      console.log("hello");
+      return true;
+    }
+    return false;
+  };
+  const varCheck2 = check2();
+
+  function exportItinerary() {
+    const emailParams = {
+      source: pastTrip.source,
+      midpoint1: pastTrip.midpoint1,
+      midpoint2: pastTrip.midpoint2,
+      destination: pastTrip.destination,
+      userEmail: auth.currentUser.email,
+    };
+
+    emailjs
+      .send(
+        "service_i3qv81i",
+        "template_a0dg6x9",
+        emailParams,
+        "jJbDp4b8TR2emTjeB"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert("Your itinerary has been sent to your email!");
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
 
   useEffect(() => {
     getData();
@@ -165,12 +213,16 @@ export default function ExpandedTrip() {
 
       {/* front stack */}
       <Stack position="absolute" paddingLeft="5%" width="60%" zIndex={1}>
-      <Button
-          variant="contained" 
+        {/* invisible button 💀 DO NOT REMOVE*/}
+        <Button onClick={calculateRoute()} sx={{ width: "60%" }}></Button>
+        <Button
+          variant="contained"
           onClick={calculateRoute}
+          sx={{ width: "60%" }}
         >
-          SHOW
-      </Button>
+          RECENTER
+        </Button>
+
         <Card
           sx={{
             marginTop: "5%",
@@ -185,19 +237,24 @@ export default function ExpandedTrip() {
         >
           <CardActionArea>
             <CardContent sx={{ marginX: "1%" }}>
-              <Stack direction="row" width="100%">
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                width="100%"
+                spacing={1}
+              >
                 <Stack width="80%">
                   <p
                     align="Left"
                     style={{
                       fontSize: "20px",
-                      marginBottom: 20,
+                      marginBottom: 10,
                       fontWeight: "bold",
                       // fontWeight: "bold",
                     }}
                   >
-                    Source: {pastTrip?.source}
+                    {pastTrip?.source}
                   </p>
+
                   <Box
                     zIndex={0}
                     sx={{ borderLeft: 1 }}
@@ -213,34 +270,43 @@ export default function ExpandedTrip() {
                           //fontSize: "3.5em",
                         }}
                       >
-                        <li
-                          style={{
-                            fontSize: "2.5em",
-                            width: "100",
-                            textAlign: "center",
-                            marginBottom: 10,
-                          }}
-                        >
-                          <div
-                            align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                        {check1 ? (
+                          <li
+                            style={{
+                              fontSize: "2.5em",
+                              width: "100",
+                              textAlign: "center",
+                              marginBottom: 10,
+                            }}
                           >
-                            Midpoint 1:
-                          </div>
-                        </li>
-                        <li
-                          style={{
-                            fontSize: "2.5em",
-                            marginBottom: 10,
-                          }}
-                        >
-                          <div
-                            align="left"
-                            style={{ fontSize: 25, align: "left" }}
+                            <div
+                              align="left"
+                              style={{ fontSize: 15, align: "left" }}
+                            >
+                              {pastTrip?.midpoint1}
+                            </div>
+                          </li>
+                        ) : (
+                          <></>
+                        )}
+
+                        {varCheck2 ? (
+                          <li
+                            style={{
+                              fontSize: "2.5em",
+                              marginBottom: 10,
+                            }}
                           >
-                            Midpoint 2:
-                          </div>
-                        </li>
+                            <div
+                              align="left"
+                              style={{ fontSize: 15, align: "left" }}
+                            >
+                              {pastTrip?.midpoint2}
+                            </div>
+                          </li>
+                        ) : (
+                          <></>
+                        )}
                       </ul>
                     </Box>
                   </Box>
@@ -250,16 +316,24 @@ export default function ExpandedTrip() {
                     style={{
                       fontSize: "20px",
                       marginTop: 20,
-                      margin: 0,
+                      marginBottom: 0,
                       fontWeight: "bold",
                     }}
                   >
-                    Destination: {pastTrip?.destination}
+                    {pastTrip?.destination}
                   </p>
                 </Stack>
                 <Stack width="10%">
-                  <Button variant="contained" onClick={editTrip_click}>
+                  <Button
+                    variant="contained"
+                    onClick={editTrip_click}
+                    paddingTop="1"
+                  >
                     Edit
+                  </Button>
+                  <p></p>
+                  <Button variant="contained" onClick={exportItinerary}>
+                    Export
                   </Button>
                 </Stack>
               </Stack>
@@ -270,7 +344,7 @@ export default function ExpandedTrip() {
           sx={{
             marginTop: "5%",
             width: "60%",
-            height: "80%",
+            height: 200,
             bgcolor: "cardBg.main",
             borderRadius: "16px",
             boxShadow: 3,

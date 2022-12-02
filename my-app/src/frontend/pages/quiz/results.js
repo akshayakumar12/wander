@@ -90,17 +90,25 @@ function Result(props) {
         </Stack>
       </div>
       <br></br>
-      <Stack direction={"row"} justifyContent="center">
-        <Button
-          variant="contained"
-          sx={{ width: 130, height: 35, margin: 2 }}
-          onClick={handleTakeQuiz}
-        >
-          {" "}
-          {"Take Quiz"}
-        </Button>
+      <Stack
+        direction={{ sm: "row", xs: "column" }}
+        justifyContent="center"
+        alignItems={"center"}
+      >
+        <Stack justifyContent={"center"}>
+          <Button
+            variant="contained"
+            sx={{ width: 130, height: 35, margin: 2 }}
+            onClick={handleTakeQuiz}
+          >
+            {" "}
+            {"Take Quiz"}
+          </Button>
+        </Stack>
 
-        <Create />
+        <Stack justifyContent={"center"}>
+          <Create />
+        </Stack>
       </Stack>
     </>
   ) : (

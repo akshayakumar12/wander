@@ -7,6 +7,9 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -40,9 +43,38 @@ function TripView() {
         item.data().latest == "true"
       ) {
         setPastTrip(item.data());
-        console.log();
       }
     });
+  };
+
+  const [midpoint1, setMidpoint1] = useState("");
+  const [midpoint2, setMidpoint2] = useState("");
+
+  const handleSelectMidpoint1 = async (value) => {
+    setMidpoint1(value);
+  };
+
+  const handleSelectMidpoint2 = async (value) => {
+    setMidpoint2(value);
+  };
+
+  const [midpointsList, setMidpointsList] = useState([{midpoint: ""}, {midpoint: ""}]);
+
+  const handleMidpointAdd = () => {
+    setMidpointsList([...midpointsList, {midpoint: ""}]);
+  };
+
+  const handleMidpointRemove = (index) => {
+    const list = [...midpointsList];
+    list.splice(index, 1);
+    setMidpointsList(list);
+
+    if (index === 0) {
+      setMidpoint1(midpoint2);
+      setMidpoint2("");
+    } else {
+      setMidpoint2("");
+    }
   };
 
   useEffect(() => {
@@ -68,7 +100,9 @@ function TripView() {
       pastTrip.destination,
       source,
       destination,
-      preference
+      preference,
+      midpoint1,
+      midpoint2
     );
     delay(1000).then(() => navigate("/home"));
   }
@@ -110,7 +144,7 @@ function TripView() {
                   }) => (
                     <div>
                       <input
-                        {...getInputProps({ placeholder: "Enter New Source" })}
+                        {...getInputProps({ placeholder: pastTrip.source })}
                       />
                       <div>
                         {loading ? <div> Loading... </div> : null}
@@ -142,6 +176,89 @@ function TripView() {
                 </PlacesAutocomplete>
               </div>
 
+              <form align = "left">
+              <div>
+                <div>
+                  {midpointsList.map((singleMidpoint, index) => (   
+                    <div key = {index}>
+                      {midpointsList.length > 0 && (
+                      <Box>
+                        <h3 align="left" style={{ marginBottom: 0, marginTop: 10 }}>
+                          Midpoint
+                        </h3>
+                        
+                        <PlacesAutocomplete
+                          value = {index === 0? midpoint1 : midpoint2}
+                          onChange={index === 0? setMidpoint1 : setMidpoint2}
+                          onSelect={index === 0? handleSelectMidpoint1 : handleSelectMidpoint2}
+                        >
+                          {({
+                            getInputProps,
+                            suggestions,
+                            getSuggestionItemProps,
+                            loading,
+                          }) => (
+                            <div>
+                              <input
+                                {...getInputProps({ placeholder: (index === 0) ? pastTrip.midpoint1 : pastTrip.midpoint2})}
+                                />
+                              <div className = "autocomplete-dropdown-container">
+                              {loading ? <div width = {"100%"}> Loading... </div> : null}
+                              {suggestions.map((suggestion) => {
+                                  const className = suggestion.active
+                                  ? "suggestion-item--active"
+                                  : "suggestion-item";
+                                  const style = suggestion.active
+                                  ? { backgroundColor: "#d5e4f4", cursor: "pointer" }
+                                  : { backgroundColor: "#ffffff", cursor: "pointer" };
+
+                                  return (
+                                    <div
+                                    {...getSuggestionItemProps(suggestion, { style })}
+                                    >
+                                      {suggestion.description}
+                                      </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </PlacesAutocomplete>
+
+                        {midpointsList.length > 1 && (
+                          <IconButton
+                            onClick={() => handleMidpointRemove(index)}
+                          >
+                            <RemoveCircleOutlineIcon 
+                              sx = {{color: "#e3242b", padding: 1}}
+                              fontSize = "large"
+                            />
+                          </IconButton>
+                        )}
+                      </Box>
+                      )}
+                    
+                      {midpointsList.length - 1 === index  && midpointsList.length < 2 && (
+                        <div> 
+                          <Button 
+                            variant = "text"
+                            startIcon = {<AddCircleOutlineIcon />}
+                            style = {{
+                              color: "#003e80",
+                            }}
+                            onClick = {() => handleMidpointAdd()}
+                          > 
+                              Add Stop 
+                          </Button> 
+
+                        </div>
+                      )}
+                    </div>
+                  ))}   
+                </div>
+              </div>
+            </form>
+
               <h3 align="left">Destination</h3>
               <div>
                 <PlacesAutocomplete
@@ -158,7 +275,7 @@ function TripView() {
                     <div>
                       <input
                         class="autocomplete-field"
-                        {...getInputProps({ placeholder: "Enter Destination" })}
+                        {...getInputProps({ placeholder: pastTrip.destination })}
                       />
                       <div>
                         {loading ? <div> Loading... </div> : null}
@@ -226,7 +343,7 @@ function TripView() {
                 marginTop: 5,
               }}
               onClick={() => {
-                editTheTrip(newSource, newDestination, newPreference);
+                editTheTrip(newSource, newDestination, newPreference, midpoint1, midpoint2);
               }}
             >
               Edit Changes

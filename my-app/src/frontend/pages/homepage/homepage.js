@@ -9,10 +9,33 @@ import { useLocation } from "react-router-dom";
 import Loading from "../quiz/loading";
 import "./homepage.css";
 
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+
 function Home() {
   //window.location.reload(false);
   const navigate = useNavigate();
   let location = useLocation();
+
+  const google = window.google;
+  const center = { lat: 48.8584, lng: 2.2945 };
+  const [map, setMap] = useState(/** @type google.maps.Map*/ (null));
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  const [srcLatLong, setSrcLatLong] = useState([]);
+  const [destLatLong, setDestLatLong] = useState([]);
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey:
+      "https://maps.googleapis.com/maps/api/geocode/json?address=AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg&sensor=true",
+    libraries: ["places"],
+    //"AIzaSyDI3xucnyuvVc5MuSmWeSMot43AOewC7Bg",
+  });
 
   const [show, setShow] = useState(false);
   const [pastTrip, setPastTrip] = useState("");
@@ -33,9 +56,30 @@ function Home() {
     setShow(true);
   };
 
+  
+
   useEffect(() => {
     getData();
+    calculateRoute();
   }, [location]);
+
+  async function calculateRoute() {
+    console.log(pastTrip?.source);
+    if (pastTrip?.source === "" || pastTrip?.destination === "") {
+      return;
+    }
+
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: pastTrip?.source,
+      destination: pastTrip?.destination,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
 
   //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator"
   return (
@@ -47,7 +91,6 @@ function Home() {
               marginTop: "5%",
               width: "100%",
               height: "80%",
-              //bgcolor: "#F5F7FA",
               bgcolor: "cardBg.main",
               borderRadius: "16px",
               boxShadow: 3,
@@ -91,15 +134,12 @@ function Home() {
                                   fontWeight: "bold",
                                 }}
                               >
-                                Source: {pastTrip?.source}
+                                {pastTrip?.source}
                               </p>
-                              {
-                                //<iframe src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"width="300" height="400"></iframe>
-                              }
 
                               <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
-                                <p align="Left">Midpoint 1: </p>
-                                <p align="Left">Midpoint 2:</p>
+                                <p align="Left"> {pastTrip?.midpoint1} </p>
+                                <p align="Left"> {pastTrip?.midpoint2} </p>
                               </Box>
 
                               <p
@@ -112,7 +152,7 @@ function Home() {
                                 }}
                               >
                                 {" "}
-                                Destination: {pastTrip?.destination}
+                                {pastTrip?.destination}
                               </p>
                             </CardContent>
                           </CardActionArea>
@@ -138,8 +178,16 @@ function Home() {
                             }
                             sx={{ paddingBottom: "2%" }}
                           >
+                            <p
+                              style={{
+                                fontSize: "17px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Playlist for your current trip
+                            </p>
                             <Playlist
-                              text={"Playlist for your current trip"}
+                              //text={"Playlist for your current trip"}
                               src={pastTrip?.playlist}
                               past={true}
                             ></Playlist>
@@ -149,6 +197,8 @@ function Home() {
                     </Stack>
                     <br></br>
                     <Stack>
+                      {/* invisible button 💀 DO NOT REMOVE*/}
+                      <Button onCLick={calculateRoute()}></Button>
                       <Card
                         sx={{
                           width: { sm: 500, xs: 250 },
@@ -164,13 +214,19 @@ function Home() {
                         >
                           Map
                         </h3>
-                        {
-                          <iframe
-                            src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
-                            width="400"
-                            height="300"
-                          ></iframe>
-                        }
+                        {/* Google Maps*/}
+                        <GoogleMap
+                          //center={center}
+                          zoom={15}
+                          mapContainerStyle={{ width: "100%", height: "100%" }}
+                          options={{ mapTypeControl: false }}
+                          onLoad={(map) => setMap(map)}
+                        >
+                          <Marker position={center}></Marker>
+                          <DirectionsRenderer
+                            directions={directionsResponse}
+                          ></DirectionsRenderer>
+                        </GoogleMap>
                       </Card>
                     </Stack>
                   </Stack>

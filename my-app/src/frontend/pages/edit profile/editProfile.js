@@ -266,9 +266,9 @@ export default function EditProfile() {
             component="label"
             onChange={handleImageChange}
             sx={{
-              "&:hover": { backgroundColor: "#f0dccf" },
+              "&:hover": { backgroundColor: "primary.main.dark" },
               color: "black",
-              backgroundColor: "#F6EAE2",
+              backgroundColor: "primary.main",
             }}
           >
             Edit Profile Picture
@@ -283,9 +283,9 @@ export default function EditProfile() {
             onClick={toggleModal}
             sx={{
               boxShadow: 3,
-              "&:hover": { backgroundColor: "#f0cfd2", boxShadow: 3 },
+              "&:hover": { backgroundColor: "primary.main.dark", boxShadow: 3 },
               color: "black",
-              backgroundColor: "#f6e2e4",
+              backgroundColor: "primary.main",
             }}
           >
             Delete Profile Picture

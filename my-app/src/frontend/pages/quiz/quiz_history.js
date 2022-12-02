@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Loading from "./loading";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
 function QuizHistory() {
   const [userPastQuizzes, setUserPastQuizzes] = useState([]);
@@ -62,6 +63,15 @@ function QuizHistory() {
     });
   }, []);
 
+  const [bgColor, setBgColor] = useState("");
+  useEffect(() => {
+    console.log(localStorage.getItem("theme"));
+    const value = localStorage.getItem("theme");
+    console.log("type: " + typeof value);
+    console.log("value: " + value);
+    value == "true" ? setBgColor("#272727") : setBgColor("#F5F8FA");
+  });
+
   return show ? (
     <Container>
       <Stack
@@ -100,10 +110,10 @@ function QuizHistory() {
       ) : (
         <>
           <Stack
-            justifyContent="center"
+            justifyContent="flex-start"
             direction={"column"}
             spacing={4}
-            alignItems="center"
+            alignItems="flex-start"
           >
             <div
               className="card-section"
@@ -111,6 +121,7 @@ function QuizHistory() {
             >
               <Grid
                 container
+                direction={"row"}
                 spacing={2}
                 rowSpacing={2}
                 columnSpacing={3}
@@ -120,61 +131,75 @@ function QuizHistory() {
                   <Grid xs={"auto"} key={index} spacing={8}>
                     <Card
                       sx={{
-                        margin: 4,
+                        margin: 2,
                         boxShadow: 1,
-                        backgroundColor: "#F2F8F4",
+                        backgroundColor: bgColor,
                         borderRadius: 4,
+                        padding: 1,
+                        paddingRight: 8,
                       }}
                     >
-                      <Box
-                        sx={{
-                          margin: 1,
-                          border: "3px solid black",
-                          borderRadius: 4,
-                        }}
-                      >
-                        <h3
-                          align="center"
-                          style={{ marginBottom: 3, padding: 0 }}
-                        >
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(0, 3)
-                              .join(" ")
-                          }
-                        </h3>
-                        <h3 align="center" style={{ marginY: 4, padding: 1 }}>
-                          {
-                            /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
-                              .toDate()
-                              .toString()
-                              .split(" ")
-                              .slice(3, 5)
-                              .join(" ")
-                          }
-                        </h3>
-                      </Box>
-
-                      <body
-                        style={{
-                          padding: 0,
-                          border: "3px solid black",
-                          borderRadius: 14,
-                          margin: 6,
-                        }}
-                      >
-                        {curCard.quiz_ans
-                          .split(",")
-                          .slice(0, 5)
-                          .map((answer, index) => (
-                            <p>
-                              {questions[index]}: {answer}
-                            </p>
-                          ))}
-                      </body>
+                      <Stack direction={"column"}>
+                        <Stack justifyContent={"center"}>
+                          <Box
+                            sx={{
+                              margin: 1,
+                              paddingRight: 1,
+                              //border: "3px solid black",
+                              //borderRadius: 4,
+                              // borderRight: 2,
+                            }}
+                          >
+                            <h3
+                              align="left"
+                              style={{ marginBottom: 3, padding: 0 }}
+                            >
+                              {
+                                /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                                  .toDate()
+                                  .toString()
+                                  .split(" ")
+                                  .slice(0, 4)
+                                  .join(" ")
+                              }
+                            </h3>
+                            <h3 align="left" style={{ marginY: 4, padding: 1 }}>
+                              {
+                                /*curCard.timestamp.toDate().getTime()*/ curCard.timestamp
+                                  .toDate()
+                                  .toString()
+                                  .split(" ")
+                                  .slice(4, 5)
+                                  .join(" ")
+                              }
+                            </h3>
+                          </Box>
+                        </Stack>
+                        <HorizontalRuleIcon
+                          fontSize="large"
+                          sx={{ color: "primary.contrastText" }}
+                        ></HorizontalRuleIcon>
+                        <Stack>
+                          <body
+                            style={{
+                              padding: 0,
+                              //border: "3px solid black",
+                              //borderRadius: 14,
+                              margin: 6,
+                              backgroundColor: "transparent",
+                            }}
+                          >
+                            {curCard.quiz_ans
+                              .split(",")
+                              .slice(0, 5)
+                              .map((answer, index) => (
+                                <p align="left">
+                                  {questions[index]}: {answer}
+                                </p>
+                              ))}
+                          </body>
+                        </Stack>
+                      </Stack>
                     </Card>
                   </Grid>
                 ))}
@@ -184,7 +209,7 @@ function QuizHistory() {
 
           <Button
             sx={{
-              bottom: 0,
+              bottom: "5%",
               left: "50%",
               position: "fixed",
               justifyContent: "flex-end",
