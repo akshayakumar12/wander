@@ -9,8 +9,6 @@ async function createTrip(source, destination, preference, midpoint1, midpoint2)
 
         checkIfLatest(user.email);
 
-        alert(midpoint1);
-
         const data = {
             email: user.email,
             source: source,

@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../../firebase";
 import Loading from "../quiz/loading";
+import emailjs from "emailjs-com";
 
 import {
   useJsApiLoader,
@@ -54,6 +55,25 @@ export default function ExpandedTrip() {
       }
     });
   };
+
+  function exportItinerary() {
+    const emailParams = {
+        source: pastTrip.source,
+        midpoint1: pastTrip.midpoint1,
+        midpoint2: pastTrip.midpoint2,
+        destination: pastTrip.destination,
+        userEmail: "cs307.wander@gmail.com"
+    };
+
+    emailjs.send('service_i3qv81i', 'template_a0dg6x9', emailParams, 'jJbDp4b8TR2emTjeB')
+      .then((result) => {
+        console.log(result.text);
+        alert("Your itinerary has been sent to your email!");
+      }, (error) => {
+        console.log(error.text);
+      });
+
+}
 
   useEffect(() => {
     getData();
@@ -260,7 +280,7 @@ export default function ExpandedTrip() {
                     Edit
                   </Button>
                   <p></p>
-                  <Button variant="contained" >
+                  <Button variant="contained" onClick={exportItinerary}>
                     Export
                   </Button>
                 </Stack>

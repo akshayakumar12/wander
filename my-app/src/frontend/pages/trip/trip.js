@@ -231,7 +231,7 @@ function TripView() {
                           >
                             <RemoveCircleOutlineIcon 
                               sx = {{color: "#e3242b", padding: 1}}
-                              fontSize = "small"
+                              fontSize = "large"
                             />
                           </IconButton>
                         )}
