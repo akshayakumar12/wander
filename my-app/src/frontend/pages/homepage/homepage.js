@@ -135,9 +135,6 @@ function Home() {
                                 {pastTrip?.source}
                               </p>
 
-                              
-
-
                               <Box sx={{ borderLeft: 1 }} paddingLeft={1}>
                                 <p align="Left"> {pastTrip?.midpoint1} </p>
                                 <p align="Left"> {pastTrip?.midpoint2} </p>
@@ -198,10 +195,7 @@ function Home() {
                     <br></br>
                     <Stack>
                       {/* invisible button 💀 DO NOT REMOVE*/}
-                       <Button 
-                        onCLick={calculateRoute()}
-                      >
-                        </Button>
+                      <Button onCLick={calculateRoute()}></Button>
                       <Card
                         sx={{
                           width: { sm: 500, xs: 250 },
