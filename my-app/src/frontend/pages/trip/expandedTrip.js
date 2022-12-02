@@ -62,7 +62,7 @@ export default function ExpandedTrip() {
         midpoint1: pastTrip.midpoint1,
         midpoint2: pastTrip.midpoint2,
         destination: pastTrip.destination,
-        userEmail: "cs307.wander@gmail.com"
+        userEmail: auth.currentUser.email
     };
 
     emailjs.send('service_i3qv81i', 'template_a0dg6x9', emailParams, 'jJbDp4b8TR2emTjeB')
@@ -72,8 +72,8 @@ export default function ExpandedTrip() {
       }, (error) => {
         console.log(error.text);
       });
-
-}
+  
+  }
 
   useEffect(() => {
     getData();

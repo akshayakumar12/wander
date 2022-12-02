@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { auth, db } from "../../../firebase";
+import emailjs from "emailjs-com";
+
 
 function Playlist(props) {
   const location = useLocation();
@@ -9,12 +11,21 @@ function Playlist(props) {
       ? props.src //"https://open.spotify.com/embed/playlist/4WD1BEKXBaXT7NwXa6RNfU?si=d7baa3d91bcb4429?utm_source=generator" //better way of setting default (maybe have current object)
       : location.state.Playlist;
 
+
+  function exportPlaylist() {
+    const emailParams = {
+        playlist: link,
+        userEmail: auth.currentUser.email
+    };
+
+    emailjs.send('service_i3qv81i', 'template_nu65cii', emailParams, 'jJbDp4b8TR2emTjeB')
+      .then((result) => {
+        console.log(result.text);
+        alert("Your playlist has been sent to your email!");
+      }, (error) => {
+        console.log(error.text);
+      });
   
-  function SendMail()
-  {
-      //var body = document.getElementById("Message").value;
-      //var SubjectLine = document.getElementById("Subject").value;
-      window.location.href = "mailto:"+auth.currentUser.email+"?subject=Your Custom Spotify Playlist!&body="+link;
   }
 
   //console.log(location);
@@ -40,10 +51,7 @@ function Playlist(props) {
         bottom: "1%",
       }}
       variant="contained"
-      onClick={() => {
-        SendMail();
-        alert("Please press send on the generated email to send yourself the playlist.")
-      }}
+      onClick={exportPlaylist}
     >
     Send playlist to yourself
   </Button>
