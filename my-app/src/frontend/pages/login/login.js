@@ -23,14 +23,22 @@ import "../style.css";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import SpotifyListenPhoto from "../../assets/spotify listen photo.jpg";
 import TestPrint from "../theme";
+import useSound from 'use-sound';
+import loginchime from "../../assets/loginchime.mp3";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const sound = () => {
+    var audio = new Audio(loginchime);
+    audio.play();
+  }
+  
   const navigate = useNavigate();
 
   if (auth.currentUser) {
+    sound();
     navigate("/home");
   }
 
@@ -43,6 +51,7 @@ function Login() {
   const login_button_click = () => {
     Login_home(email, password);
     if (auth.currentUser) {
+      sound();
       navigate("/home");
     }
   };
